@@ -1,0 +1,16 @@
+    <tr>
+      <td><%= user.fName %></td>
+      <td><%= user.lName %></td>
+      <td><%= user.email %></td>
+      <td><%= user.account_status %></td>
+      <td><%= link_to 'Show', user_path(user) %></td>
+      <td><%= link_to 'Edit', edit_user_path(user)%></td>
+      <% if user.account_active? %>
+        <td><%= link_to 'Delete', user_path(user), 
+        method: :delete, 
+        data: {confirm: 'Are you sure you want to delete the user?'}%></td>
+      <% else %>
+        <td>
+        <%=  link_to 'Activate', reactivate_user_path(user), method: :post %></td>
+      <% end %>
+    </tr>

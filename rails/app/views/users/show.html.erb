@@ -1,0 +1,27 @@
+<h2>
+	Welcome to our test application!
+</h2>
+<strong>Name:</strong>
+<%= @user.fName + " " + @user.lName %>
+
+
+
+
+<br/>
+<strong>Email:</strong>
+<%= @user.email%>
+
+<br/>
+
+<strong>User Information:</strong>
+<%= @user.infoString %>
+
+<br/>
+
+<strong>Account Status:</strong>
+<%= @user.account_status %>
+
+</p>
+<%= link_to 'Edit', edit_user_path(@user)%>
+<%= button_to "Delete Account", { action: "destroy", id: @user.id },
+                                method: :delete, data: { confirm: "Are you sure?" } %>

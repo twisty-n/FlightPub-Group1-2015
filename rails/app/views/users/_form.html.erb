@@ -1,0 +1,61 @@
+<%= form_for @user do |f| %>
+ 
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@user.errors.count, "error") %> prohibited
+        this user from being saved:
+      </h2>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+ 
+  <p>
+    <%= f.label :'First Name' %><br>
+    <%= f.text_field :fName %>
+  </p>
+ 
+  <p>
+    <%= f.label :'Last Name' %><br>
+    <%= f.text_field :lName %>
+  </p>
+
+  <p>
+    <%= f.label :'Email' %><br>
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :'Email Confirmation' %><br>
+    <%= f.text_field :email_confirmation %>
+  </p>
+
+  <p>
+    <%= f.label :'Bio' %><br>
+    <%= f.text_field :infoString %>
+  </p>
+
+  <p>
+    <%= f.label :'Password' %><br>
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= f.label :'Confirmation' %><br>
+    <%= f.password_field :password_confirmation %>
+  </p>
+
+  <% if can? :manage, User %>
+    <p>
+      <%= f.label :'System Role' %><br>
+      <%= f.select :role, [ ["Standard", 'default'], ['Administrator', 'admin']] %>
+    </p>
+  <% end %>
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+ 
+<% end %>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FlightPub</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<% flash.each do |message_type, message| %>
+        <div class="alert alert-<%= message_type %>"><%= message %></div>
+      <% end %>
+<%= link_to 'Home', root_path %> 
+<%= link_to "Manage Users", users_path  if can? :manage, User%>
+<% if !logged_in? %>
+	<%= link_to 'Login', login_path%>
+	<%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
+<% else %>
+	<%= link_to 'Profile', current_user%>
+	<%= link_to 'Logout', logout_path%>
+<% end %>
+
+<%= yield %>
+<!-- Footer! -->
+<% if !logged_in? %>
+  <%= link_to "Sign up now!", signup_path  %>
+<% end %>
+
+</body>
+</html>

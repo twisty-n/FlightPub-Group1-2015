@@ -1,0 +1,13 @@
+<h1>System Users</h1>
+ 
+<table>
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Account Status</th>
+    <th>Email</th>
+  </tr>
+ 
+  <%= render partial: 'listing', collection: @active_users, as: :user %>
+  <%= render partial: 'listing', collection:  @inactive_users, as: :user %>
+</table>
