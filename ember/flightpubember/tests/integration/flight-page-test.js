@@ -22,6 +22,7 @@ module('Integration - Flights Page', {
         App = startApp();
         var flights = [
             {
+                id: 1,
                 flightNumber:       "AAA111",
                 price:              "$1200",
                 seatsAvailable:     "60",
@@ -29,6 +30,7 @@ module('Integration - Flights Page', {
                 arrivalTime:        "1.50"   
             },
              {
+                id:2, 
                 flightNumber:       "BBB111",
                 price:              "$1200",
                 seatsAvailable:     "60",
@@ -36,6 +38,7 @@ module('Integration - Flights Page', {
                 arrivalTime:        "1.50"   
             },
              {
+                id:3,
                 flightNumber:       "CCC111",
                 price:              "$1200",
                 seatsAvailable:     "60",
@@ -43,6 +46,7 @@ module('Integration - Flights Page', {
                 arrivalTime:        "1.50"   
             },
              {
+                id:4,
                 flightNumber:       "DDD111",
                 price:              "$1200",
                 seatsAvailable:     "60",
@@ -53,16 +57,16 @@ module('Integration - Flights Page', {
 
         server = new Pretender(function() {
             this.get('/api/flights', function(request) {
-                return ['200', {"Content Type": "application/json"}, JSON.stringify({flights: flights})];
+                return [200, {'Content Type': 'application/json'}, JSON.stringify({flights: flights})];
             });
 
-            this.get('/api/flights/:flightNumber', function(request) {
+            this.get('/api/flights/:id', function(request) {
                 var flight = flights.find(function(flight) {
                     if (flight.flightNumber === parseInt(request.params.flightNumber)) {
                         return flight;
                     }
                 });
-                return ['200', {"Content Type": "application/json"}, JSON.stringify({flight: flight})];
+                return [200, {"Content Type": "application/json"}, JSON.stringify({flight: flight})];
             });
 
         });
