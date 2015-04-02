@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
 
+  namespace :api do
+    resources :flights
+  end
+
   root 'static_pages#home'
   get 'signup'  => 'users#new'
 
-  resources :users do 
+  resources :users do
     member do
       post 'reactivate'
     end
@@ -18,7 +22,7 @@ Rails.application.routes.draw do
   get 'auth/:provider/callback', to: 'sessions#create_oa'
   get 'auth/failure', to: redirect('/')
   get 'signout', to: 'sessions#destroy', as: 'signout'
-   
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
