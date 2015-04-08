@@ -6,12 +6,13 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-    this.route('about');
-    //this.resource('flights');
-    
-    this.resource('flights', function() {
-        this.route('show', {path: ':flightNumber'});
-    }); 
+  this.route('about');
+  //this.resource('flights');
+
+  this.resource('flights', function() {
+      this.route('show', {path: ':flightNumber'});
+  });
+  this.route('user');
 });
 
 export default Router;
