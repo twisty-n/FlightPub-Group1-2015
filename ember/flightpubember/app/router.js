@@ -12,7 +12,10 @@ Router.map(function() {
   this.resource('flights', function() {
       this.route('show', {path: ':flightNumber'});
   });
-  this.route('user');
+
+  this.resource('users', function() {
+    this.route('show', {path: ':id'});
+  });
 });
 
 export default Router;
