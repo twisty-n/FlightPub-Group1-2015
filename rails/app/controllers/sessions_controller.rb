@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
   end
 
   def auth_params
-    params.require(:user).permit(:fName, :lName, :password, :infoString, :email)
+    params.require(:user).permit(:first_name, :last_name, :password, :info_string, :email)
   end
 
 end

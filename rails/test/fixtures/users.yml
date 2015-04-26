@@ -9,3 +9,17 @@ one: {}
 #
 two: {}
 #  column: value
+
+Tristan:
+  id: 1
+  first_name: Tristan
+  last_name: Newmann
+  email: tnew2294@gmail.com
+  password_digest: "$2a$10$wJTPdvpGgzDvkXChrcPyqOQrFFawzGu89B1rZze/lVIcJKWiNeAqS" # 'secret'
+
+John:
+  id: 2
+  first_name: John
+  last_name: Williams
+  email: jwillow@gmail.com
+  password_digest: "$2a$10$wJTPdvpGgzDvkXChrcPyqOQrFFawzGu89B1rZze/lVIcJKWiNeAqS" # 'secret'

@@ -10,8 +10,9 @@ gem 'figaro'
 
 gem 'active_model_serializers', '0.9.3'
 
+gem 'mysql2'
 #
-gem 'pg'
+#gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -51,5 +52,5 @@ group :development, :test do
   gem 'minitest-reporters'
 
   # Use mysql as the database for Active Record  for deployment
-	#gem 'mysql2'
+  gem 'mysql2'
 end

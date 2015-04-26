@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :api_keys
+
   namespace :api do
     resources :flights
     resources :users

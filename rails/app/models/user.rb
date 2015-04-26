@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
 
-	validates :fName, 	presence: true, length: {maximum: 40}
-	validates :lName,   presence: true, length: {maximum: 40}
-	validates :infoString, presence: false, length: {maximum: 200}
+	validates :first_name, 	presence: true, length: {maximum: 40}
+	validates :last_name,   presence: true, length: {maximum: 40}
+	validates :info_string, presence: false, length: {maximum: 200}
 	validates :email, confirmation: true, presence: true, uniqueness: true
 
 	before_create :set_roles
@@ -35,8 +35,8 @@ class User < ActiveRecord::Base
 	def self.from_omniauth(auth)
 		where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
 			user.uid = auth.uid
-			user.fName = auth.info.name.split(" ")[0]
-			user.lName = auth.info.name.split(" ")[1]
+			user.first_name = auth.info.name.split(" ")[0]
+			user.last_name = auth.info.name.split(" ")[1]
 			user.email = auth.info.email
 			user.oauth_token = auth.credentials.token
 			user.oauth_expires_at = Time.at(auth.credentials.expires_at)
