@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+Tristan_session:
+  user_id: 1
+  access_token: <%= SecureRandom.hex %>
+  scope: 'session'
+  expired_at: <%= 4.hours.from_now %>
+
+Tristan_session:
+  user_id: 2
+  access_token: <%= SecureRandom.hex %>
+  scope: 'session'
+  expired_at: <%= 4.hours.from_now %>
