@@ -4,11 +4,13 @@ class UserTest < ActiveSupport::TestCase
   
   def setup
   	@user = User.new(
-  		fName: 'Tristan', 
-  		lName: 'Newmann', 
+  		first_name: 'Tristan', 
+  		last_name: 'Newmann', 
   		password: 'password',
+                email: 'tnew2294@gmail.com',
+                email_confirmation: 'tnew2294@gmail.com',
   		password_confirmation: "password", 
-  		infoString: 'Bio String')
+  		info_string: 'Bio String')
   end
 
   test 'should be valid' do
@@ -16,17 +18,17 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'first name should be present' do
-  	@user.fName = "     "
+  	@user.first_name = "     "
   	assert_not @user.valid?
   end
 
   test 'last name should be present' do
-  	@user.lName = "     "
+  	@user.last_name = "     "
   	assert_not @user.valid?
   end
 
   test 'fName not exceed char limit' do
-  	@user.fName = "a" * 255
+  	@user.first_name = "a" * 255
   	assert_not @user.valid?
   end
 
