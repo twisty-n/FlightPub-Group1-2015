@@ -14,7 +14,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'should be valid' do
-	assert @user.valid?  	
+	assert @user.valid?, 'This fails, and I\'m not really sure why :/'  	
   end
 
   test 'first name should be present' do
@@ -32,4 +32,10 @@ class UserTest < ActiveSupport::TestCase
   	assert_not @user.valid?
   end
 
+  test "create a session for the user" do
+    tristan = @user
+    api_key = tristan.session_api_key
+    assert api_key.access_token =~ /\S{32}/, "Assert that the key is in the correct format , the access token is #{api_key.access_token}"
+    assert api_key.user_id == tristan.user_id, "Assert that the user id for the key is correct"
+  end
 end

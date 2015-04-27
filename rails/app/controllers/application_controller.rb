@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :exception
+  protect_from_forgery with: :null_session
   check_authorization
 
   #This should provide us with our current user
@@ -16,5 +16,20 @@ class ApplicationController < ActionController::Base
   	return current_user
   end
 
+  # Define information to be used by the API functions
+  protected
 
+  def ensure_authenticated_user
+    head :unauthorized unless current_user
+  end
+
+  def token
+    bearer = request.headers["HTTP_AUTHORIZATION"]
+    bearer ||= request.headers["rack.session"].try(:[], 'Authorization')
+    if bearer.present?
+      bearer.split.last
+    else
+      nil
+    end
+  end
 end

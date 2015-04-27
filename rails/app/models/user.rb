@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+  has_many :api_keys
+
 	validates :first_name, 	presence: true, length: {maximum: 40}
 	validates :last_name,   presence: true, length: {maximum: 40}
 	validates :info_string, presence: false, length: {maximum: 200}
@@ -9,6 +11,10 @@ class User < ActiveRecord::Base
 
 	Roles = [ :admin, :default ]
 
+        def session_api_key
+          api_keys.active.session.first_or_create
+        end
+        
 	def soft_delete!
 		self.account_status = 'inactive'
 		self.save
