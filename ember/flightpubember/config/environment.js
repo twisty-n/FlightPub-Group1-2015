@@ -12,12 +12,17 @@ module.exports = function(environment) {
         // e.g. 'with-controller': true
       }
     },
+    //added contentSecurityPolicy because I was getting annoying errors remove if necessary
+    contentSecurityPolicy: {
+      'font-src': "'self' data: use.typekit.net fonts.gstatic.com",
+    },
 
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
     }
   };
+
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
