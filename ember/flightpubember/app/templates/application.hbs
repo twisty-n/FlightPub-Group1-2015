@@ -1,7 +1,13 @@
-<h2 id="title">Welcome to FlightPub: Where dreams come to fly!</h2>
-
-{{link-to 'Home' 'index'}}
-{{link-to 'About' 'about'}}
-{{link-to 'Flights' 'flights'}}
+<div id="navbar-wrapper">
+	<div id="navbar">
+		<div id="logo">{{#link-to 'index'}}<img src="assets/flightpub-logo.png">{{/link-to}}</div>
+		<div id="login"><a href="#">Login</a></div>
+	</div>
+</div>
 
 {{outlet}}
+
+<div id="footer">
+	<hr> 
+	<div id="footer-logo"><img src="assets/flightpub-logo.png"></div>
+</div>

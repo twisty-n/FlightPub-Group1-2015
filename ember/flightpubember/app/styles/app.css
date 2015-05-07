@@ -1,0 +1,725 @@
+@import url(http://fonts.googleapis.com/css?family=Hind:700,400);
+
+body{
+	width:100%;
+	height:100%;
+	margin: 0;	
+	background-color: #1479C9;
+
+	font-family: 'Hind', sans-serif;
+}
+
+/* Nav Bar */
+#navbar-wrapper{
+	width:100%;
+	height:70px;
+	background-color: #FBFBFB;
+	z-index: 3;
+}
+
+#navbar{
+	height:inherit;
+	width:70%;
+	margin: 0 auto;
+}
+
+#logo{
+	float:left;
+	margin-top:5px;
+}
+
+#logo img{
+	width: 300px;
+}
+
+#login{
+	float:right;
+	padding-top:27px;
+	padding-right:50px;
+}
+
+#login a{
+	text-decoration: none;
+	color:#797979;
+}
+
+
+/* Search Bar */
+#search-wrapper{
+	width:100%;
+	background-color: #17AEE5;
+	
+	margin-top: 100px;
+}
+
+#flight-search{
+	height: inherit;
+	margin: 0 auto;
+	width:990px;
+}
+
+.flight-search-box{
+	font-size: 25px;
+	color: #FFF;
+
+
+	position: relative;
+	display: inline-block;
+}
+
+@media screen and (max-width: 1100px){
+	#flight-search{
+		width: 610px;
+	}
+
+	.flight-search-box.place-input{
+		width: 300px;
+	}
+
+	div.flight-search-box.seat-input{
+		left:0px;
+		bottom: 0px;
+	}
+
+	div.flight-search-box#search-button-wrapper{
+		bottom: 20px;
+		left: 150px;
+	}
+}
+@media screen and (max-width: 570px)
+{
+	#navbar #logo img{
+		width: 270px;
+	}
+	div#footer-logo{
+		width: 100%;
+	}
+	div#footer-logo img{
+		width: 200px;
+		margin-left:10%;
+	}
+
+	#navbar{
+		width: 100%;
+	}
+
+	#flight-search{
+		width: 90%;
+		margin-left: 5%;
+		padding-top:20px;
+		padding-bottom:20px; 
+	}
+
+	.flight-search-box.place-input{
+		display: block;
+		width: 100%; 
+	}
+
+	div.flight-search-box#search-button-wrapper{
+		bottom: 0px;
+		left: 0px;
+		margin-top: 20px;
+		display: block;
+	}
+}
+
+@media screen and (min-width: 1200px)
+{
+	.flight-search-box#left-box{
+		
+	}
+
+
+}
+
+
+.flight-search-box.seat-input{
+	left:60px;
+	bottom: 10px;
+}
+
+.flight-search-box .city-input{
+	width: 80%;
+	height:30px;
+}
+
+.flight-search-box #departure-date{
+	margin-top: 20px;
+}
+
+.flight-search-box #departure-date input{
+	margin-left: 7px;
+}
+
+.flight-search-box #return-date{
+	margin-top: 20px;
+}
+
+.flight-search-box #return-date input{
+	margin-left: 7px;
+}
+
+.flight-search-box .value-select{
+	width: 100%;
+	margin-top: 15px;
+}
+
+.flight-search-box#search-button-wrapper{
+	bottom: 40px;
+	left: 100px;
+}
+
+.flight-search-box #search-button{
+	width:150px;
+	height: 60px;
+	background-color: #17AEE5;
+	color:#FFF; 
+	border-style: solid;
+	border-width: 3px;
+	border-color: #FFFFFF;
+	bottom:40px;
+
+}
+
+
+
+
+/* Style */
+
+.rounded{
+	border: 2px solid #ccc;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    
+    -webkit-appearance: none;
+}
+
+input.rounded {
+    border: 1px solid #ccc;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    
+    font-size: 20px;
+    padding: 4px 7px;
+    outline: 0;
+    -webkit-appearance: none;
+}
+
+input.rounded:focus {
+    border-color: #339933;
+}
+
+
+
+/* Description */
+
+#description-wrapper{
+}
+
+#description{
+	height: 100%;
+	width:70%;
+	margin: 0 auto;
+}
+
+#description p{
+	text-align: center;
+	font-size: 28px;
+	font-style: bold;
+	color: #fff;
+}
+
+/* Footer */
+
+#footer{
+	width:100%;
+	margin-top: 40px;
+}
+
+#footer hr{
+	width:70%;
+}
+
+#footer-logo{
+	width:360px;
+	margin: 0 auto;
+}
+
+
+/* Results Top Row */
+
+#results-top-row{
+	width: 100%;
+	min-width: 880px;
+	height: 110px;
+	position: fixed;
+	top: 10px;
+	z-index: 10;
+	background-color: #FFFFFF;
+	border-top: 4px solid #1479C9;
+	border-bottom: 4px solid #1479C9;
+}
+
+#top-row-inner{
+	width: 800px;
+	height: 110px;
+	margin: 0 auto;
+}
+
+#total{
+	float: left;
+	width: 160px;
+	margin-top: 10px;
+	margin-right: 10px;
+	font-size: 20px;
+	height: 100px;
+}
+
+#money{
+	font-size: 26px;
+	color: #00dd00;
+	margin: 0 auto;
+}
+
+#total-title{
+	font-size: 13px;
+	font-weight: 700;
+}
+
+#filter{
+	height: 30px;
+	width: 130px;
+	float: left;
+	margin-left: 5px;
+	padding-left: 5px;
+}
+
+/* Ticket Styles */
+
+#ticket-display{
+	float: left;
+	height: 110px;
+	width: 484px;
+	overflow: hidden;
+	position: relative;
+	//border-left: 4px solid #17AEE5;
+	//border-right: 4px solid #17AEE5;
+}
+
+#depart{
+	float: left;
+	width: 480px;
+	height: 110px;
+	overflow: hidden;
+	background-color: #FFF;
+
+	position: absolute;
+
+}
+
+#depart-small{
+	display: none;
+	position: relative;
+	width: 50px;
+	font-size: 12px;
+	line-height: 15px;
+	background-color: #D7D5F1;
+	height: 110px;
+	border-right:4px solid #17AEE5;
+	padding-top: 5px;
+}
+
+#depart-small .arrow{
+	font-size: 40px;
+	width: 20px;
+	margin-left: 18px;
+	margin-top: 0px;
+
+}
+
+#depart-small .text-top{
+	margin-left: 5px;
+	margin-bottom: 5px;
+	font-size: 9px;
+}
+
+#depart-small .text-bottom{
+	margin-top: 7px;
+	margin-left: 5px;
+	font-size: 9px;
+}
+
+#depart-small:hover{
+	background-color: #AFACD0;
+	cursor: pointer;
+}
+
+#depart .ticket-info{
+	width: 90%;
+	float: left;
+}
+
+
+#return{
+	width: 480px;
+	height: 110px;
+	//border-left: 4px solid #17AEE5;
+	//border-right: 4px solid #17AEE5;
+	overflow: hidden;
+	background-color: #FFF;
+	
+	position: absolute;
+	left: 100%;
+}
+
+#return .ticket-info{
+	position: relative;
+	top: -40px;
+	width:480px;
+	height: 110px;
+	
+}
+
+#return .ticket-middle{
+	position: relative;
+	top: 40px;
+	margin-left: 110px;
+}
+
+#return .ticket-top .ticket-price{
+	margin-left: 350px;
+}
+
+
+#return .ticket-bottom{
+	position: relative;
+	top: 40px;
+}
+
+#return .ticket-bottom .flight-duration{
+	margin-left: 370px;
+}
+
+#return .ticket-bottom .travel-stops{
+	margin-left: 190px;	
+}
+
+.ticket-info .ticket-top{
+	position: absolute;
+	width: 480px;
+	margin-top: 5px;
+}
+
+.ticket-top .ticket-title{
+	position: absolute;
+	margin-left: 20px;
+	font-size: 24px;
+	font-weight: 600;
+}
+
+.ticket-top .ticket-price{
+	position: absolute;
+	margin-left: 410px;
+	font-size: 24px;
+	color: #00dd00;
+}
+
+.ticket-middle{
+	height: 30px;
+	margin-left: 135px;
+	margin-top: 40px;
+	font-size: 22px;
+}
+
+.ticket-middle .start{
+	position: absolute;
+	margin-left: 30px;
+}
+
+.ticket-middle .arrow{
+	position: absolute;
+	margin-left: 90px;
+	content: "\f008";
+}
+
+.ticket-middle .end{
+	position: absolute;
+	margin-left: 180px;
+}
+
+.ticket-bottom{
+	margin-top: 10px;
+	height: 40px;
+	font-size: 16px;
+}
+
+.ticket-bottom .flight-times{
+	position: absolute;
+	margin-left: 20px;
+}
+
+.flight-times img{
+	width: 20px;
+	margin-right: 5px;
+}
+
+.ticket-bottom .travel-stops{
+	position: absolute;
+	margin-left: 200px;
+}
+
+.ticket-bottom .flight-duration{
+	position: absolute;
+	margin-left: 425px;
+}
+
+.flight-duration img{
+	width: 19px;
+	height: 21px;
+}
+
+#flight-select{
+	height: 100%;
+	float: left;
+	width: 47px;
+	background-color: #A1E5A9;
+	
+}
+
+#flight-select:hover{
+	background-color: #59EE6B;
+	cursor: pointer;
+}
+
+#flight-select img{
+	position: relative;
+	top: 45px;
+	left: 12px;
+}
+
+/* Flight Results */ 
+
+#results{
+	width:100%;
+	min-width: 880px;
+	background-color: #fff;
+	margin-top: 75px;
+}
+
+#result-graph-wrapper{
+	position: relative;
+}
+
+#result-graph{
+	padding: 10px;
+	padding-bottom: 35px;
+	width: 90%;
+	margin: 0 auto;
+}
+
+#result-graph-overlay{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	display: block;
+	background-color: rgba(255, 255, 255, 0.86)
+}
+
+#result-graph-loader-img{
+}
+
+#result-graph-loader-img img{
+	z-index: 3;
+	position: fixed;
+	width: 185px;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	top: 300px;
+}
+
+#loader-text{
+	z-index: 3;
+	position: fixed;
+	width: 100px;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	top: 400px;
+	font-size: 40px;
+	color:#17AEE5;
+}
+
+
+.result-item{
+	width:100%;
+	height: 50px;
+	border-color: #fff;
+	border-bottom: none;
+	background-color: #47CEFF;
+}
+
+.result-item .airline{
+	width: 30px;
+	float: left;
+}
+
+.result-item .price{
+	width: 130px;
+	float: left;
+}
+
+.result-item .time-wrapper{
+	height: inherit;
+	margin-left: 160px;
+	border-left: 2px solid #FFF;
+	background-color: #17AEE5;
+	overflow: hidden;
+	//color: #17AEE5;
+}
+
+.result-item .time-wrapper .col{
+	width: 2px;
+	height: 100%;
+	background-color: rgba(255, 255, 255, 0.2);
+	position: relative;
+	display: inline-block;
+	top: -50px;
+	pointer-events: none;
+}
+
+.result-item .time-wrapper:hover{
+	cursor: pointer;
+	background-color: #00A6E3;//#7BC5E0;//#1F96C2;
+	color: #FFF;
+}
+
+
+.result-item .time-bar{
+	width: 0%;
+	position: relative;
+	background-color: #EAC043;
+	height:100%;
+}
+
+.result-item .time-bar:hover{
+	color: #fff;
+}
+
+.result-item .time{
+	float: left;
+	z-index: 5;
+	position: absolute;
+	font-size: 14px;
+	top: 15px;
+	width:60px;
+	padding-left:5px;
+}
+
+.result-item .time.flight-time{
+	color: inherit;
+}
+
+.result-item .layover-time{
+	font-size: 13px;
+	width: 20px;
+	line-height: 10px;
+	top: 15px;
+
+}
+
+.result-item .layover{
+	width: 0%;
+	height: 100%;
+	float: left;
+	z-index: 4;
+	background-color: rgba(255, 104, 0, 0.27);//rgba(255, 104, 0, 0.29);
+	position: absolute;
+	text-align: center;
+	padding-top: 11px;
+	line-height: 15px;
+}
+
+
+.layover .layover-time{
+	display: none;
+	pointer-events: none;
+}
+
+.layover{
+	color: rgba(255, 104, 0, 0.0);
+}
+
+.layover:hover{
+	color: #FFF;
+}
+.layover:hover > .time.layover-time{
+	color: #FFF;
+	display: block;
+}
+
+
+.result-item .price-inner{
+	font-size: 20px;
+	color: #FFFFFF;
+	margin-top: 10px;
+}
+.result-item .price-inner{
+	font-size: 20px;
+	margin-top: 10px;
+	margin-left: 5px;
+}
+
+.airline .airline-image{
+	margin-top: 10px;
+	margin-left: 5px;
+}
+
+
+/* Flight Results Hover */
+
+.non-zero-stops{
+	background-color: #efefef;
+	padding-left: 4px;
+	padding-right: 4px;
+	cursor: pointer;
+}
+
+#stops-info{
+	display: none;
+	position: absolute;
+	background-color: #fff;
+	top: 120px;
+	max-width: 300px;
+	margin-left: 48%;
+}
+
+.arrow_box {
+	position: relative;
+	background: #47CEFF;
+	border: 4px solid #ffffff;
+}
+.arrow_box:after, .arrow_box:before {
+	bottom: 100%;
+	left: 10%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box:after {
+	border-color: rgba(71, 206, 255, 0);
+	border-bottom-color: #FFF;
+	border-width: 10px;
+	margin-left: -10px;
+}
