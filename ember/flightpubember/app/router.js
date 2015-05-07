@@ -11,6 +11,9 @@ Router.map(function() {
   this.route('flights'); // needs aditional setup probably ??
   this.route('review'); // additional setup probably
   this.route('complete'); // additional setup probs too
+
+
+
 });
 
 export default Router;
