@@ -1,5 +1,5 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-  soundVolume: 100
+  soundVolume: 100,
 });

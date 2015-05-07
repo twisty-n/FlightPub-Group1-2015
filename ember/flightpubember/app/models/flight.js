@@ -25,4 +25,5 @@ Flight.reopenClass({
 });
 
 
+
 export default Flight;

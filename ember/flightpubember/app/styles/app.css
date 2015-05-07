@@ -589,16 +589,17 @@ a{
 	height: 100%;
 	top: 0;
 	left: 0;
-	z-index: 2;
+	z-index: 10;
 	display: block;
 	background-color: rgba(255, 255, 255, 0.86)
 }
 
 #result-graph-loader-img{
+	z-index: 11;
 }
 
 #result-graph-loader-img img{
-	z-index: 3;
+	z-index: 11;
 	position: fixed;
 	width: 185px;
 	margin-left: auto;
@@ -609,7 +610,7 @@ a{
 }
 
 #loader-text{
-	z-index: 3;
+	z-index: 11;
 	position: fixed;
 	width: 100px;
 	margin-left: auto;
