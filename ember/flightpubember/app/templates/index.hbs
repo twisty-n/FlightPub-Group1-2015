@@ -1,0 +1,65 @@
+
+	<div id="search-wrapper">
+
+		<div id="flight-search">
+				<!-- NOT A REAL FORM 
+					We need to create a model and bind data to that, then when search is
+					pressed we need to make a call with the search data to the api
+
+				-->
+	
+				<div id="left-box" class="flight-search-box place-input">
+					<div id="departure">
+						<div class="input-title">From:</div> 
+						<input class="city-input rounded" type="text">
+					</div>
+					<div id="departure-date">
+						Depart: 
+						<input type="date">
+						<!-- <img src="png/glyphicons-55-clock.png"> -->
+					</div>
+				</div>
+
+				<div class="flight-search-box place-input">
+					<div class="return">
+						<div class="input-title">To:</div> 
+						<input class="city-input rounded" type="text">
+					</div>
+					<div id="return-date">
+						Return:
+						<input class="date-input" type="date">
+						<!-- <img src="png/glyphicons-55-clock.png"> -->
+					</div>
+				</div>
+
+				<div class="flight-search-box seat-input">
+					<div class="value-select">
+						People:
+						<select name="people">
+							<option value=1>1</option>
+							<option value=2>2</option>
+							<option value=3>3</option>
+							<option value=4>4</option>
+							<option value=5>5</option>
+							<option value=6>6</option>
+						</select>
+					</div>
+					<div class="value-select">
+						Class: 
+						<select>
+							<option value="economy">Economy</option>
+							<option value="business">Business</option>
+							<option value="first">First Class</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="flight-search-box" id="search-button-wrapper">
+					<input id="search-button" class="rounded" type="submit" value="Search">
+				</div>
+		</div>
+	</div>
+
+	<div id="description">
+		<p>Sit back, have a drink, and we'll do the work for you.</p>
+	</div>
