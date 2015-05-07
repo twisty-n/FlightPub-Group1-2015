@@ -15,7 +15,7 @@ module.exports = function(environment) {
     //added contentSecurityPolicy because I was getting annoying errors remove if necessary
     contentSecurityPolicy: {
       'font-src': "'self' data: use.typekit.net fonts.gstatic.com",
-      'style-src': "'self' 'unsafe-inline' use.typekit.net fonts.gstatic.com",
+      'style-src': "'self' 'unsafe-inline' use.typekit.net fonts.gstatic.com fonts.googleapis.com",
     },
 
     APP: {
