@@ -8,20 +8,38 @@
 
 # Create some basic flight seeds for the API testing stuff
 
-Flight.create(flightNumber:   'AAA111',
-              price:          '1200',
+Flight.create(flight_number:   'AAA111',
+              price:          '8456',
               seatsAvailable: '10',
-              departureTime:  '1200',
+              departureTime:  '2400',
               arrivalTime:    '1300')
 
-Flight.create(flightNumber:   'BBB111',
-              price:          '1200',
+Flight.create(flight_number:   'BBB111',
+              price:          '852',
               seatsAvailable: '9',
               departureTime:  '1200',
               arrivalTime:    '1300')
 
-Flight.create(flightNumber:   'CCC111',
-              price:          '1200',
+Flight.create(flight_number:   'CCC111',
+              price:          '963',
               seatsAvailable: '10',
+              departureTime:  '1200',
+              arrivalTime:    '1300')
+
+Flight.create(flight_number:   'DDD111',
+              price:          '1340',
+              seatsAvailable: '25',
+              departureTime:  '0100',
+              arrivalTime:    '1300')
+
+Flight.create(flight_number:   'SEX111',
+              price:          '420',
+              seatsAvailable: '100',
+              departureTime:  '1200',
+              arrivalTime:    '1300')
+
+Flight.create(flight_number:   'SEX222',
+              price:          '120',
+              seatsAvailable: '1',
               departureTime:  '1200',
               arrivalTime:    '1300')
