@@ -9,19 +9,19 @@
 # Create some basic flight seeds for the API testing stuff
 
 Flight.create(flightNumber:   'AAA111',
-              price:          '$1200',
+              price:          '1200',
               seatsAvailable: '10',
               departureTime:  '1200',
               arrivalTime:    '1300')
 
 Flight.create(flightNumber:   'BBB111',
-              price:          '$1200',
+              price:          '1200',
               seatsAvailable: '9',
               departureTime:  '1200',
               arrivalTime:    '1300')
 
 Flight.create(flightNumber:   'CCC111',
-              price:          '$1200',
+              price:          '1200',
               seatsAvailable: '10',
               departureTime:  '1200',
               arrivalTime:    '1300')

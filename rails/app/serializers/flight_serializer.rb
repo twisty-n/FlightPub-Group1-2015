@@ -1,5 +1,5 @@
 class FlightSerializer < ActiveModel::Serializer
-  attributes :id, :flightNumber, :price, :seatsAvailable, :departureTime, :arrivalTime
+  attributes :id, :flight_number, :price#, :seatsAvailable, :departureTime, :arrivalTime
 end
 
 
