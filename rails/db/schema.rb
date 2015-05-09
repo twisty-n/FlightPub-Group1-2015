@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150509091153) do
+ActiveRecord::Schema.define(version: 20150509093731) do
 
   create_table "api_keys", force: :cascade do |t|
     t.integer  "user_id",      limit: 4
@@ -35,6 +35,9 @@ ActiveRecord::Schema.define(version: 20150509091153) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
   end
+
+  add_index "countries", ["country_code_2"], name: "index_countries_on_country_code_2", unique: true, using: :btree
+  add_index "countries", ["country_code_3"], name: "index_countries_on_country_code_3", unique: true, using: :btree
 
   create_table "flights", force: :cascade do |t|
     t.string   "flight_number",  limit: 255
