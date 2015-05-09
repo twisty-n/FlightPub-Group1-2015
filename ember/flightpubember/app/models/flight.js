@@ -6,6 +6,7 @@ export default DS.Model.extend({
     departureTime:      DS.attr('string'),
     arrivalTime:        DS.attr('string'),
     seatsAvailable:     DS.attr('string'),
+  
     /*legs: DS.attr('array') I'm hoping this is a thing, we need to get all the legs of the flight*/
 });
 

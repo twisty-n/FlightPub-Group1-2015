@@ -1,9 +1,9 @@
 <!-- Index listing for the 'flights' -->
 <!-- This is essential as certain things that are created by ember expect their
-own templates and routes and what not -->
+	own templates and routes and what not -->
 
 
-<div id="results">
+	<div id="results">
 		<div id="result-graph-wrapper">
 			<div id="loader" style="display:none;">
 				<div id="result-graph-overlay">
@@ -16,36 +16,39 @@ own templates and routes and what not -->
 					</div>
 				</div>
 			</div>
-			
-			<div id="result-graph">
-				{{#each item in model}}
-    				<!--<div>FlightNumber: {{item.flightNumber}} Price:${{item.price}}</div>-->
-				
-					<div class="result-item rounded">
-						<div class="result-left">
-							<div class="airline">
-								<div class="airline-image">
-									<img src="png/glyphicons-39-airplane.png">
-								</div>
-							</div>
-							<div class="price">
-								<div class="price-inner">${{item.price}}</div>
-							</div>
-						</div>
-						<div class="time-wrapper">
-							<div class="time-bar" style="width:10%; left:30%;">
-								<div class="time" style="right:100%;">10 pm Sat</div>
-								<div class="time" style="left:100%;">12 am Fri</div>
-							</div>
-							<div class="col" style="left:16.6666666%;"></div>
-							<div class="col" style="left:33.3333333%;"></div>
-							<div class="col" style="left:50%;"></div>
-							<div class="col" style="left:66.6666666%;"></div>
-							<div class="col" style="left:83.3333333%;"></div>
+			<!--
+			TODO: Need to do some fancy coding to get the graphs displaying correctly for dates
+
+		-->
+		<div id="result-graph">
+			{{#each flight in model}}
+			<!--<div>FlightNumber: {{item.flightNumber}} Price:${{item.price}}</div>-->
+
+			<div class="result-item rounded">
+				<div class="result-left">
+					<div class="airline">
+						<div class="airline-image">
+							<img src="png/glyphicons-39-airplane.png">
 						</div>
 					</div>
-
-				{{/each}}
+					<div class="price">
+						<div class="price-inner">${{flight.price}}</div>
+					</div>
+				</div>
+				<div class="time-wrapper">
+				<div class="time-bar" {{flight.timeBarStyle}}>
+						<div class="time" style="right:100%;">{{flight.departureTime}}</div>
+						<div class="time" style="left:100%;">{{flight.arrivalTime}}</div>
+					</div>
+					<div class="col" style="left:16.6666666%;"></div>
+					<div class="col" style="left:33.3333333%;"></div>
+					<div class="col" style="left:50%;"></div>
+					<div class="col" style="left:66.6666666%;"></div>
+					<div class="col" style="left:83.3333333%;"></div>
+				</div>
 			</div>
+
+			{{/each}}
 		</div>
 	</div>
+</div>
