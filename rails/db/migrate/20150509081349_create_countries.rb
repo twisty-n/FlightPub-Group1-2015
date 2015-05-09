@@ -1,6 +1,6 @@
 class CreateCountries < ActiveRecord::Migration
   def change
-    create_table :countries do |t|
+    create_table :countries, {id: false} do |t|
       t.string :country_code_2
       t.string :country_code_3
       t.string :country_name
@@ -11,5 +11,6 @@ class CreateCountries < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    execute "ALTER TABLE employees ADD PRIMARY KEY (country_code_3);"
   end
 end

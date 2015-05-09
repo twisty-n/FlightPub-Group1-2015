@@ -1,0 +1,190 @@
+Destinations_1:
+  destination_code: ADL
+  airport: Adelaide
+  country_code_3: AUS
+  country_id: AUS
+Destinations_2:
+  destination_code: AMS
+  airport: Amsterdam
+  country_code_3: NLD
+  country_id: NLD
+Destinations_3:
+  destination_code: ATL
+  airport: Atlanta
+  country_code_3: USA
+  country_id: USA
+Destinations_4:
+  destination_code: BKK
+  airport: Bangkok
+  country_code_3: THA
+  country_id: THA
+Destinations_5:
+  destination_code: BNE
+  airport: Brisbane
+  country_code_3: AUS
+  country_id: AUS
+Destinations_6:
+  destination_code: CBR
+  airport: Canberra
+  country_code_3: AUS
+  country_id: AUS
+Destinations_7:
+  destination_code: CDG
+  airport: Paris - Charles De Gaulle
+  country_code_3: FRA
+  country_id: FRA
+Destinations_8:
+  destination_code: CNS
+  airport: Cairns
+  country_code_3: AUS
+  country_id: AUS
+Destinations_9:
+  destination_code: DOH
+  airport: Doha
+  country_code_3: QAT
+  country_id: QAT
+Destinations_10:
+  destination_code: DRW
+  airport: Darwin
+  country_code_3: AUS
+  country_id: AUS
+Destinations_11:
+  destination_code: DXB
+  airport: Dubai
+  country_code_3: ARE
+  country_id: ARE
+Destinations_12:
+  destination_code: FCO
+  airport: Rome-Fiumicino
+  country_code_3: ITA
+  country_id: ITA
+Destinations_13:
+  destination_code: GIG
+  airport: Rio De Janeiro
+  country_code_3: BRA
+  country_id: BRA
+Destinations_14:
+  destination_code: HBA
+  airport: Hobart
+  country_code_3: AUS
+  country_id: AUS
+Destinations_15:
+  destination_code: HEL
+  airport: Helsinki
+  country_code_3: FIN
+  country_id: FIN
+Destinations_16:
+  destination_code: HKG
+  airport: Hong Kong
+  country_code_3: CHN
+  country_id: CHN
+Destinations_17:
+  destination_code: HNL
+  airport: Honolulu
+  country_code_3: USA
+  country_id: USA
+Destinations_18:
+  destination_code: JFK
+  airport: New York - JFK
+  country_code_3: USA
+  country_id: USA
+Destinations_19:
+  destination_code: JNB
+  airport: Johannesburg
+  country_code_3: ZAF
+  country_id: ZAF
+Destinations_20:
+  destination_code: KUL
+  airport: Kuala Lumpur
+  country_code_3: MYS
+  country_id: MYS
+Destinations_21:
+  destination_code: LAX
+  airport: Los Angeles
+  country_code_3: USA
+  country_id: USA
+Destinations_22:
+  destination_code: LGA
+  airport: New York - Laguardia
+  country_code_3: USA
+  country_id: USA
+Destinations_23:
+  destination_code: LGW
+  airport: London-Gatwick
+  country_code_3: GBR
+  country_id: GBR
+Destinations_24:
+  destination_code: LHR
+  airport: London-Heathrow
+  country_code_3: GBR
+  country_id: GBR
+Destinations_25:
+  destination_code: MAD
+  airport: Madrid
+  country_code_3: ESP
+  country_id: ESP
+Destinations_26:
+  destination_code: MEL
+  airport: Melbourne
+  country_code_3: AUS
+  country_id: AUS
+Destinations_27:
+  destination_code: MIA
+  airport: Miami
+  country_code_3: USA
+  country_id: USA
+Destinations_28:
+  destination_code: MUC
+  airport: Munich
+  country_code_3: DEU
+  country_id: DEU
+Destinations_29:
+  destination_code: NRT
+  airport: Tokyo - Narita
+  country_code_3: JPN
+  country_id: JPN
+Destinations_30:
+  destination_code: OOL
+  airport: Gold Coast
+  country_code_3: AUS
+  country_id: AUS
+Destinations_31:
+  destination_code: ORD
+  airport: Chicago - OHare Intl.
+  country_code_3: USA
+  country_id: USA
+Destinations_32:
+  destination_code: ORY
+  airport: Paris - Orly
+  country_code_3: FRA
+  country_id: FRA
+Destinations_33:
+  destination_code: PER
+  airport: Perth
+  country_code_3: AUS
+  country_id: AUS
+Destinations_34:
+  destination_code: SFO
+  airport: San Francisco
+  country_code_3: USA
+  country_id: USA
+Destinations_35:
+  destination_code: SIN
+  airport: Singapore
+  country_code_3: SGP
+  country_id: SGP
+Destinations_36:
+  destination_code: SYD
+  airport: Sydney
+  country_code_3: AUS
+  country_id: AUS
+Destinations_37:
+  destination_code: VIE
+  airport: Vienna
+  country_code_3: AUT
+  country_id: AUT
+Destinations_38:
+  destination_code: YYZ
+  airport: Toronto
+  country_code_3: CAN
+  country_id: CAN
