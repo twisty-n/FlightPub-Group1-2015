@@ -42,4 +42,8 @@ Rails.application.configure do
 
     #The base URL for the application
   config.base_url = 'localhost:3000'
+
+  config.loglevel = :debug
+
+  ActiveRecord::Base.logger = Logger.new(STDOUT)
 end

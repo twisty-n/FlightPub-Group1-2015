@@ -1,11 +1,7 @@
-tristan:
-  first_name: Tristan
-  last_name: Newmann
-  email: tnew2294@gmail.com
+joe:
+  email: joe_user@example.com
   password_digest: "$2a$10$wJTPdvpGgzDvkXChrcPyqOQrFFawzGu89B1rZze/lVIcJKWiNeAqS" # 'secret'
 
-john:
-  first_name: John
-  last_name: Williams
-  email: jwillow@gmail.com
-  password_digest: "$2a$10$wJTPdvpGgzDvkXChrcPyqOQrFFawzGu89B1rZze/lVIcJKWiNeAqS" # 'secret'
+jane:
+  email: jane_user@example.com
+  password_digest: "$2a$10$wJTPdvpGgzDvkXChrcPyqOQrFFawzGu89B1rZze/lVIcJKWiNeAqS" # 'secret

@@ -6,26 +6,31 @@ class UsersController < ApplicationController
 	skip_authorization_check :only => [:new, :create]
 
 	def  index
+		inimplemented_status and return
 		@active_users = User.where(account_status: 'active')
 		@inactive_users = User.where(account_status: 'inactive')
 	end
 
 	def show
+		inimplemented_status and return
 		if !@user.account_active?
 			@user.reactivate!
 		end
 	end
 
 	def new
+		unimplemented_status and return
 		#All this does is render the editing form
 		@user = User.new
 	end
 	# A user can edit their own stuff, or an admin can edit anything
 	def edit
+		unimplemented_status and return
 		@user = User.find(params[:id])
 	end
 
 	def create
+		unimplemented_status and return
 		@user = User.new(user_params)
 
 		if @user.save
@@ -43,6 +48,7 @@ class UsersController < ApplicationController
 	end
 
 	def update
+		unimplemented_status and return
 		@user = User.find(params[:id])
 
 		if @user.update(user_params)
@@ -54,6 +60,7 @@ class UsersController < ApplicationController
 	end
 
 	def destroy
+		unimplemented_status and return
 		@user = User.find(params[:id])
 		@user.soft_delete!
 		UserMailer.delete_email(@user).deliver_now
@@ -66,6 +73,7 @@ class UsersController < ApplicationController
 	end
 
 	def reactivate
+		unimplemented_status and return
 		@user.reactivate!
 		redirect_to user_path
 	end

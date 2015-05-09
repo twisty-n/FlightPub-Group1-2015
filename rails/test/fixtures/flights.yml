@@ -1,15 +1,1 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  flightNumber: MyString
-  price: MyString
-  seatsAvailable: MyString
-  departureTime: MyString
-  arrivalTime: MyString
-
-two:
-  flightNumber: MyString
-  price: MyString
-  seatsAvailable: MyString
-  departureTime: MyString
-  arrivalTime: MyString

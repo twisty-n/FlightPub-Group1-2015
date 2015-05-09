@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
   end
 
   def create
+    unimplemented_status and return
   	user = User.find_by(email: params[:session][:email])
   	if user && user.authenticate(params[:session][:password])
   		#Log the user in
@@ -18,6 +19,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    unimplemented_status and return
   	log_out if logged_in?
   	redirect_to root_url
   end

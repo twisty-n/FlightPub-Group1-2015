@@ -2,18 +2,25 @@ class User < ActiveRecord::Base
 
   has_many :api_keys
 
-	validates :first_name, 	presence: true, length: {maximum: 40}
-	validates :last_name,   presence: true, length: {maximum: 40}
-	validates :info_string, presence: false, length: {maximum: 200}
+	validates :first_name, 	length: {maximum: 40}
+	validates :last_name,   length: {maximum: 40}
+	validates :info_string, length: {maximum: 200}
 	validates :email, confirmation: true, presence: true, uniqueness: true
 
+	# This will automagically ensure that the user has a password and that the
+	# password is valid
+	has_secure_password
+
+	# Methods that are set under_before create are done before the user model is saved
+	# to the database
 	before_create :set_roles
 
+	# Define our CanCan roles. We dont do it in the DB as we only have two roles
 	Roles = [ :admin, :default ]
 
-        def session_api_key
-          api_keys.active.session.first_or_create
-        end
+    def session_api_key
+      api_keys.active.session.first_or_create
+    end
         
 	def soft_delete!
 		self.account_status = 'inactive'
@@ -46,12 +53,11 @@ class User < ActiveRecord::Base
 			user.email = auth.info.email
 			user.oauth_token = auth.credentials.token
 			user.oauth_expires_at = Time.at(auth.credentials.expires_at)
-			user.password = "no_pass"
+			user.password = "password"
 			user.save!
 		end
 	end
 
-	# Define out private methods for the user class
 	private
 
 		# Sets up some base roles and status' while creating the user
@@ -59,7 +65,5 @@ class User < ActiveRecord::Base
 			self.role = "default"
 			self.account_status = "active"
 		end
-
-	has_secure_password
 
 end
