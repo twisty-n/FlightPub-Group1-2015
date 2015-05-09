@@ -5,7 +5,8 @@ export default DS.Model.extend({
     price:              DS.attr('string')
     /*seatsAvailable:     DS.attr('string'),
     departureTime:      DS.attr('string'),
-    arrivalTime:        DS.attr('string')*/
+    arrivalTime:        DS.attr('string'),
+    legs: DS.attr('array') I'm hoping this is a thing, we need to get all the legs of the array*/
 });
 
 /*
