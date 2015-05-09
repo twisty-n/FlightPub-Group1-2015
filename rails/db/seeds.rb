@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Create some basic flight seeds for the API testing stuff
-
+# Replace this later with a flights fixture thang
 Flight.create(flight_number:   'AAA111',
               price:          '8456',
               seatsAvailable: '10',
@@ -43,3 +43,10 @@ Flight.create(flight_number:   'SEX222',
               seatsAvailable: '1',
               departureTime:  '1200',
               arrivalTime:    '1300')
+
+
+# To specify our own Fixtures, use a thing similar to below, 
+# changing the 'resource.yml' and Rsource.create! as needed
+
+# Load our fixture for Country data
+

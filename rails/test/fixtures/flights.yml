@@ -1,1 +1,42 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+flight_1:
+  flight_number:     AAA111    
+  price:            8456    
+  seatsAvailable:   10    
+  departureTime:    2400    
+  arrivalTime:      1300    
+
+flight_2:
+  flight_number:     BBB111    
+  price:            852    
+  seatsAvailable:   9    
+  departureTime:    1200    
+  arrivalTime:      1300    
+
+flight_3:
+  flight_number:     CCC111    
+  price:            963    
+  seatsAvailable:   10    
+  departureTime:    1200    
+  arrivalTime:      1300    
+
+flight_4:
+  flight_number:     DDD111    
+  price:            1340    
+  seatsAvailable:   25    
+  departureTime:    0100    
+  arrivalTime:      1300    
+
+flight_5:
+  flight_number:     SEX111    
+  price:            420    
+  seatsAvailable:   100    
+  departureTime:    1200    
+  arrivalTime:      1300    
+
+flight_6:
+  flight_number:     SEX222    
+  price:            120    
+  seatsAvailable:   1    
+  departureTime:    1200    
+  arrivalTime:      1300    
