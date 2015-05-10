@@ -1,8 +1,7 @@
-import Ember from 'ember';
+// import Ember from 'ember';
 
-export default Ember.Route.extend({
-  setupController: function(controller, flights) {
-  	alert(controller);
-    controller.set('model', flights.get('flights'));
-  }
-});
+// export default Ember.Route.extend({
+//   setupController: function(controller, flights) {
+//     controller.set('model', flights.get('flights'));
+//   }
+// });

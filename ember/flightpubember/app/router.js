@@ -15,6 +15,8 @@ Router.map(function() {
   this.route('review'); // additional setup probably
   this.route('complete'); // additional setup probs too
 
+  this.route('results');
+
 /*
   Hax because reasons. The commented out route for some reason
   this.route('flights'); // needs aditional setup probably ??
@@ -75,10 +77,11 @@ NOTE: You should use this.resource for URLs that represent a noun, and this.rout
 
  !!! End official ember documentation
   */
-  this.resource('flights', function() {
+ /* this.resource('flights', function() {
     //When we define additional routes, these will correspond to their own template folders in the flights template folder
       //this.route('show', {path: ':flightNumber'});
-  });
+  });*/
+
 
 
 
