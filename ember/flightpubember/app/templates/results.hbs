@@ -99,37 +99,32 @@
 					</div>
 				</div>
 			</div>
-			<!--
-			TODO: Need to do some fancy coding to get the graphs displaying correctly for dates
-
-		-->
+			
 		<div id="result-graph">
 			{{#each flight in model itemController='flight'}}
-			<!--<div>FlightNumber: {{item.flightNumber}} Price:${{item.price}}</div>-->
-			<div class="result-item rounded">
-				<div class="result-left">
-					<div class="airline">
-						<div class="airline-image">
-							<img src="png/glyphicons-39-airplane.png">
+				<div class="result-item rounded">
+					<div class="result-left">
+						<div class="airline">
+							<div class="airline-image">
+								<img src="assets/glyphicons-39-airplane.png">
+							</div>
+						</div>
+						<div class="price">
+							<div class="price-inner">${{flight.price}}</div>
 						</div>
 					</div>
-					<div class="price">
-						<div class="price-inner">${{flight.price}}</div>
+					<div class="time-wrapper">
+					<div class="time-bar" {{bind-attr style='flight.timeBarStyle'}}>
+							<div class="time" style="right:100%;">{{flight.departureTime}}</div>
+							<div class="time" style="left:100%;">{{flight.arrivalTime}}</div>
+						</div>
+						<div class="col" style="left:16.6666666%;"></div>
+						<div class="col" style="left:33.3333333%;"></div>
+						<div class="col" style="left:50%;"></div>
+						<div class="col" style="left:66.6666666%;"></div>
+						<div class="col" style="left:83.3333333%;"></div>
 					</div>
 				</div>
-				<div class="time-wrapper">
-				<div class="time-bar" {{bind-attr style='flight.timeBarStyle'}}>
-						<div class="time" style="right:100%;">{{flight.departureTime}}</div>
-						<div class="time" style="left:100%;">{{flight.arrivalTime}}</div>
-					</div>
-					<div class="col" style="left:16.6666666%;"></div>
-					<div class="col" style="left:33.3333333%;"></div>
-					<div class="col" style="left:50%;"></div>
-					<div class="col" style="left:66.6666666%;"></div>
-					<div class="col" style="left:83.3333333%;"></div>
-				</div>
-			</div>
-
 			{{/each}}
 		</div>
 	</div>
