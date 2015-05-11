@@ -117,7 +117,11 @@
 			<div id="result-filters">
 				<div id="main-filters">
 					Filter By: 
-					<button id="cheapest-first-filter">cheapest first</button> 
+
+					<!-- this sorting works but! because price is in strings it sorts weird -->
+					<button {{action "sortBy" "price:asc"}} id="cheapest-first-filter">cheapest first</button> 
+					
+
 					<button id="shortest-first-filter">quickest first</button> 
 					<button id="no-stops-filter">no stops</button> <!-- this button acts like a checkbox? -->	
 				</div>
@@ -131,7 +135,8 @@
 			</div>
 
 			<div id="result-graph">
-				{{#each flight in model itemController='flight'}}
+
+				{{#each flight in controller.sortedFlights itemController="flight"}}
 				<div class="result-item rounded">
 					<div class="result-left">
 						<div class="airline">

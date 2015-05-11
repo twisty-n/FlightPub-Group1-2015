@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-    flightNumber: DS.attr('string'),
+    flightNumber: DS.attr('number'), //this needs to change to decimal
     price:              DS.attr('string'),
     departureTime:      DS.attr('string'),
     arrivalTime:        DS.attr('string'),
