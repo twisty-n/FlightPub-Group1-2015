@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  
+  resources :urails
 
   # OUR API ENPOINTS ===========================================================================
   namespace :api do
