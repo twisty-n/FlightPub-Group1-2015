@@ -1,13 +1,6 @@
-<!-- 
-	TODO: I have to add some things:
-		- accordian for flight ticket info stuff
-		- flight filters
--->
+
 {{outlet}}
 
-<div id="top-row-anchor">
-		
-	</div>
 	<!-- <div id="results-top-row">
 		<div id="top-row-inner">
 			<div id="total">
@@ -80,10 +73,7 @@
 			Columbia, Singapore, Gauntanamo, Other stuff with more
 		</div>
 	</div>
-	-->
-<!-- Index listing for the 'flights' -->
-<!-- This is essential as certain things that are created by ember expect their
-	own templates and routes and what not -->
+-->
 
 <!-- TODO:
 
@@ -101,7 +91,9 @@
 		- accordian for displaying flight details
 				
 		- show whether page is for Departure or Return (maybe just a title?)
--->
+
+		- no results display (can be an else after the #each)
+	-->
 
 
 	<div id="results">
@@ -117,9 +109,29 @@
 					</div>
 				</div>
 			</div>
-			
-		<div id="result-graph">
-			{{#each flight in model itemController='flight'}}
+
+			<div id="ticket-type">
+				<!-- we will be displaying the type 'Depart' || 'Return' and maybe a cute image -->
+			</div>
+
+			<div id="result-filters">
+				<div id="main-filters">
+					Filter By: 
+					<button id="cheapest-first-filter">cheapest first</button> 
+					<button id="shortest-first-filter">quickest first</button> 
+					<button id="no-stops-filter">no stops</button> <!-- this button acts like a checkbox? -->	
+				</div>
+
+				<div id="advanced-filters">
+					<input id="depart-from-time-filter"> <!-- this is some sort of selection based on time of day -->
+					<input id="arrive-before-time-filter"> <!-- this is some sort of selection based on time of day -->
+					<input id="max-stops-filter"> <!-- this is some sort of number selection -->
+					<input id="airline-filter"> <!-- this is some sort of selection where you choose whihc airline(s?) to filter by -->
+				</div>
+			</div>
+
+			<div id="result-graph">
+				{{#each flight in model itemController='flight'}}
 				<div class="result-item rounded">
 					<div class="result-left">
 						<div class="airline">
@@ -132,7 +144,7 @@
 						</div>
 					</div>
 					<div class="time-wrapper">
-					<div class="time-bar" {{bind-attr style='flight.timeBarStyle'}}>
+						<div class="time-bar" {{bind-attr style='flight.timeBarStyle'}}>
 							<div class="time" style="right:100%;">{{flight.departureTime}}</div>
 							<div class="time" style="left:100%;">{{flight.arrivalTime}}</div>
 						</div>
@@ -143,8 +155,8 @@
 						<div class="col" style="left:83.3333333%;"></div>
 					</div>
 				</div>
-			{{/each}}
+				{{/each}}
+			</div>
 		</div>
 	</div>
-</div>
 	
