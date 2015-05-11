@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150509145926) do
+ActiveRecord::Schema.define(version: 20150511141403) do
 
   create_table "api_keys", force: :cascade do |t|
     t.integer  "user_id",      limit: 4
@@ -36,19 +36,15 @@ ActiveRecord::Schema.define(version: 20150509145926) do
     t.datetime "updated_at",                           null: false
   end
 
-  add_index "countries", ["country_code_2"], name: "index_countries_on_country_code_2", unique: true, using: :btree
-  add_index "countries", ["country_code_3"], name: "index_countries_on_country_code_3", unique: true, using: :btree
-
   create_table "destinations", force: :cascade do |t|
+    t.integer  "country_id",       limit: 4
     t.string   "destination_code", limit: 255
     t.string   "airport",          limit: 255
-    t.string   "country_code_3",   limit: 255
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.string   "country_id",       limit: 255
   end
 
-  add_index "destinations", ["country_code_3"], name: "fk_rails_e7ba6920d3", using: :btree
+  add_index "destinations", ["country_id"], name: "index_destinations_on_country_id", using: :btree
 
   create_table "flights", force: :cascade do |t|
     t.string   "flight_number",  limit: 255
@@ -78,5 +74,4 @@ ActiveRecord::Schema.define(version: 20150509145926) do
   add_index "users", ["id"], name: "userID", unique: true, using: :btree
 
   add_foreign_key "api_keys", "users"
-  add_foreign_key "destinations", "countries", column: "country_code_3", primary_key: "country_code_3"
 end

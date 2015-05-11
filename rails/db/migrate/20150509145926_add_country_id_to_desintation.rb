@@ -5,6 +5,11 @@ class AddCountryIdToDesintation < ActiveRecord::Migration
     add_column :destinations, :country_id, :string
 
      # Now we will go through and update the information as well
+=begin
+    
+rescue Exception => e
+    
+end
     Destination.reset_column_information
 
     dest = Destination.all
@@ -19,6 +24,6 @@ class AddCountryIdToDesintation < ActiveRecord::Migration
         d.country_id = d.country_code_3
         d.save!
     end
-
+=end
   end
 end
