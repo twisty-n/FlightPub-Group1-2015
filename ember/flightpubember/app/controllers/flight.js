@@ -7,4 +7,19 @@ export default Ember.ObjectController.extend({
 
 		return width + ' ' + left;
 	}),
+
+	selected: false,
+
+	actions: {
+		selected: function(){
+			if(this.get('selected'))
+			{
+				this.set('selected', false);
+			}
+			else
+			{
+				this.set('selected', true);
+			}
+		},
+	}
 });
