@@ -16,6 +16,7 @@ export default Ember.ArrayController.extend({
     	{
     		this.get('sortProperties').removeObject(property);
     	}
+    	console.log(this.get('sortProperties'));
     },
   },
 
