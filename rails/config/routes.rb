@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
     post 'session' => 'session#create'
 
+    get 'destinations' => 'destinations#index'
+
   end
 
   # END API ENDPOINTS ===========================================================================
