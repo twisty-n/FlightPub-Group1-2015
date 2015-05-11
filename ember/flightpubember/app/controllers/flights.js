@@ -4,6 +4,8 @@ export default Ember.ArrayController.extend({
   itemController: 'flight',
   sortProperties: Ember.A([]),
   sortedFlights: Ember.computed.sort('model', 'sortProperties'),
+
+  selectedFlight: null,
   
   actions: {
     sortBy: function(property) {
@@ -18,6 +20,7 @@ export default Ember.ArrayController.extend({
     	}
     	console.log(this.get('sortProperties'));
     },
+
   },
 
   flightByPrice: false
