@@ -17,6 +17,20 @@ Router.map(function() {
 
   this.route('results');
 
+  this.resource('sessions', function() {
+    this.route('logout');
+    this.route('login');
+  });
+
+  this.resource('users', function() {
+    this.route('signup');
+    this.route('user', {
+      path: '/user/:user_id'
+    });
+  });
+
+  this.route('secret');
+
 /*
   Hax because reasons. The commented out route for some reason
   this.route('flights'); // needs aditional setup probably ??
