@@ -4,7 +4,7 @@ import Ember from 'ember';
     This will act as a base object which we will use to protect
     all routes that we want to be protected
 */
-export default Ember.Route.extend({
+var AuthenticatedRoute =  Ember.Route.extend({
   
     //Verify that the token property of the sessions controller is set before continuing with the request
     beforeModel: function(transition) {
@@ -31,3 +31,5 @@ export default Ember.Route.extend({
         }
     }
 });
+
+export default AuthenticatedRoute;

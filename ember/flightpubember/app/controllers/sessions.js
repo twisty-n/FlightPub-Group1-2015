@@ -10,6 +10,7 @@ which is why it is cut and pasted back in
 export default Ember.ObjectController.extend({
 // initialization method to verify if there is a access_token cookie set
   // so we can set our ajax header with it to access the protected pages
+  content: {},
   init: function() {
     this._super();
     if (Ember.$.cookie('access_token')) {
@@ -43,7 +44,7 @@ export default Ember.ObjectController.extend({
   // reset the controller properties and the ajax header
   reset: function() {
     this.setProperties({
-      username_or_email: null,
+      email: null,
       password:          null,
       token:             null,
       currentUser:       null
@@ -61,16 +62,17 @@ export default Ember.ObjectController.extend({
 
       // get the properties sent from the form and if there is any attemptedTransition set
       var attemptedTrans = this.get('attemptedTransition');
-      var data =           this.getProperties('username_or_email', 'password');
+      var data =           this.getProperties('email', 'password');
 
       // clear the form fields
       this.setProperties({
-        username_or_email: null,
+        email: null,
         password:          null
       });
 
+      console.log('Attempting to login user');
       // send a POST request to the /sessions api with the form data
-      Ember.$.post('/session', data).then(function(response) {
+      Ember.$.get('api/session', data).then(function(response) {
           // set the ajax header with the returned access_token object
           Ember.$.ajaxSetup({
             headers: {
@@ -79,6 +81,8 @@ export default Ember.ObjectController.extend({
           });
 
           // create a apiKey record on the local storage based on the returned object
+          console.log("We got a good response!");
+          console.log('The response was' + response)
           var key = _this.get('store').createRecord('apiKey', {
             accessToken: response.api_key.access_token
           });
@@ -90,14 +94,14 @@ export default Ember.ObjectController.extend({
             // based on the data from the user and access_token
             _this.setProperties({
               token:       response.api_key.access_token,
-              currentUser: user.getProperties('username', 'name', 'email')
+              currentUser: user.getProperties('email', 'firstName', 'lastName')
             });
 
             // set the relationship between the User and the ApiKey models & save the apiKey object
             key.set('user', user);
             key.save();
 
-            user.get('apiKeys').content.push(key);
+            user.get('apiKeys').pushObject(key);
 
             // check if there is any attemptedTransition to retry it or go to the secret route
             if (attemptedTrans) {

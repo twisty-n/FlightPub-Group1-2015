@@ -20,5 +20,6 @@ var app = new EmberApp();
 app.import('bower_components/jquery-ui/jquery-ui.js');
 app.import('bower_components/jquery-ui/ui/tooltip.js');
 app.import("bower_components/jquery-cookie/jquery.cookie.js");
+app.import("bower_components/ember-localstorage-adapter/localstorage_adapter.js");
 
 module.exports = app.toTree();

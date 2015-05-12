@@ -11,7 +11,7 @@ export default Ember.ObjectController.extend({
     }).property('controllers.sessions.currentUser'),
 
     isAuthenticated: (function() {
-        return !Ember.isEmpty(this.get('controllers.sessios.currentUser'));
+        return !Ember.isEmpty(this.get('controllers.sessions.currentUser'));
     }).property('controllers.sessions.currentUser')
 
 });
