@@ -8,6 +8,9 @@ which is why it is cut and pasted back in
 */
 
 export default Ember.ObjectController.extend({
+
+  needs: ['users/signup'],
+
 // initialization method to verify if there is a access_token cookie set
   // so we can set our ajax header with it to access the protected pages
   content: {},
@@ -118,6 +121,24 @@ export default Ember.ObjectController.extend({
           alert("wrong user or password, please try again");
         }
       });
+    }
+    ,
+    registerUser: function() {
+      console.log("register user called!");
+
+      var _this = this;
+
+//http://stackoverflow.com/questions/25632567/javascript-code-with-ember-js-password-confirm-password-matching-fields-with-em
+//TODO: password and email confirmation checking
+
+      var data = this.getProperties('email', 'password', 'email_confirmation', 'password_confirmation');
+      _this.setProperties({
+        email: null,
+        email_confirmation: null,
+        password: null,
+        password_confirmation: null
+      })
+      this.get('controllers.users/signup').send('createUser', data);
     }
   }
 });

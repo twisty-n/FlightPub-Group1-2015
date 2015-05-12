@@ -24,12 +24,13 @@ Router.map(function() {
 
   this.resource('users', function() {
     this.route('signup');
-    this.route('user', {
-      path: '/user/:user_id'
-    });
+    //Do a profile route in here or something. It wil lbe protected by our api
   });
 
   this.route('secret');
+
+  // When we implement the admin side, we'll create a route that has a server check to see
+  // if the user accessing the route is an admin
 
 /*
   Hax because reasons. The commented out route for some reason
