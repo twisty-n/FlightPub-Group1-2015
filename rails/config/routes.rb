@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       post 'reactivate'
     end
 
-    post 'session' => 'session#create'
+    get 'session' => 'session#create'
 
     get 'destinations' => 'destinations#index'
 
