@@ -1,0 +1,21 @@
+Alistair wants:
+
+trip ID
+price
+Trip length
+Leg info:
+  depart time
+  arrival time
+  destinatino
+  origin
+arrival time
+Departure time
+destinatiion
+origin
+
+Steps:
+Make a migration file for flights that does:
+
+  - trip length for main flight
+  - Destination
+  - Origin
