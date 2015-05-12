@@ -14,8 +14,12 @@ destinatiion
 origin
 
 Steps:
-Make a migration file for flights that does:
+Make a migration file for flights that does the info alistair wnats.
 
-  - trip length for main flight
-  - Destination
-  - Origin
+2: Alter the destination table, this has
+  - id
+  - Country_id
+  - Destination_code
+  - Airport
+  - a timestamp.
+  
