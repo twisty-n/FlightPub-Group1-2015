@@ -24,7 +24,7 @@ export default Ember.ObjectController.extend({
 
             user.save().then(function(user) {
 
-                var sessionsController = _this.get('controller.sessions');
+                var sessionsController = _this.get('controllers.sessions');
                 sessionsController.setProperties({
                     email: data.email,
                     password: data.password
