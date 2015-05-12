@@ -50,16 +50,21 @@ ActiveRecord::Schema.define(version: 20150514040826) do
   add_index "destinations", ["country_id"], name: "index_destinations_on_country_id", using: :btree
 
   create_table "flights", force: :cascade do |t|
-    t.string   "flight_number",   limit: 255
-    t.decimal  "price",                       precision: 10
-    t.string   "seats_available", limit: 255
-    t.string   "departure_time",  limit: 255
-    t.string   "arrival_time",    limit: 255
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
-    t.string   "destination",     limit: 255
-    t.string   "origin",          limit: 255
-    t.integer  "flight_time",     limit: 4
+    t.string   "flight_number",           limit: 255
+    t.decimal  "price",                               precision: 10
+    t.string   "seatsAvailable",          limit: 255
+    t.string   "departureTime",           limit: 255
+    t.string   "arrivalTime",             limit: 255
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+    t.integer  "trip_length",             limit: 4
+    t.string   "destination",             limit: 255
+    t.string   "origin",                  limit: 255
+    t.boolean  "has_stopover",            limit: 1
+    t.datetime "stopover_arrival_time"
+    t.datetime "stopover_departure_time"
+    t.string   "stopover_destination",    limit: 255
+    t.string   "stopover_origin",         limit: 255
   end
 
   create_table "save_identifiers", force: :cascade do |t|
@@ -81,7 +86,7 @@ ActiveRecord::Schema.define(version: 20150514040826) do
     t.string   "class_code", limit: 255
     t.string   "details",    limit: 255
     t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "updated_at",             null: false  
   end
 
   create_table "users", force: :cascade do |t|
