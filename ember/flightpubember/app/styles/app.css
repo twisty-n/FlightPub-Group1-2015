@@ -326,9 +326,9 @@ a{
 	border-bottom: 4px solid #1479C9;
 }
 
-#top-row-inner{
+#top-row-inner{  
 	width: 800px;
-	height: 110px;
+	height: 1px;
 	margin: 0 auto;
 }
 
@@ -364,7 +364,7 @@ a{
 
 #ticket-display{
 	float: left;
-	height: 110px;
+	height: 100%;
 	width: 484px;
 	overflow: hidden;
 	position: relative;
