@@ -77,7 +77,7 @@
 			<div id="result-graph">
 
 				{{#each flight in controller.sortedFlights itemController="flight"}}
-				<div class="result-item rounded" {{action  "selected" on="mouseUp"}}>
+				<div class="result-item rounded" {{action  "selected"}}>
 					<div class="result-left">
 						<div class="airline">
 							<div class="airline-image">
@@ -100,64 +100,61 @@
 						<div class="col" style="left:83.3333333%;"></div>
 					</div>
 				</div>
-				{{#if flight.selected}}
 				<div id="flight-details">
-						<div id="top-row-inner">
+					<div class="top-row-inner" {{bind-attr id="flight.flightNumber"}}> <!-- change all these id names -->
 
-							<!-- maybe move this total to above/next to the filters -->
+						<!-- maybe move this total to above/next to the filters -->
 							<!-- <div id="total">
-								<div id="total-title">Total:</div>
-								<div id="money">${{flight.price}}</div>
-							</div> -->
+							<div id="total-title">Total:</div>
+							<div id="money">${{flight.price}}</div>
+						</div> -->
 
 
-							<div id="ticket-display">
-								<!-- TODO: should this still be called depart? -->
-								<div id="depart">
-									<div id="depart-small">
-										<div class="text-top">Depart</div>
-										<div class="arrow"><img src="images/ticket-back.png"></div>
-										<div class="text-bottom">Depart</div>
+						<div id="ticket-display">
+						<!-- TODO: should this still be called depart? -->
+						<div id="depart">
+							<div id="depart-small">
+								<div class="text-top">Depart</div>
+								<div class="arrow"><img src="images/ticket-back.png"></div>
+								<div class="text-bottom">Depart</div>
+							</div>
+							<div class="ticket-info">
+								<div class="ticket-top">
+									<div class="ticket-title">
+										Ticket Name? 
 									</div>
-									<div class="ticket-info">
-										<div class="ticket-top">
-											<div class="ticket-title">
-												Ticket Name? 
-											</div>
-											<div class="ticket-price">
-												${{flight.price}}
-											</div>
-										</div>
+									<div class="ticket-price">
+										${{flight.price}}
+									</div>
+								</div>
 
-										<!-- TODO: make these things work!! -->
-										<div class="ticket-middle">
-											<div class="start">{{flight.from}}</div>
-											<div class="arrow"> -> </div>
-											<div class="end">{{flight.to}}</div>  
-										</div>
+								<!-- TODO: make these things work!! -->
+								<div class="ticket-middle">
+									<div class="start">{{flight.from}}</div>
+									<div class="arrow"> -> </div>
+									<div class="end">{{flight.to}}</div>  
+								</div>
 
 
-										<div class="ticket-bottom">
-											<div class="flight-times">
-												<img src="png/glyphicons-58-history.png"><span class="bottom-text">9am - 5pm</span>
-											</div>
-											<div id="stops1" class="travel-stops non-zero-stops">{{flight.numberOfStops}} 2 stops<!-- make the thing work {{#if flight.numberOfStops }}s{{/if}}--> </div>
-											<div class="flight-duration">
-												<img src="png/glyphicons-56-stopwatch.png">
-												<span class="bottom-text">{{flight.duration}}</span> 
-											</div>
-										</div>
+								<div class="ticket-bottom">
+									<div class="flight-times">
+										<img src="png/glyphicons-58-history.png"><span class="bottom-text">9am - 5pm</span>
+									</div>
+									<div id="stops1" class="travel-stops non-zero-stops">{{flight.numberOfStops}} 2 stops<!-- make the thing work {{#if flight.numberOfStops }}s{{/if}}--> </div>
+									<div class="flight-duration">
+										<img src="png/glyphicons-56-stopwatch.png">
+										<span class="bottom-text">{{flight.duration}}</span> 
 									</div>
 								</div>
 							</div>
-							<div id="flight-select">
-								<img src="png/glyphicons-207-ok-2.png">
-							</div>
 						</div>
+					</div>
+					<div id="flight-select">
+						<img src="png/glyphicons-207-ok-2.png">
+					</div>
 				</div>
-				{{/if}}
-				{{/each}}
 			</div>
+			{{/each}}
 		</div>
 	</div>
-	
+</div>

@@ -326,10 +326,11 @@ a{
 	border-bottom: 4px solid #1479C9;
 }
 
-#top-row-inner{  
+.top-row-inner{  
 	width: 800px;
 	height: 1px;
 	margin: 0 auto;
+	display: none;
 }
 
 #total{
@@ -362,14 +363,12 @@ a{
 
 /* Ticket Styles */
 
-#ticket-display{
+#ticket-display{  
 	float: left;
 	height: 100%;
 	width: 484px;
 	overflow: hidden;
 	position: relative;
-	//border-left: 4px solid #17AEE5;
-	//border-right: 4px solid #17AEE5;
 }
 
 #depart{
