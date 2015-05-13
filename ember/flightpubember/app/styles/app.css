@@ -53,9 +53,15 @@ body{
 }
 
 #flight-search{
+/*	height: inherit;
+	margin: 0 auto;
+	width:990px;*/
+
 	height: inherit;
 	margin: 0 auto;
-	width:990px;
+	padding-top: 15px;
+	padding-bottom: 10px;
+	width: 990px;
 }
 
 .flight-search-box{
@@ -67,6 +73,72 @@ body{
 	display: inline-block;
 }
 
+<<<<<<< HEAD
+=======
+.drop-down{
+	position: absolute;
+}
+
+.suggestions-box{
+	width: 325px;
+	max-height: 150px;
+	min-height: 68px;
+	top: 10px;
+	left: 10px;
+	overflow: hidden;
+	overflow-y:scroll;
+	z-index: 10;
+}
+
+.suggestions{
+
+}
+
+.suggestions-box li{
+	cursor: pointer;
+}
+
+.suggestions-box li:hover{
+	background-color: #64D0F7;
+}
+.suggestions-box ul{
+	margin-top: 4px;
+	margin-bottom:4px;
+	list-style: none;
+	font-size: 17px;
+	padding-left: 3px;
+}
+
+.arrow_box {
+	position: relative;
+	background: #47CEFF;
+	border: 4px solid #ffffff;
+}
+
+.arrow_box.rounded{
+	border:3px solid #fff;
+}
+
+.arrow:after, .arrow:before {
+	bottom: 50px;
+	left: 35px;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow:after {
+	border-color: rgba(71, 206, 255, 0);
+	border-bottom-color: #FFF;
+	border-width: 10px;
+	margin-left: -10px;
+}
+
+
+>>>>>>> index page design cleanup
 @media screen and (max-width: 1100px){
 	#flight-search{
 		width: 610px;
@@ -145,6 +217,7 @@ body{
 
 .flight-search-box #departure-date{
 	margin-top: 20px;
+	margin-bottom: 10px;
 }
 
 .flight-search-box #departure-date input{
@@ -153,6 +226,7 @@ body{
 
 .flight-search-box #return-date{
 	margin-top: 20px;
+	margin-bottom: 10px;
 }
 
 .flight-search-box #return-date input{
@@ -187,7 +261,7 @@ body{
 /* Style */
 
 .rounded{
-	border: 2px solid #ccc;
+	border: 2px solid #fff;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
@@ -196,7 +270,7 @@ body{
 }
 
 input.rounded {
-	border: 1px solid #ccc;
+	border: 1px solid #fff;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
@@ -270,18 +344,72 @@ input.rounded:focus {
 	height: 60px;
 	margin: 0 auto;
 	background-color: #7FF016;
-	border: solid 4px #3ee012;
+	border: solid 3px #3EE013;
 	font-size: 22px;
-	color: #375906;
+	color: #38A879;
 }
 
-#puchase-flights button:hover{
-	cursor: pointer; 
-	cursor: hand;
-	background-color: #7FF016;
-	border: solid 4px #3ee012;
-	font-size: 22px;
-	color: #375906;	
+#purchase-flights button:hover{
+	cursor: pointer !important; 
+}
+
+#people-selection{
+
+	background: transparent;
+	width: 65px;
+	padding: 5px;
+	font-size: 16px;
+	height: 30px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+
+	border: 1px solid #fff;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+
+
+	background: url(/assets/glyphicons-44-group.png) 90% / 45% no-repeat #fff;
+}
+
+#class-selection{
+	background: transparent;
+	width: 120px;
+	padding: 5px;
+	font-size: 16px;
+	height: 30px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+
+	border: 1px solid #fff;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+
+
+	background: url(/assets/plane.png) 95% / 20% no-repeat #fff;
+}
+
+.date-input{
+	cursor: pointer;
+	background: transparent;
+	width: 126px;
+	padding: 5px;
+	font-size: 16px;
+	height: 20px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+
+	border: 1px solid #fff;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+
+
+	background: url(/assets/glyphicons-46-calendar.png) 90% / 17% no-repeat #fff;	
 }
 
 /* Complete */

@@ -14,4 +14,34 @@ var App = Ember.Application.extend({
 
 loadInitializers(App, config.modulePrefix);
 
+<<<<<<< HEAD
+=======
+
+//not sure this is the best place for this to be being called
+Ember.View.reopen({
+  didInsertElement : function(){
+    this._super();
+    Ember.run.scheduleOnce('afterRender', this, this.afterRenderEvent);
+  },
+  afterRenderEvent : function(){
+
+  	$("#departure-suggestions").niceScroll({
+  		mousescrollstep: 10,
+  		cursorcolor: "#fff",
+  		cursorborder: "0px solid #fff",
+  		railpadding: { top: 2, right: 2, left: 2, bottom: 2 },
+  	});
+  	$("#return-suggestions").niceScroll({
+  		mousescrollstep: 10,
+  		cursorcolor: "#fff",
+  		cursorborder: "0px solid #fff",
+  		railpadding: { top: 2, right: 2, left: 2, bottom: 2 },
+  	});
+
+  	$("#departure-datepicker").datepicker({dateFormat: 'dd-mm-yy'});
+  	$("#return-datepicker").datepicker({dateFormat: 'dd-mm-yy'});
+  }
+});
+
+>>>>>>> index page design cleanup
 export default App;
