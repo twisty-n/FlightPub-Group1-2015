@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513042114) do
+ActiveRecord::Schema.define(version: 20150513142712) do
 
   create_table "api_keys", force: :cascade do |t|
     t.integer  "user_id",      limit: 4
@@ -58,6 +58,21 @@ ActiveRecord::Schema.define(version: 20150513042114) do
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
   end
+
+  create_table "save_identifiers", force: :cascade do |t|
+    t.string "s_type",       limit: 255
+    t.string "account_type", limit: 255
+  end
+
+  create_table "saved_flights", force: :cascade do |t|
+    t.integer "flight_id",          limit: 4
+    t.integer "user_id",            limit: 4
+    t.integer "save_identifier_id", limit: 4
+  end
+
+  add_index "saved_flights", ["flight_id"], name: "index_saved_flights_on_flight_id", using: :btree
+  add_index "saved_flights", ["save_identifier_id"], name: "index_saved_flights_on_save_identifier_id", using: :btree
+  add_index "saved_flights", ["user_id"], name: "index_saved_flights_on_user_id", using: :btree
 
   create_table "ticket_classes", force: :cascade do |t|
     t.string   "class_code", limit: 255

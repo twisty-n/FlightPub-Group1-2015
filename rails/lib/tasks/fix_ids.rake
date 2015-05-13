@@ -15,10 +15,10 @@ namespace :fix_ids do
         Destination.all.each do |dest|
 
             unnormed_destination = unnormed.select{|d| d["destination_code"] == dest.destination_code}
-            print(unnormed_destination)
+            #print(unnormed_destination)
 
             country = Country.find_by(country_code_3: unnormed_destination[0]["country_code_3"])
-            print(country.inspect)
+            #print(country.inspect)
 
             country_id = country.id
             dest.country_id = country_id
