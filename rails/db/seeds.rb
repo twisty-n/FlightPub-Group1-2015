@@ -8,41 +8,34 @@
 
 # Create some basic flight seeds for the API testing stuff
 # Replace this later with a flights fixture thang
-Flight.create(flight_number:   'AAA111',
-              price:          '8456',
-              seatsAvailable: '10',
-              departureTime:  '2400',
-              arrivalTime:    '1300')
+# NOTE: fields that need to be null in the table should not have an entry in the key/value pairs.
+Flight.create(flight_number:            'AAA111',
+              price:                    '8456',
+              seatsAvailable:           '10',
+              departureTime:            '2400',
+              arrivalTime:              '1300',
+              trip_length:              '5500',
+              destination:              'Sydney',
+              origin:                   'Tokyo',
+              has_stopover:             false)
+#              stopover_arrival_time:    null,
+#              stopover_departure_time:  null,
+#              stopover_destination:     null,
+#              stopover_origin:          null)
 
-Flight.create(flight_number:   'BBB111',
-              price:          '852',
-              seatsAvailable: '9',
-              departureTime:  '1200',
-              arrivalTime:    '1300')
-
-Flight.create(flight_number:   'CCC111',
-              price:          '963',
-              seatsAvailable: '10',
-              departureTime:  '1200',
-              arrivalTime:    '1300')
-
-Flight.create(flight_number:   'DDD111',
-              price:          '1340',
-              seatsAvailable: '25',
-              departureTime:  '0100',
-              arrivalTime:    '1300')
-
-Flight.create(flight_number:   'SEX111',
-              price:          '420',
-              seatsAvailable: '100',
-              departureTime:  '1200',
-              arrivalTime:    '1300')
-
-Flight.create(flight_number:   'SEX222',
-              price:          '120',
-              seatsAvailable: '1',
-              departureTime:  '1200',
-              arrivalTime:    '1300')
+Flight.create(flight_number:            'AAA112',
+              price:                    '9000',
+              seatsAvailable:           '11',
+              departureTime:            '2300',
+              arrivalTime:              '1500',
+              trip_length:              '7500',
+              destination:              'Tokyo',
+              origin:                   'Sydney',
+              has_stopover:             'true',)
+              stopover_arrival_time:    '2200',
+              stopover_departure_time:  '2300',
+              stopover_destination:     'Darwin',
+              stopover_origin:          'Sydney')
 
 
 # To specify our own Fixtures, use a thing similar to below, 
