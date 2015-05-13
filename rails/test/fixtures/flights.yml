@@ -28,14 +28,14 @@ flight_4:
   arrivalTime:      1300    
 
 flight_5:
-  flight_number:     SEX111    
+  flight_number:     HEX111    
   price:            420    
   seatsAvailable:   100    
   departureTime:    1200    
   arrivalTime:      1300    
 
 flight_6:
-  flight_number:     SEX222    
+  flight_number:     HEX222    
   price:            120    
   seatsAvailable:   1    
   departureTime:    1200    
