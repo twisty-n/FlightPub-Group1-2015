@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150512111108) do
+ActiveRecord::Schema.define(version: 20150513042114) do
 
   create_table "api_keys", force: :cascade do |t|
     t.integer  "user_id",      limit: 4
@@ -57,6 +57,13 @@ ActiveRecord::Schema.define(version: 20150512111108) do
     t.string   "arrivalTime",    limit: 255
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
+  end
+
+  create_table "ticket_classes", force: :cascade do |t|
+    t.string   "class_code", limit: 255
+    t.string   "details",    limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "users", force: :cascade do |t|
