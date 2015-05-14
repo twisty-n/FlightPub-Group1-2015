@@ -27,7 +27,7 @@ export default Ember.ObjectController.extend({
 
 				flightsController.set('selected', null);
 				
-				$(flightID).animate({height: 1}, 110, function(){
+				$(flightID).animate({height: 1}, 93, function(){
 					$(flightID).css({'display':'none'});
 				});
 
@@ -44,7 +44,7 @@ export default Ember.ObjectController.extend({
 				flightsController.set('selected', this);
 
 				$(flightID).css({'display':'block'});
-				$(flightID).animate({height: 110}, 110);
+				$(flightID).animate({height: 93}, 93);
 			}
 		},
 	}
