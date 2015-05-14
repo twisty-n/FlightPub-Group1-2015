@@ -4,13 +4,6 @@
 
 <!-- TODO:
 
-		- create filters: 
-				larger buttons for common ones like 'no stops' and 'lowest price'
-				custom filter for filter by time and by number of stops
-
-		- get better plane image
-				if you have time make it so it changes depending on airlines
-
 		- show promotions
 				either create a new promotions section or do what people were 
 				suggesting where we slash the price or something
@@ -21,9 +14,6 @@
 					- from and to
 					- legs of the flight
 					- time (total + depart/arrive)
-					- select flight button
-					- save flight button
-					- compare flight button
 
 
 		- show whether page is for Departure or Return (maybe just a title?)
@@ -31,6 +21,8 @@
 		- no results display (can be an else after the #each)
 	-->
 
+
+	<h1>SYD to MLB</h1>
 
 	<div id="results">
 		<div id="result-graph-wrapper">
@@ -52,33 +44,18 @@
 
 			<div id="result-filters">
 				<div id="main-filters">
-					<!-- these filters buttons need to click on and off, visually -->
-
-					<!-- this sorting works but! because price is in strings it sorts weird -->
 					<button {{action "sortBy" "price:asc"}} id="cheapest-first-filter">cheapest first</button> 
-					
-					<!-- change this to flight time in the future -->
 					<button {{action "sortBy" "departureTime:asc"}}id="shortest-first-filter">quickest first</button> 
-					
-
 					<button id="no-stops-filter">no stops</button> <!-- this button acts like a checkbox? -->	
 				</div>
-				<!--
-					duration of flight
-					stopover location 
-				-->
-
-				<!-- <div id="advanced-filters"> -->
-					<input  id="depart-from-time-filter"> <!-- this is some sort of selection based on time of day -->
-					<input id="arrive-before-time-filter"> <!-- this is some sort of selection based on time of day -->
-					<select id="max-stops-filter">
-						<option value="-1">Max Stops</option>
-						<option value="1">1 Stops</option>
-						<option value="2">2 Stops</option>
-						<option value="3">3 Stops</option>
-						<option value="4">4 Stops</option>
-						<option value="-2">5+ Stops</option>
-					</select> <!-- this is some sort of number selection -->				
+				<select id="max-stops-filter">
+					<option value="-1">Max Stops</option>
+					<option value="1">1 Stops</option>
+					<option value="2">2 Stops</option>
+					<option value="3">3 Stops</option>
+					<option value="4">4 Stops</option>
+					<option value="-2">5+ Stops</option>
+				</select> <!-- this is some sort of number selection -->				
 				<select id="stop-location-filter">
 					<option value="">Specify Stop</option>
 					<option value="syd">SYD</option>
@@ -87,7 +64,6 @@
 					<option value="syd">SYD</option>
 				</select>
 
-				<!-- </div> -->
 			</div>
 
 			<div id="result-graph">
@@ -116,61 +92,59 @@
 						<div class="col" style="left:83.3333333%;"></div>
 					</div>
 				</div>
-				<div id="flight-details">
-					<div class="top-row-inner" {{bind-attr id="flight.flightNumber"}}> <!-- change all these id names -->
+				<div class="flight-details">
+					<div class="flight-details-inner" {{bind-attr id="flight.flightNumber"}}>
+						<!-- {#if flight.hasStops}
+							
+							<div class="stops">{{flight.numberOfStops}}</div>
 
-						<!-- maybe move this total to above/next to the filters -->
-							<!-- <div id="total">
-							<div id="total-title">Total:</div>
-							<div id="money">${{flight.price}}</div>
-						</div> -->
-
-
-						<div id="ticket-display">
-						<!-- TODO: should this still be called depart? -->
-						<div id="depart">
-							<div id="depart-small">
-								<div class="text-top">Depart</div>
-								<div class="arrow"><img src="assets/ticket-back.png"></div>
-								<div class="text-bottom">Depart</div>
+							{#else} -->
+							<div class="details-l1">
+								<div class="flight-number">
+									{{flight.flightNumber}}
+								</div>
+								<div class="direct">Direct Flight</div>
 							</div>
-							<div class="ticket-info">
-								<div class="ticket-top">
-									<div class="ticket-title">
-										Ticket Name? 
-									</div>
-									<div class="ticket-price">
-										${{flight.price}}
-									</div>
-								</div>
-
-								<!-- TODO: make these things work!! -->
-								<div class="ticket-middle">
-									<div class="start">{{flight.from}}</div>
-									<div class="arrow"> -> </div>
-									<div class="end">{{flight.to}}</div>  
-								</div>
-
-
-								<div class="ticket-bottom">
-									<div class="flight-times">
-										<img src="assets/glyphicons-58-history.png"><span class="bottom-text">9am - 5pm</span>
-									</div>
-									<div id="stops1" class="travel-stops non-zero-stops">{{flight.numberOfStops}} 2 stops<!-- make the thing work {{#if flight.numberOfStops }}s{{/if}}--> </div>
-									<div class="flight-duration">
-										<img src="assets/glyphicons-56-stopwatch.png">
-										<span class="bottom-text">{{flight.duration}}</span> 
-									</div>
+							<div class="details-l2">
+								<div class="total-time">
+									<div class="time-img"><img src="/assets/glyphicons-58-history.png"></div> 
+									<div class="time">9h 5m</div>
 								</div>
 							</div>
+
+							<div class="details-center">
+								<div class="trip">
+
+									<div class="trip-left">
+										<div class="from">from</div>
+										<div class="trip-from">HKG</div>
+									</div>
+									<div class="trip-right">
+										<div class="to">to</div>
+										<div class="trip-to">SYD</div>
+									</div>
+								</div>
+									
+									<div class="trip-times">
+										<div class="arrive"><span class="grey">Arrive:</span> {{flight.arrivalTime}}</div>
+										<div class="depart"><span class="grey">Depart:</span> {{flight.departureTime}}</div>
+									</div>
+							</div>
+
+							<div class="details-right">
+								<div class="flight-select">
+									<button class="btn"><img src="/assets/glyphicons-207-ok-2.png"></button>
+								</div>
+								<div class="extra-buttons-wrapper">
+									<div class="flight-save"><button class="btn">Save</button></div>
+									<div class="flight-compare"><button class="btn">Compare</button></div>
+								</div>
+							</div>
+
+							<!-- {/if} -->
 						</div>
 					</div>
-					<div id="flight-select">
-						<img src="assets/glyphicons-207-ok-2.png">
-					</div>
+					{{/each}}
 				</div>
 			</div>
-			{{/each}}
 		</div>
-	</div>
-</div>
