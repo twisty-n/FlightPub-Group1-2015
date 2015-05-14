@@ -2,32 +2,30 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
 
-    controllerName: 'index',
+    controllerName: 'destinations',
     model:  function() {
 
-    // Move this to index controller to fire once the controller loads or some shit
-
-      console.log("hello!");
+      //console.log("hello!");
       var desintations = [];
       var self = this;
       Ember.$.get('api/destinations').then(function(response) {
 
         // Our response is now a JSON hash of the destinations
-        console.log("entered destinations access");
-        console.log("Server response:" + response);
+        //console.log("entered destinations access");
+        //console.log("Server response:" + response);
         // 
         response.destinations.forEach( function(destination) {
 
           var destModel = self.store.createRecord('destination');
-          console.log("Destination Model: " + destModel);
+         // console.log("Destination Model: " + destModel);
           destModel.setFields(destination);
-          console.log ("Now we have set the fields");
-          console.log("New model" + destModel);
+          //console.log ("Now we have set the fields");
+          //console.log("New model" + destModel);
           desintations.addObject(destModel);
 
         });
 
-        console.log(desintations);
+        //console.log(desintations);
         return desintations;
 
       },
