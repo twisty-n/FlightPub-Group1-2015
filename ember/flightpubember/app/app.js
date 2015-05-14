@@ -14,9 +14,6 @@ var App = Ember.Application.extend({
 
 loadInitializers(App, config.modulePrefix);
 
-<<<<<<< HEAD
-=======
-
 //not sure this is the best place for this to be being called
 Ember.View.reopen({
   didInsertElement : function(){
@@ -43,5 +40,4 @@ Ember.View.reopen({
   }
 });
 
->>>>>>> index page design cleanup
 export default App;
