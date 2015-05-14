@@ -16,12 +16,16 @@ var Destination =  DS.Model.extend({
 	alternateName1: 	DS.attr('string'),
 
 	setFields: function(fields) {
-		this.destinationCode = fields['destination_code'];
-		this.airport = fields['airport'];
-		this.country_code_2 = fields['country']['country_code_2'];
-		this.country_code_3 = fields['country']['country_code_3'];
-		this.country_name = fields['country']['country_name'];
-		this.alternate_name_1 = fields['country']['alternate_name_1'];
+
+		this.setProperties({
+			destinationCode: 	fields['destination_code'],
+			airport: 			fields['airport'],
+			countryCode2: 		fields['country']['country_code_2'],
+			countryCode3: 		fields['country']['country_code_3'],
+			countryName: 		fields['country']['country_name'],
+			alternateName1: 	fields['country']['alternate_name_1']
+		});
+
 	}
   
 });
