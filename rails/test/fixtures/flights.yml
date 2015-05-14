@@ -2,53 +2,53 @@
 flight_1:
   flight_number:     AAA111    
   price:            8456    
-  seatsAvailable:   10    
-  departureTime:    2400    
-  arrivalTime:      1300
+  seats_available:   10    
+  departure_time:    2400    
+  arrival_time:      1300
   destination:      Orgeon
   origin:           Boston
 
 flight_2:
   flight_number:     BBB111    
   price:            852    
-  seatsAvailable:   9    
-  departureTime:    1200    
-  arrivalTime:      1300    
+  seats_available:   9    
+  departure_time:    1200    
+  arrival_time:      1300    
   destination:      Orange
   origin:           BoganVille
 
 flight_3:
   flight_number:     CCC111    
   price:            963    
-  seatsAvailable:   10    
-  departureTime:    1200    
-  arrivalTime:      1300    
+  seats_available:   10    
+  departure_time:    1200    
+  arrival_time:      1300    
   destination:      Tamworth
   origin:           Sydney
 
 flight_4:
   flight_number:     DDD111    
   price:            1340    
-  seatsAvailable:   25    
-  departureTime:    0100    
-  arrivalTime:      1300  
+  seats_available:   25    
+  departure_time:    0100    
+  arrival_time:      1300  
   destination:      Orgeon
   origin:           Orange  
 
 flight_5:
   flight_number:     HEX111    
   price:            420    
-  seatsAvailable:   100    
-  departureTime:    1200    
-  arrivalTime:      1300  
+  seats_available:   100    
+  departure_time:    1200    
+  arrival_time:      1300  
   destination:      Halp
   origin:           Our load and saviour Cheezus  
 
 flight_6:
   flight_number:     HEX222    
   price:            120    
-  seatsAvailable:   1    
-  departureTime:    1200    
-  arrivalTime:      1300    
+  seats_available:   1    
+  departure_time:    1200    
+  arrival_time:      1300    
   destination:      Herptastic Advanture Land
   origin:           Dubai
