@@ -12,8 +12,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 
-ActiveRecord::Schema.define(version: 20150514040826) do
-
+ActiveRecord::Schema.define(version: 20150514125408) do
 
   create_table "api_keys", force: :cascade do |t|
     t.integer  "user_id",      limit: 4
@@ -88,6 +87,10 @@ ActiveRecord::Schema.define(version: 20150514040826) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false  
   end
+  
+  add_index "flights", ["leg_1_id"], name: "fk_rails_addabd29ea", using: :btree
+  add_index "flights", ["leg_2_id"], name: "fk_rails_739ad5a492", using: :btree
+
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name",       limit: 255, default: ""
@@ -107,4 +110,6 @@ ActiveRecord::Schema.define(version: 20150514040826) do
   add_index "users", ["id"], name: "userID", unique: true, using: :btree
 
   add_foreign_key "api_keys", "users"
+  add_foreign_key "flights", "flights", column: "leg_1_id"
+  add_foreign_key "flights", "flights", column: "leg_2_id"
 end
