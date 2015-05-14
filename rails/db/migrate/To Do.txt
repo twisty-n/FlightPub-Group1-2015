@@ -23,3 +23,7 @@ Make a migration file for flights that does the info alistair wnats.
   - Airport
   - a timestamp.
   
+3: Add some sample data
+4: Modify the seralisers so the new data can get through and remember to tell Alistair
+5: Begin work on the search algorithm.
+  
