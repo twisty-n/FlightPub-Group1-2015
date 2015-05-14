@@ -37,37 +37,8 @@ Ember.View.reopen({
 
   	$("#departure-datepicker").datepicker({dateFormat: 'dd-mm-yy'});
   	$("#return-datepicker").datepicker({dateFormat: 'dd-mm-yy'});
-    this.locations();
-  },
-  locations:  function() {
-
-    var _this = this;
-    // Move this to index controller to fire once the controller loads or some shit
-
-    console.log("hello!");
-    var desintations = [];
-    Ember.$.get('api/destinations').then(function(response) {
-
-      // Our response is now a JSON hash of the destinations
-      console.log("entered destinations access")
-      console.log(response)
-      // 
-      response.destinations.forEach( function(destination) {
-        var destModel = _this.get('store').createRecord('destination');
-        console.log(destModel);
-        destModel.setFields(destination);
-        desintations.addObject(destModel);
-      });
-
-      console.log(destinations);
-      return desintations;
-
-    },
-    function(error) {
-      // Handle error
-      console.log("We have an error creating destination list" + error)
-    });
   }
+  
 });
 
 export default App;
