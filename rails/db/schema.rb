@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513142712) do
+ActiveRecord::Schema.define(version: 20150514035219) do
 
   create_table "api_keys", force: :cascade do |t|
     t.integer  "user_id",      limit: 4
@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(version: 20150513142712) do
     t.string   "arrivalTime",    limit: 255
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
+    t.string   "destination",    limit: 255
+    t.string   "origin",         limit: 255
   end
 
   create_table "save_identifiers", force: :cascade do |t|
