@@ -52,8 +52,6 @@
 
 			<div id="result-filters">
 				<div id="main-filters">
-					Filter By: 
-
 					<!-- these filters buttons need to click on and off, visually -->
 
 					<!-- this sorting works but! because price is in strings it sorts weird -->
@@ -65,13 +63,31 @@
 
 					<button id="no-stops-filter">no stops</button> <!-- this button acts like a checkbox? -->	
 				</div>
+				<!--
+					duration of flight
+					stopover location 
+				-->
 
-				<div id="advanced-filters">
-					<input id="depart-from-time-filter"> <!-- this is some sort of selection based on time of day -->
+				<!-- <div id="advanced-filters"> -->
+					<input  id="depart-from-time-filter"> <!-- this is some sort of selection based on time of day -->
 					<input id="arrive-before-time-filter"> <!-- this is some sort of selection based on time of day -->
-					<input id="max-stops-filter"> <!-- this is some sort of number selection -->
-					<input id="airline-filter"> <!-- this is some sort of selection where you choose whihc airline(s?) to filter by -->
-				</div>
+					<select id="max-stops-filter">
+						<option value="-1">Max Stops</option>
+						<option value="1">1 Stops</option>
+						<option value="2">2 Stops</option>
+						<option value="3">3 Stops</option>
+						<option value="4">4 Stops</option>
+						<option value="-2">5+ Stops</option>
+					</select> <!-- this is some sort of number selection -->				
+				<select id="stop-location-filter">
+					<option value="">Specify Stop</option>
+					<option value="syd">SYD</option>
+					<option value="syd">SYD</option>
+					<option value="syd">SYD</option>
+					<option value="syd">SYD</option>
+				</select>
+
+				<!-- </div> -->
 			</div>
 
 			<div id="result-graph">
