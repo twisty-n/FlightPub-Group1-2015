@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150512133415) do
+ActiveRecord::Schema.define(version: 20150513072505) do
 
   create_table "api_keys", force: :cascade do |t|
     t.integer  "user_id",      limit: 4
@@ -50,21 +50,19 @@ ActiveRecord::Schema.define(version: 20150512133415) do
   add_index "destinations", ["country_id"], name: "index_destinations_on_country_id", using: :btree
 
   create_table "flights", force: :cascade do |t|
-    t.string   "flight_number",           limit: 255
-    t.decimal  "price",                               precision: 10
-    t.string   "seatsAvailable",          limit: 255
-    t.string   "departureTime",           limit: 255
-    t.string   "arrivalTime",             limit: 255
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
-    t.integer  "trip_length",             limit: 4
-    t.string   "destination",             limit: 255
-    t.string   "origin",                  limit: 255
-    t.boolean  "has_stopover",            limit: 1
-    t.datetime "stopover_arrival_time"
-    t.datetime "stopover_departure_time"
-    t.string   "stopover_destination",    limit: 255
-    t.string   "stopover_origin",         limit: 255
+    t.string   "flight_number",       limit: 255
+    t.decimal  "price",                           precision: 10
+    t.string   "seatsAvailable",      limit: 255
+    t.string   "departureTime",       limit: 255
+    t.string   "arrivalTime",         limit: 255
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.integer  "trip_length",         limit: 4
+    t.string   "destination",         limit: 255
+    t.string   "origin",              limit: 255
+    t.boolean  "is_composite_flight", limit: 1
+    t.integer  "leg_1_id",            limit: 4
+    t.integer  "leg_2_id",            limit: 4
   end
 
   create_table "users", force: :cascade do |t|
