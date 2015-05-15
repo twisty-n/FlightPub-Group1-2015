@@ -1,5 +1,7 @@
 class FlightSerializer < ActiveModel::Serializer
-  attributes :id, :flight_number, :price, :seats_available, :departure_time, :arrival_time, :origin, :destination, :flight_time
+
+# NOTE: Be careful when accessing leg IDs, they will be null if the flight is not a composite.
+  attributes :id, :flight_number, :price, :seatsAvailable, :departureTime, :arrivalTime, :trip_length, :destination, :origin, :is_composite_flight, :leg_1_id, :leg_2_id
 end
 
 
