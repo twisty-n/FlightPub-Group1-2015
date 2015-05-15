@@ -1,6 +1,5 @@
-{{#each destination in controller.departLocations itemController="destination"}}
-	{{destination.airport}}
-	hALP
+{{#each item in controller.tickets}}
+	{{item.details}}
 {{/each}}
 	<div id="search-wrapper">
 
@@ -21,28 +20,13 @@
 						<input placeholder="From" class="city-input rounded" type="text">
 					</div>
 
-					<div class="arrow" style="display:none;"></div>
-					<div class="drop-down" style="display:none;">
+					<div class="arrow"></div>
+					<div class="drop-down">
 						<div class="arrow_box rounded suggestions-box" id="departure-suggestions">
 							<ul class="suggestions">
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
+								{{#each destination in model}}
+									<li>{{destination.destinationCode}}  -  {{destination.airport}}, {{destination.countryName}}</li>
+								{{/each}}
 							</ul>
 						</div>
 					</div>
@@ -108,9 +92,14 @@
 					<div class="value-select">
 						Class: 
 						<select id="class-selection">
+						{{#each item in controller.tickets}}
+							<option {{bind-attr value="item.classCode"}}>{{item.details}}</option>
+						{{/each}}
+						<!--
 							<option value="economy">Economy</option>
 							<option value="business">Business</option>
 							<option value="first">First Class</option>
+						-->
 						</select>
 					</div>
 				</div>

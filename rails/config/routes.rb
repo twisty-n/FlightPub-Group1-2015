@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     get 'destinations'  => 'destinations#index'
 
     # Route that allows client to get list of ticket classes
-    get 'classes'       => 'ticket_classes#index'
+    get 'ticket_classes'       => 'ticket_classes#index'
 
   end
 
