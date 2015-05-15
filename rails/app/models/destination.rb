@@ -8,14 +8,18 @@ class Destination < ActiveRecord::Base
 =end
     
     def as_json(options={})
-        super(
-            :only => [:destination_code, :airport],
-            :include => {
-                :country => {
-                    :only => [:country_code_2, :country_code_3, :country_name, :alternate_name_1]
-                }   
-            }
-        )
-    end
+        
+        {   
+            :id => self.id,
+            :destination_code => self.destination_code,
+            :airport => self.airport,
+            :country_code_2 => self.country.country_code_2,
+            :country_code_3 => self.country.country_code_3,
+            :country_name => self.country.country_name,
+            :alternate_name_1 => self.country.alternate_name_1
+        }
+
+    end 
+        
 
 end
