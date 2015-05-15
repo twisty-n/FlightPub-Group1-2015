@@ -500,9 +500,9 @@ a{
 }
 
 .total-time .time-img{
-  float: left;
-  padding-right: 8px;
-  padding-top: 2px;
+	float: left;
+	padding-right: 8px;
+	padding-top: 2px;
 }
 
 .total-time .time{
@@ -565,12 +565,12 @@ a{
 	border-color: #6CD7FF;
 }
 
-.flight-number{  
+.flight-number{
 	font-size: 30px;
 	font-weight: bold;
 	width: inherit;
 	line-height: 23px;
-	padding-top: 33px;
+	padding-top: 22px;
 }
 
 .direct{
@@ -578,9 +578,9 @@ a{
 }
 
 .trip{
-  padding-top: 19px;
-  font-size: 17px;
-  width: 100%;
+	padding-top: 19px;
+	font-size: 17px;
+	width: 100%;
 }
 
 .trip-left{
@@ -1212,26 +1212,70 @@ a{
 		display: inline-block;	
 	}
 
-/* sessions */
+	/* sessions */
 
-#signup-wrapper{
-	width:100%;
-	background-color: #fff;
+	#signup-wrapper{
+		width:100%;
+		background-color: #fff;
 
-	margin-top:30px;
-	height: 400px;
-}
+		margin-top:30px;
+		height: 200px;
+	}
 
-#signup{
-	width: 70%;
-	margin: 0 auto;
-	height: 100%;
-	padding-top: 15px;
-	padding-bottom: 10px;
-}
+	#signup{
+		width: 70%;
+		margin: 0 auto;
+		height: 100%;
+		padding-top: 15px;
+		padding-bottom: 10px;
+	}
 
-.jumbotron{
-	width: 50%;
-	float:left;
-	height: 100%;
-}
+	.jumbotron{
+		width: 50%;
+		float:left;
+		height: 100%;
+	}
+
+	.jumbotron form{
+		margin: 0 auto;
+		width: 50%;
+	}
+	
+	.jumbotron form button{
+		margin-top: 10px;
+	}
+
+	.jumbotron input {
+		margin-top: 10px;
+	}
+
+	.std-btn{
+		width: 75px;
+		background-color: #FFFFFF;
+		color: #1479C9;
+		border-color: #1479C9;
+	}
+
+	.std-btn:hover{
+		background-color: #1479C9;
+		color:white;
+	}
+
+
+	/* User Page */
+
+	.full-page-white-wrapper{
+		width:100%;
+		background-color: #fff;
+
+		margin-top:30px;
+		height: 200px;
+	}
+
+	.full-page-white-center{
+		width: 70%;
+		margin: 0 auto;
+		height: 100%;
+		padding-top: 15px;
+		padding-bottom: 10px;
+	}
