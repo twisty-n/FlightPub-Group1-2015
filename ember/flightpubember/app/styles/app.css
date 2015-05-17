@@ -78,6 +78,7 @@ body{
 
 .drop-down{
 	position: absolute;
+	top: 50px;
 }
 
 .suggestions-box{
