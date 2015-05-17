@@ -7,22 +7,26 @@
 
 		<div id="flight-search">
 			<form class="form-horizontal" {{action "flightSearch" on="submit"}}>
-			<div id="left-box" class="flight-search-box place-input">
-				<div id="departure">
-					{{input value=from type="text" class="city-input rounded" placeholder="From" contentBinding="controller.filterString"}}
-				</div>
 
-				<div class="arrow"></div>
-				<div class="drop-down">
-					<div class="arrow_box rounded suggestions-box" id="departure-suggestions">
-						<ul class="suggestions">
-							{{#each destination in fromDestinationSearch}}
-							<li>{{destination.destinationCode}}  -  {{destination.airport}}, {{destination.countryName}}</li>
-							{{/each}}
-						</ul>
+				<div id="from-box" class="flight-search-box place-input">
+					<div id="departure">
+						{{input value=fromDestination type="text" class="city-input rounded" id="from" placeholder="From" focus-out="hideSuggestions"
+						}}
 					</div>
-				</div>
 
+					<div class="arrow"></div>
+					<div class="drop-down">
+						{{#view 'destination-suggestion'}}
+						<div class="arrow_box rounded suggestions-box" id="departure-suggestions">
+							<ul class="suggestions">
+								{{#each destination in fromDestinationSearch itemController="destination"}}
+
+									<li {{bind-attr id="destination.destinationCode"}} {{action "fromSelected"}}>{{destination.detail}}</li>
+								{{/each}}
+							</ul>
+						</div>
+						{{/view}}
+				</div>
 
 
 				<div id="departure-date">
@@ -31,24 +35,26 @@
 				</div>
 			</div>
 
-			<div class="flight-search-box place-input">
+			<div id="to-box" class="flight-search-box place-input">
 				<div class="return">
-					{{input value=to placeholder="To" class="city-input rounded" type="text"}}
+					{{input value=toDestination placeholder="To" class="city-input rounded" id="to" type="text" focus-out="hideSuggestions"}}
 				</div>
-				<div class="arrow" style="display:none;"></div>
-				<div class="drop-down" style="display:none;">
+				<div class="arrow"></div>
+				<div class="drop-down">
+				{{#view 'destination-suggestion'}}
 					<div class="arrow_box rounded suggestions-box" id="return-suggestions">
 						<ul class="suggestions">
-							{{#each destination in foundDestinations}}
-							<li>{{destination.destinationCode}}  -  {{destination.airport}}, {{destination.countryName}}</li>
+							{{#each destination in toDestinationSearch itemController="destination"}}
+							<li {{bind-attr id="destination.destinationCode"}} {{action "toSelected"}}>{{destination.detail}}</li>
 							{{/each}}
 						</ul>
 					</div>
+					{{/view}}
 				</div>
 
 				<div id="return-date">
 					Return:						
-					{{input value=returntDate type="text" id="return-datepicker"  class="date-input" placeholder="dd-mm-yyyy"}}
+					{{input value=returnDate type="text" id="return-datepicker"  class="date-input" placeholder="dd-mm-yyyy"}}
 				</div>
 			</div>
 
@@ -56,15 +62,17 @@
 				<div class="value-select">
 					People:
 					{{view "select"
+					value=numberOfPeople
 					content=controller.people
 					optionValuePath="content.number"
 					optionLabelPath="content.number"
 					id="people-selection"}}
-				
+
 				</div>
 				<div class="value-select">
 					Class: 
 					{{view "select"
+					value=selectedClass
 					content=controller.tickets
 					optionValuePath="content.classCode"
 					optionLabelPath="content.details"
@@ -76,10 +84,10 @@
 				<button id="search-button" class="rounded" type="submit">Search</button>
 			</div>
 
-			</form>
-		</div>
+		</form>
 	</div>
+</div>
 
-	<div id="description">
-		<p>Sit back, have a drink, and we'll do the work for you.</p>
-	</div>
+<div id="description">
+	<p>Sit back, have a drink, and we'll do the work for you.</p>
+</div>

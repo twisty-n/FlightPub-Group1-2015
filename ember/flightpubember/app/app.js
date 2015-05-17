@@ -22,12 +22,13 @@ Ember.View.reopen({
   },
   afterRenderEvent : function(){
 
-  	$("#departure-suggestions").niceScroll({
-  		mousescrollstep: 10,
-  		cursorcolor: "#fff",
-  		cursorborder: "0px solid #fff",
-  		railpadding: { top: 2, right: 2, left: 2, bottom: 2 },
-  	});
+    $("#departure-suggestions").niceScroll({
+        mousescrollstep: 10,
+        cursorcolor: "#fff",
+        cursorborder: "0px solid #fff",
+        railpadding: { top: 2, right: 2, left: 2, bottom: 2 },
+     });
+
   	$("#return-suggestions").niceScroll({
   		mousescrollstep: 10,
   		cursorcolor: "#fff",

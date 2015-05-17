@@ -253,6 +253,10 @@ body{
 
 }
 
+#flight-search .arrow, .drop-down{
+	display: none;
+}
+
 #search-button:hover{
 	cursor: pointer !important;
 	background-color: #EAC043;
@@ -394,7 +398,7 @@ input.rounded:focus {
   border-radius: 4px;
   background: url(/assets/plane.png) 99% / 14% no-repeat #fff;
 }
-}
+
 
 .date-input{
 	cursor: pointer;
