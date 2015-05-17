@@ -7,7 +7,7 @@ export default Ember.ArrayController.extend({
 	departDate: '',
 	returnDate: '',
 	selectedClass: '',
-	numberOfPeople: 1,
+	numberOfPeople: '1',
 
 
 

@@ -66,14 +66,15 @@
 					content=controller.people
 					optionValuePath="content.number"
 					optionLabelPath="content.number"
+					defaultvalue=1
 					id="people-selection"}}
 
 				</div>
 				<div class="value-select">
 					Class: 
 					{{view "select"
-					value=selectedClass
-					content=controller.tickets
+
+					contentBinding="controller.tickets"
 					optionValuePath="content.classCode"
 					optionLabelPath="content.details"
 					id="class-selection"}}
