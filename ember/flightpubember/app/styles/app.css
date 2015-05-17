@@ -83,8 +83,8 @@ body{
 
 .suggestions-box{
 	width: 325px;
-	max-height: 150px;
-	min-height: 68px;
+	max-height: 220px;
+  	min-height: 36px;
 	top: 10px;
 	left: 10px;
 	overflow: hidden;

@@ -9,14 +9,14 @@
 			<form class="form-horizontal" {{action "flightSearch" on="submit"}}>
 			<div id="left-box" class="flight-search-box place-input">
 				<div id="departure">
-					{{input value=from type="text" class="city-input rounded" placeholder="From"}}
+					{{input value=from type="text" class="city-input rounded" placeholder="From" contentBinding="controller.filterString"}}
 				</div>
 
 				<div class="arrow"></div>
 				<div class="drop-down">
 					<div class="arrow_box rounded suggestions-box" id="departure-suggestions">
 						<ul class="suggestions">
-							{{#each destination in dest}}
+							{{#each destination in fromDestinationSearch}}
 							<li>{{destination.destinationCode}}  -  {{destination.airport}}, {{destination.countryName}}</li>
 							{{/each}}
 						</ul>
@@ -39,7 +39,7 @@
 				<div class="drop-down" style="display:none;">
 					<div class="arrow_box rounded suggestions-box" id="return-suggestions">
 						<ul class="suggestions">
-							{{#each destination in dest}}
+							{{#each destination in foundDestinations}}
 							<li>{{destination.destinationCode}}  -  {{destination.airport}}, {{destination.countryName}}</li>
 							{{/each}}
 						</ul>
