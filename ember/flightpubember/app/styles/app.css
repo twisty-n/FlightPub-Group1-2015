@@ -249,11 +249,14 @@ body{
 	border-width: 3px;
 	border-color: #FFFFFF;
 	bottom:40px;
+	font-size: 18px;
 
 }
 
 #search-button:hover{
 	cursor: pointer !important;
+	background-color: #EAC043;
+
 }
 
 
@@ -377,22 +380,20 @@ input.rounded:focus {
 }
 
 #class-selection{
-	background: transparent;
-	width: 120px;
-	padding: 5px;
-	font-size: 16px;
-	height: 30px;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-
-	border: 1px solid #fff;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-
-
-	background: url(/assets/plane.png) 95% / 20% no-repeat #fff;
+  background: transparent;
+  /* width: 120px; */
+  /* padding: 5px; */
+  /* font-size: 16px; */
+  height: 30px;
+  /* -webkit-appearance: none; */
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid #fff;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  background: url(/assets/plane.png) 99% / 14% no-repeat #fff;
+}
 }
 
 .date-input{

@@ -1,109 +1,82 @@
+{{view Ember.Select
+	contentBinding="App.peopleController"
+	selectionBinding="App.selectedPersonController.person"
+	optionLabelPath="content.fullName"
+	optionValuePath="content.id"}}
 	<div id="search-wrapper">
 
 		<div id="flight-search">
-				<!-- NOT A REAL FORM 
-					We need to create a model and bind data to that, then when search is
-					pressed we need to make a call with the search data to the api
+			<form class="form-horizontal" {{action "flightSearch" on="submit"}}>
+			<div id="left-box" class="flight-search-box place-input">
+				<div id="departure">
+					{{input value=from type="text" class="city-input rounded" placeholder="From"}}
+				</div>
 
-					This can be done in a similar way to sessions.index
-					and the related things. By using an action on the 
-					index controller
-
-				-->
-	
-				<div id="left-box" class="flight-search-box place-input">
-					<div id="departure">
-						<!-- <div class="input-title">From:</div>  -->
-						<input placeholder="From" class="city-input rounded" type="text">
-					</div>
-
-					<div class="arrow"></div>
-					<div class="drop-down">
-						<div class="arrow_box rounded suggestions-box" id="departure-suggestions">
-							<ul class="suggestions">
-								{{#each destination in model}}
-									<li>{{destination.destinationCode}}  -  {{destination.airport}}, {{destination.countryName}}</li>
-								{{/each}}
-							</ul>
-						</div>
-					</div>
-
-
-					<div id="departure-date">
-						Depart: 
-						<input class="date-input" id="departure-datepicker" type="text">
-						<!-- <img src="png/glyphicons-55-clock.png"> -->
+				<div class="arrow"></div>
+				<div class="drop-down">
+					<div class="arrow_box rounded suggestions-box" id="departure-suggestions">
+						<ul class="suggestions">
+							{{#each destination in model}}
+							<li>{{destination.destinationCode}}  -  {{destination.airport}}, {{destination.countryName}}</li>
+							{{/each}}
+						</ul>
 					</div>
 				</div>
 
-				<div class="flight-search-box place-input">
-					<div class="return">
-						<!-- <div class="input-title">To:</div>  -->
-						<input placeholder="To" class="city-input rounded" type="text">
-					</div>
-					<div class="arrow" style="display:none;"></div>
-					<div class="drop-down" style="display:none;">
-						<div class="arrow_box rounded suggestions-box" id="return-suggestions">
-							<ul class="suggestions">
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-								<li>SAO - São Paulo, Brazil (GRU, CGH, VCP)</li>
-							</ul>
-						</div>
-					</div>
 
-					<div id="return-date">
-						Return:
-						<input id="return-datepicker" class="date-input" type="text">
-						<!-- <img src="png/glyphicons-55-clock.png"> -->
+
+				<div id="departure-date">
+					Depart: 
+					{{input value=departDate type="text" class="date-input" id="departure-datepicker" placeholder="dd-mm-yyyy"}}
+				</div>
+			</div>
+
+			<div class="flight-search-box place-input">
+				<div class="return">
+					{{input value=to placeholder="To" class="city-input rounded" type="text"}}
+				</div>
+				<div class="arrow" style="display:none;"></div>
+				<div class="drop-down" style="display:none;">
+					<div class="arrow_box rounded suggestions-box" id="return-suggestions">
+						<ul class="suggestions">
+							{{#each destination in model}}
+							<li>{{destination.destinationCode}}  -  {{destination.airport}}, {{destination.countryName}}</li>
+							{{/each}}
+						</ul>
 					</div>
 				</div>
 
-				<div class="flight-search-box seat-input">
-					<div class="value-select">
-						People:
-						<select id="people-selection" name="people">
-							<option value=1>1</option>
-							<option value=2>2</option>
-							<option value=3>3</option>
-							<option value=4>4</option>
-							<option value=5>5</option>
-							<option value=6>6</option>
-						</select>
-					</div>
-					<div class="value-select">
-						Class: 
-						<select id="class-selection">
-						{{#each item in controller.tickets}}
-							<option {{bind-attr value="item.classCode"}}>{{item.details}}</option>
-						{{/each}}
-						<!--
-							<option value="economy">Economy</option>
-							<option value="business">Business</option>
-							<option value="first">First Class</option>
-						-->
-						</select>
-					</div>
+				<div id="return-date">
+					Return:						
+					{{input value=returntDate type="text" id="return-datepicker"  class="date-input" placeholder="dd-mm-yyyy"}}
 				</div>
+			</div>
 
-				<div class="flight-search-box" id="search-button-wrapper">
-					{{#link-to 'results'}}<input id="search-button" class="rounded" type="submit" value="Search">{{/link-to}}
+			<div class="flight-search-box seat-input">
+				<div class="value-select">
+					People:
+					{{view "select"
+					content=controller.people
+					optionValuePath="content.number"
+					optionLabelPath="content.number"
+					id="people-selection"}}
+				
 				</div>
+				<div class="value-select">
+					Class: 
+					{{view "select"
+					content=controller.tickets
+					optionValuePath="content.classCode"
+					optionLabelPath="content.details"
+					id="class-selection"}}
+				</div>
+			</div>
+
+			<div class="flight-search-box" id="search-button-wrapper">
+				<button id="search-button" class="rounded" type="submit">Search</button>
+			</div>
+
+			</form>
 		</div>
 	</div>
 
