@@ -16,7 +16,7 @@
 				<div class="drop-down">
 					<div class="arrow_box rounded suggestions-box" id="departure-suggestions">
 						<ul class="suggestions">
-							{{#each destination in model}}
+							{{#each destination in dest}}
 							<li>{{destination.destinationCode}}  -  {{destination.airport}}, {{destination.countryName}}</li>
 							{{/each}}
 						</ul>
@@ -39,7 +39,7 @@
 				<div class="drop-down" style="display:none;">
 					<div class="arrow_box rounded suggestions-box" id="return-suggestions">
 						<ul class="suggestions">
-							{{#each destination in model}}
+							{{#each destination in dest}}
 							<li>{{destination.destinationCode}}  -  {{destination.airport}}, {{destination.countryName}}</li>
 							{{/each}}
 						</ul>
