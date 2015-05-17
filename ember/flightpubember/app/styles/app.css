@@ -495,8 +495,7 @@ a{
 
 }
 .total-time{
-	margin-top: 33px;
-
+	margin-top: 25px;
 }
 
 .total-time .time-img{
@@ -578,7 +577,7 @@ a{
 }
 
 .trip{
-	padding-top: 19px;
+	padding-top: 13px;
 	font-size: 17px;
 	width: 100%;
 }
