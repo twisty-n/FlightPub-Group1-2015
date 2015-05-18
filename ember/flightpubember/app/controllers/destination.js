@@ -17,9 +17,7 @@ export default Ember.ObjectController.extend({
 		},
 
 		destinationSelected: function(suggestionBox){
-			var selectedID = '#' + this.get('destinationCode');			
-			$('#'+suggestionBox).val($(selectedID).text());
-			return true;
+			this.send('suggestionSelected', this.get('destinationCode'), suggestionBox);
 		}
 	}
 });

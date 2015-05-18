@@ -1,31 +1,26 @@
-{{view Ember.Select
-	contentBinding="App.peopleController"
-	selectionBinding="App.selectedPersonController.person"
-	optionLabelPath="content.fullName"
-	optionValuePath="content.id"}}
 	<div id="search-wrapper">
 
 		<div id="flight-search">
 			<form class="form-horizontal" {{action "flightSearch" on="submit"}}>
-
+				
 				<div id="from-box" class="flight-search-box place-input">
 					<div id="departure">
 						{{input value=fromDestination type="text" class="city-input rounded" id="from" placeholder="From" focus-out="hideSuggestions"
-						}}
+					}}
+				</div>
+
+				<div class="arrow"></div>
+				<div class="drop-down">
+					{{#view 'destination-suggestion'}}
+					<div class="arrow_box rounded suggestions-box" id="departure-suggestions">
+						<ul class="suggestions">
+							{{#each destination in fromDestinationSearch itemController="destination"}}
+
+							<li {{bind-attr id="destination.destinationCode"}} {{action "fromSelected"}}>{{destination.detail}}</li>
+							{{/each}}
+						</ul>
 					</div>
-
-					<div class="arrow"></div>
-					<div class="drop-down">
-						{{#view 'destination-suggestion'}}
-						<div class="arrow_box rounded suggestions-box" id="departure-suggestions">
-							<ul class="suggestions">
-								{{#each destination in fromDestinationSearch itemController="destination"}}
-
-									<li {{bind-attr id="destination.destinationCode"}} {{action "fromSelected"}}>{{destination.detail}}</li>
-								{{/each}}
-							</ul>
-						</div>
-						{{/view}}
+					{{/view}}
 				</div>
 
 
@@ -41,7 +36,7 @@
 				</div>
 				<div class="arrow"></div>
 				<div class="drop-down">
-				{{#view 'destination-suggestion'}}
+					{{#view 'destination-suggestion'}}
 					<div class="arrow_box rounded suggestions-box" id="return-suggestions">
 						<ul class="suggestions">
 							{{#each destination in toDestinationSearch itemController="destination"}}
