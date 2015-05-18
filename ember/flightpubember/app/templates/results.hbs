@@ -67,12 +67,8 @@
 			</div>
 
 			<div id="result-graph">
-				{{#each flight in controller.filteredFlights itemController="flight"}}
-					{{flight.price}}
-				{{/each}}
-
 				{{#each flight in controller.sortedFlights itemController="flight"}}
-				<div class="result-item rounded" {{action  "selected"}}>
+				<div class="result-item rounded" {{action  "selected" flight}}>
 					<div class="result-left">
 						<div class="airline">
 							<div class="airline-image">

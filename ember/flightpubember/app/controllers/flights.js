@@ -18,35 +18,35 @@ export default Ember.ArrayController.extend({
     }
 
     return flights.filter(function(flight, index, enumerable){
-        return flight.get('price') >= 600;
+      return flight.get('price') >= 600;
     });
 
 
     //TODO: make sure this is working, I don't think we
     //      currently have stops data
-    if(this.get('noStops')){
-      flights = flights.filter(function(flight){
-        return (flight.get('stops') == 0);
-      })
-    }
+    // if(this.get('noStops')){
+    //   flights = flights.filter(function(flight){
+    //     return (flight.get('stops') === 0);
+    //   });
+    // }
 
-    //TODO: make sure this also works
-    if(this.get('maxStops') > 0)
-    {
-      flights = flights.filter(function(flight){
-        return (flight.get('stops') > this.get('maxStops'));
-      })
-    }
+    // //TODO: make sure this also works
+    // if(this.get('maxStops') > 0)
+    // {
+    //   flights = flights.filter(function(flight){
+    //     return (flight.get('stops') > this.get('maxStops'));
+    //   });
+    // }
 
-    if(this.get('mustStopAt') != ''){
-      //not certain how to implement this. Have to look in the
-      // stops array of the flight to find whether it contains
-      // a stop at the place
-    }
+    // if(this.get('mustStopAt') !== ''){
+    //   //not certain how to implement this. Have to look in the
+    //   // stops array of the flight to find whether it contains
+    //   // a stop at the place
+    // }
+    // return flights;
 
 
 
-    return flights;
 
   }.property('model.isLoaded', 'model', 'sortProperties'),
 
@@ -55,23 +55,52 @@ export default Ember.ArrayController.extend({
   
   actions: {
     sortBy: function(property) {
-    	var index = this.get('sortProperties').indexOf(property);
-    	if(index < 0)
-    	{
-    		this.get('sortProperties').pushObject(property);
-    	}
-    	else
-    	{
-    		this.get('sortProperties').removeObject(property);
-    	}
-    	console.log(this.get('sortProperties'));
+
+      var index = this.get('sortProperties').indexOf(property);
+      if(index < 0)
+      {
+        this.get('sortProperties').pushObject(property);
+      }
+      else
+      {
+        this.get('sortProperties').removeObject(property);
+      }
+      console.log(this.get('sortProperties'));
     },
 
     filterBy: function(property){
 
+    },
+
+    selected: function(flight){
+      var currentSelectedFlight = this.get('selectedFlight'); 
+      
+      if(currentSelectedFlight)
+      {
+        //hide the current flight because no matter what click 
+        // happens we want it to hide again
+        var id = '#'+currentSelectedFlight.get('flightNumber');
+
+        $(id).animate({height: 1}, 93, function(){
+          $(id).css({'display':'none'});
+        });
+      }
+
+      if(flight === currentSelectedFlight)
+      {
+        this.set('selectedFlight', null);
+      }
+      else
+      {
+        this.set('selectedFlight', flight);
+
+        //display the newly selected flight
+        var flightID = '#' + flight.get('flightNumber');
+        $(flightID).css({'display':'block'});
+        $(flightID).animate({height: 93}, 93);
+
+      }
     }
 
   },
-
-  flightByPrice: false
 });
