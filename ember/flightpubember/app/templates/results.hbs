@@ -46,7 +46,7 @@
 				<div id="main-filters">
 					<button {{action "sortBy" "price:asc"}} id="cheapest-first-filter">cheapest first</button> 
 					<button {{action "sortBy" "departureTime:asc"}}id="shortest-first-filter">quickest first</button> 
-					<button id="no-stops-filter">no stops</button> <!-- this button acts like a checkbox? -->	
+					<button id="no-stops-filter" {{action "filterBy" "noStops"}}>no stops</button> <!-- this button acts like a checkbox? -->	
 				</div>
 				<select id="max-stops-filter">
 					<option value="-1">Max Stops</option>
@@ -67,6 +67,9 @@
 			</div>
 
 			<div id="result-graph">
+				{{#each flight in controller.filteredFlights itemController="flight"}}
+					{{flight.price}}
+				{{/each}}
 
 				{{#each flight in controller.sortedFlights itemController="flight"}}
 				<div class="result-item rounded" {{action  "selected"}}>

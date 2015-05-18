@@ -18,7 +18,9 @@ export default Ember.ArrayController.extend({
     // calling functions within controllers makes it hard to refactor, but
     // it's possible. 
 
-    toDestinationSearch: function(){
+    //TODO: cleanup this mess, remove repeated code
+    toDestinationSearch: function(test){
+        alert(test);
         var filter = this.get('toDestination');
 
         if(filter === undefined)
@@ -165,6 +167,8 @@ export default Ember.ArrayController.extend({
                 //success!
                 //we pass this valid shit to the server
                 // and redirect to the results page
+                //TODO: figure out how to pass these values to the server
+                //      after we switch to the results page
                 this.transitionToRoute('results');
             }
             else
