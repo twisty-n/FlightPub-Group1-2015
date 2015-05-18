@@ -39,11 +39,15 @@ Rails.application.routes.draw do
   get 'login' =>'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
-  get 'logout' => 'sessions#destroy'    # ot quite restful, but will work
+  get 'logout' => 'sessions#destroy'    # not quite restful, but will work
 
   get 'auth/:provider/callback', to: 'sessions#create_oa'
   get 'auth/failure', to: redirect('/')
   get 'signout', to: 'sessions#destroy', as: 'signout'
+  
+  # MATT'S SEARCH TESTING JUNK ==================================================================
+  
+  get 'search' => 'flight_search#search'
 
 
 end
