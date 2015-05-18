@@ -2,147 +2,214 @@ import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
 
-	fromDestination: '',
-	toDestination: '',
-	departDate: '',
-	returnDate: '',
-	selectedClass: '',
-	numberOfPeople: '1',
+    fromDestination: '',
+    toDestination: '',
+    departDate: '',
+    returnDate: '',
+    selectedClass: '',
+    numberOfPeople: '1',
 
 
 
-	//these are the same destination search but for different inputs
-	// I'm doing it this way to quickly move on to other stuff, and since
-	// calling functions within controllers makes it hard to refactor, but
-	// it's possible. 
+    //these are the same destination search but for different inputs
+    // I'm doing it this way to quickly move on to other stuff, and since
+    // calling functions within controllers makes it hard to refactor, but
+    // it's possible. 
 
-	toDestinationSearch: function(){
-		var filter = this.get('toDestination');
-		console.log(filter);
-		if(filter === undefined)
-		{
-			filter = '';
-		}
+    toDestinationSearch: function(){
+        var filter = this.get('toDestination');
 
-		var result = this.get('destinations').filter(function(item, index, enumerable){
-			var stringToMatch = '';
-			stringToMatch += (item.get('destinationCode') || ''); 
-			stringToMatch += (item.get('countryName') || '');
-			stringToMatch += (item.get('alternateName1') || '');
-			stringToMatch += (item.get('countryCode3') || '');
-			stringToMatch += (item.get('countryCode2') || '');
-			stringToMatch += (item.get('airport') || '');
+        if(filter === undefined)
+        {
+            filter = '';
+        }
 
-			return stringToMatch.toLowerCase().match(filter.toLowerCase());
-		});
+        var result = this.get('destinations').filter(function(item, index, enumerable){
+            var stringToMatch = '';
+            stringToMatch += (item.get('destinationCode') || ''); 
+            stringToMatch += (item.get('countryName') || '');
+            stringToMatch += (item.get('alternateName1') || '');
+            stringToMatch += (item.get('countryCode3') || '');
+            stringToMatch += (item.get('countryCode2') || '');
+            stringToMatch += (item.get('airport') || '');
 
-		if(result.length === 0)
-		{
-			$("#to-box .drop-down").hide();
-			$("#to-box .arrow").hide();
-		}
-		else
-		{
-			$("#to-box .drop-down").show();
-			$("#to-box .arrow").show();
-		}
+            return stringToMatch.toLowerCase().match(filter.toLowerCase());
+        });
 
-		return result;
+        if(result.length === 0)
+        {
+            this.send('hideSuggestions', 'to');
+        }
+        else
+        {
+            this.send('showSuggestions', 'to');
+        }
 
-	}.property('toDestination'),
+        return result;
 
-	fromDestinationSearch: function(){
-		var filter = this.get('fromDestination');
-		if(filter === undefined)
-		{
-			filter = '';
-		}
+    }.property('toDestination'),
 
-		var result = this.get('destinations').filter(function(item, index, enumerable){
-			var stringToMatch = '';
-			stringToMatch += (item.get('destinationCode') || '');
-			stringToMatch += (item.get('countryName') || '');
-			stringToMatch += (item.get('alternateName1') || '');
-			stringToMatch += (item.get('countryCode3') || '');
-			stringToMatch += (item.get('countryCode2') || '');
-			stringToMatch += (item.get('airport') || '');
+    fromDestinationSearch: function(){
+        var filter = this.get('fromDestination');
+        if(filter === undefined)
+        {
+            filter = '';
+        }
 
-			return stringToMatch.toLowerCase().match(filter.toLowerCase());
-		});
+        var result = this.get('destinations').filter(function(item, index, enumerable){
+            var stringToMatch = '';
+            stringToMatch += (item.get('destinationCode') || '');
+            stringToMatch += (item.get('countryName') || '');
+            stringToMatch += (item.get('alternateName1') || '');
+            stringToMatch += (item.get('countryCode3') || '');
+            stringToMatch += (item.get('countryCode2') || '');
+            stringToMatch += (item.get('airport') || '');
 
-		if(result.length === 0)
-		{
-			$("#from-box .drop-down").hide();
-			$("#from-box .arrow").hide();
-		}
-		else
-		{
-			$("#from-box .drop-down").show();
-			$("#from-box .arrow").show();
-		}
+            return stringToMatch.toLowerCase().match(filter.toLowerCase());
+        });
 
-		return result;
+        if(result.length === 0)
+        {
+            this.send('hideSuggestions', 'from');
+        }
+        else
+        {
+            this.send('showSuggestions', 'from');
+        }
 
-	}.property('fromDestination'),
+        return result;
+
+    }.property('fromDestination'),
 
 
-	selectionMade: function(){
-		console.log(this.get('fromDestination'));
-	}.property('fromDestination'),
+    actions: {
+        flightSearch: function(){
+            
+            console.log(this.get('fromDestination'));
+            console.log(this.get('toDestination'));
+            console.log(this.get('departDate'));
+            console.log(this.get('returnDate'));
+            console.log(this.get('selectedClass'));
+            console.log(this.get('numberOfPeople'));
+
+            console.log("we will get all the stuff and send it away for processing");
+
+            //getting all the values we want to pass to the server
+
+            var fromDestination = this.get('fromDestination');
+            var toDestination = this.get('toDestination');
+            var departDate = this.get('departDate');
+            var returnDate = this.get('returnDate');
+            var selectedClass = this.get('selectedClass');
+            var numberOfPeople = this.get('numberOfPeople');
 
 
-	actions: {
-		flightSearch: function(){
-			
-			console.log(this.get('fromDestination'));
-			console.log(this.get('toDestination'));
-			console.log(this.get('departDate'));
-			console.log(this.get('returnDate'));
-			console.log(this.get('selectedClass'));
-			console.log(this.get('numberOfPeople'));
+            var incorrectValues = [];
+            //gotta check which ones are valid, if they aren't we tell the user
 
-			console.log("we will get all the stuff and send it away for processing");
-		},
+            //fromDestination, we check to see if the thing we've been passed matches any of the 
+            // values is 'destinations'
 
-		setFrom: function(value){
-			console.log("gotta set from value to "+value);
-		},
+            if(fromDestination)
+            {
+                
+            }
+            else
+            {
+                incorrectValues.push('from');
+            }
+
+            if(toDestination)
+            {
+
+            }
+            else
+            {
+                incorrectValues.push('to');
+            }
+
+            if(departDate)
+            {
+            }
+            else
+            {
+                incorrectValues.push('departure-datepicker');
+            }
+
+            if(returnDate)
+            {
+            }
+            else
+            {
+                incorrectValues.push('return-datepicker');
+            }
 
 
-		/* hovering and selecting from results list */
+            if(incorrectValues.length == 0)
+            {
+                //success!
+                //we pass this valid shit to the server
+                // and redirect to the results page
+                this.transitionToRoute('results');
+            }
+            else
+            {
+                for(var i = 0; i < incorrectValues.length; i++)
+                {
+                    this.send('incorrectValue', incorrectValues[i]);
+                }
+            }
 
-		hoveringSuggestions: function(){
-			console.log("hovering");
-			this.set('hoveringResults', true);
-		},
+        },
 
-		stoppedHoveringSuggestions: function(){
-			this.set('hoveringResults', false);		
-			console.log("off hover");
-		},
+        incorrectValue: function(value){
+            $("#"+value).css({'border-color':'#FF0000'});
+        },
 
-		hideSuggestions: function(){
-			if(!this.get('hoveringResults'))
-			{
-				$("#from-box .drop-down").hide();
-				$("#from-box .arrow").hide();
-				$("#to-box .drop-down").hide();
-				$("#to-box .arrow").hide();
-			}
-		},
+        setFrom: function(value){
+            console.log("gotta set from value to "+value);
+        },
 
-		fromSelected: function(){
-			this.set('hoveringResults', false);
-			this.send('hideSuggestions');
-			this.set('fromDestination', $('#from').val());
-		},
+        hideSuggestions: function(){
+            if(this.get('hoveringResults') == true){ 
+                //don't wanna hide the suggestions
+                // if the user is hovering over them to select one
+                return; 
+            }
 
-		toSelected: function(){
-			this.set('hoveringResults', false);
-			this.send('hideSuggestions');
-			this.set('toDestination', $('#to').val());
-		},
-	}
+            $("#to-box .drop-down").hide();
+            $("#to-box .arrow").hide();
+            $("#from-box .drop-down").hide();
+            $("#from-box .arrow").hide();
+        },
+
+        showSuggestions: function(suggestionBox){
+            $("#"+suggestionBox+"-box .drop-down").show();
+            $("#"+suggestionBox+"-box .arrow").show();
+        },
+
+        hoveringSuggestions: function(){
+            this.set('hoveringResults', true);
+        },
+
+        stoppedHoveringSuggestions: function(){
+            this.set('hoveringResults', false);
+        },
+
+        destinationSelected: function(destionationBox){
+            // setting to false because otherwise the hide would be blocked
+            this.set('hoveringResults', false);
+            this.send('hideSuggestions');
+
+            //this works because destinationBox is either 'from' or 'to'
+            //which corresponds to the id's on the page and to the variables we store
+
+            var val = $('#'+destionationBox).val();
+            var destVariable = destionationBox + 'Destination';
+
+            this.set(destVariable, val);
+        },
+    }
 
 });
 

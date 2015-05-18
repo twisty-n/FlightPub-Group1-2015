@@ -9,14 +9,16 @@ export default Ember.ObjectController.extend({
 
 	actions: {
 		fromSelected: function(){
-			var selectedID = '#' + this.get('destinationCode');			
-			$('#from').val($(selectedID).text());
-			return true;
+			this.send('destinationSelected', 'from');
 		},
 
 		toSelected: function() {
-			var selectedID = '#' + this.get('destinationCode');
-			$('#to').val($(selectedID).text());	
+			this.send('destinationSelected', 'to');
+		},
+
+		destinationSelected: function(suggestionBox){
+			var selectedID = '#' + this.get('destinationCode');			
+			$('#'+suggestionBox).val($(selectedID).text());
 			return true;
 		}
 	}
