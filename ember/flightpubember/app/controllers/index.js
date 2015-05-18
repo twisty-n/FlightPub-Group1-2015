@@ -91,17 +91,8 @@ export default Ember.ArrayController.extend({
 
     actions: {
         flightSearch: function(){
-
-            console.log(this.get('fromDestination'));
-            console.log(this.get('toDestination'));
-            console.log(this.get('departDate'));
-            console.log(this.get('returnDate'));
-            console.log(this.get('selectedClass'));
-            console.log(this.get('numberOfPeople'));
-
-            console.log("we will get all the stuff and send it away for processing");
-
             //getting all the values we want to pass to the server
+            // checking that they are valid
 
             var fromCode = this.get('fromCode');
             var toCode = this.get('toCode');
@@ -113,67 +104,49 @@ export default Ember.ArrayController.extend({
 
 
             var incorrectValues = [];
-            //gotta check which ones are valid, if they aren't we tell the user
 
-            //TODO: clean up this repeated code
-            if(fromCode)
+            var _this = this; //allows us access this from function scope
+            function validateCode(code, field)
             {
-                //check if fromCode matches any of the destination codes in 
+                if(!code){
+                    incorrectValues.push(field);
+                    return false;
+                }
+
+                //check if code matches any of the destination codes in 
                 // our list of destination codes
                 // if it has a single match it's valid
-                var result = this.get('destinations').filter(function(item, index, enumerable){
-                    var stringToMatch = (item.get('destinationCode') || '');
-
-                    return stringToMatch.toLowerCase().match(fromCode.toLowerCase());
+                var result = _this.get('destinations').filter(function(item, index, enumerable){
+                    return (item.get('destinationCode') || '').toLowerCase().match(code.toLowerCase());
                 });
 
-                if(result.length != 1)
-                {
-                    incorrectValues.push('from');
+                if (result.length != 1){
+                    incorrectValues.push(field);
                 }
                 else
                 {
-                    this.send('correctValue', 'from');
+                    _this.send('correctValue', field);
                 }
             }
-            else
-            {
-                incorrectValues.push('from');
-            }
-
-            if(toCode)
-            {
-                 //check if toCode matches any of the destination codes in 
-                // our list of destination codes
-                // if it has a single match it's valid
-                var result = this.get('destinations').filter(function(item, index, enumerable){
-                    var stringToMatch = (item.get('destinationCode') || '');
-                    
-                    return stringToMatch.toLowerCase().match(toCode.toLowerCase());
-                });
-
-                if(result.length != 1)
-                {
-                    incorrectValues.push('to');
-                }
-                else
-                {
-                    this.send('correctValue', 'to');
-                }
-            }
-            else
-            {
-                incorrectValues.push('to');
-            }
-
+        
+            validateCode(fromCode, 'from');
+            validateCode(toCode, 'to');
+            
 
             function parseDate(date){
                 var from = date.split("-");
                 return new Date(from[2], from[1] - 1, from[0]);
             }
 
-            function validDate(date){
-                return date && date.length == 10 && parseDate(date);
+            function validDate(date, field){
+                if(date && date.length == 10 && parseDate(date))
+                {
+                    _this.send('correctValue', field);
+                }
+                else
+                {
+                    incorrectValues.push(field);
+                }
             }
 
             //departDate isn't before returnDate 
@@ -183,24 +156,8 @@ export default Ember.ArrayController.extend({
                 incorrectValues.push('return-datepicker');
             }
 
-            if(validDate(departDate))
-            {
-                this.send('correctValue', 'departure-datepicker');
-            }
-            else
-            {
-                incorrectValues.push('departure-datepicker');
-            }
-
-            if(validDate(returnDate))
-            {
-                this.send('correctValue', 'return-datepicker');
-            }
-            else
-            {
-                incorrectValues.push('return-datepicker');
-            }
-
+            validDate(departDate, 'departure-datepicker');
+            validDate(returnDate, 'return-datepicker');
 
 
             if(incorrectValues.length == 0)
