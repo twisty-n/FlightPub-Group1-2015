@@ -1,59 +1,47 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 flight_1:
-  trip_length:   4000
+  flight_time:   4000
   flight_number:     AAA111    
-  price:            8456    
-  seats_available:   10    
   departure_time:    2400    
   arrival_time:      1300
   destination:      Orgeon
   origin:           Boston
 
 flight_2:
-  trip_length:   3200
+  flight_time:   3200
   flight_number:     BBB111    
-  price:            852    
-  seats_available:   9    
   departure_time:    1200    
   arrival_time:      1300    
   destination:      Orange
   origin:           BoganVille
 
 flight_3:
-  trip_length:   7860
+  flight_time:   7860
   flight_number:     CCC111    
-  price:            963    
-  seats_available:   10    
   departure_time:    1200    
   arrival_time:      1300    
   destination:      Tamworth
   origin:           Sydney
 
 flight_4:
-  trip_length:   2700
+  flight_time:   2700
   flight_number:     DDD111    
-  price:            1340    
-  seats_available:   25    
   departure_time:    0100    
   arrival_time:      1300  
   destination:      Orgeon
   origin:           Orange  
 
 flight_5:
-  trip_length:   890404
+  flight_time:   890404
   flight_number:     HEX111    
-  price:            420    
-  seats_available:   100    
   departure_time:    1200    
   arrival_time:      1300  
   destination:      Halp
   origin:           Our load and saviour Cheezus  
 
 flight_6:
-  trip_length:   72000
+  flight_time:   72000
   flight_number:     HEX222    
-  price:            120    
-  seats_available:   1    
   departure_time:    1200    
   arrival_time:      1300    
   destination:      Herptastic Advanture Land
