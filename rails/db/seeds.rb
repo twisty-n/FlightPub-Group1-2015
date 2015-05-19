@@ -34,8 +34,8 @@ Flight.create(
               is_composite_flight:      false)	
 			  
 Flight.create(
-			  id: 						'3',
-			  flight_number:            'AAA111',
+			       id: 						'3',
+			        flight_number:            'AAA111',
               price:                    '8456',
               seatsAvailable:           '10',
               departureTime:            '2400',

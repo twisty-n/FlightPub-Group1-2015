@@ -45,7 +45,7 @@ output_on = true		#Make true
 		
 		puts "Converting flight activerecord associations to array of hash browns..."
 		array_of_hash_flights = raw_flights.as_json
-		puts "\n THE FLIGHT VALUES IN THE DATABASE ARE:\N"
+		puts "\n THE FLIGHT VALUES IN THE DATABASE ARE:\n"
 		
 		array_of_hash_flights.each do |value|
 			
@@ -62,13 +62,14 @@ output_on = true		#Make true
 	end	#eof search function
 	
 	
-	# This is the main search method
-	def self.search(target)
+	# This is the main search method. 
+	# Accepts a target city and origin as an argument (at the moment, more params later)
+	# and then runs a breadthfirst search on it
+	def self.search(target, origin)
 	
-		# verify the input is not blank
+		# verify the input is not blank or empty
 		if target == nill || target.blank
 			raise InvalidInputError "The input is invalid"
-		
 		end
 	
 	end	#eof search function
