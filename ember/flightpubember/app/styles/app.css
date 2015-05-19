@@ -855,11 +855,18 @@ a{
 
 /* Flight Results */ 
 
+#result-header{
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 25px;
+  color: #fff;
+}
+
 #results{
 	width:100%;
 	min-width: 880px;
 	background-color: #fff;
-	margin-top: 75px;
+	margin-top: 0px;
 }
 
 #result-graph-wrapper{
