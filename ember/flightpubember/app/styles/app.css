@@ -84,7 +84,7 @@ body{
 .suggestions-box{
 	width: 325px;
 	max-height: 220px;
-  	min-height: 36px;
+	min-height: 36px;
 	top: 10px;
 	left: 10px;
 	overflow: hidden;
@@ -384,19 +384,19 @@ input.rounded:focus {
 }
 
 #class-selection{
-  background: transparent;
-  /* width: 120px; */
-  /* padding: 5px; */
-  /* font-size: 16px; */
-  height: 30px;
-  /* -webkit-appearance: none; */
-  -moz-appearance: none;
-  appearance: none;
-  border: 1px solid #fff;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-  background: url(/assets/plane.png) 99% / 14% no-repeat #fff;
+	background: transparent;
+	/* width: 120px; */
+	/* padding: 5px; */
+	/* font-size: 16px; */
+	height: 30px;
+	/* -webkit-appearance: none; */
+	-moz-appearance: none;
+	appearance: none;
+	border: 1px solid #fff;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	background: url(/assets/plane.png) 99% / 14% no-repeat #fff;
 }
 
 
@@ -1235,23 +1235,34 @@ a{
 		padding-bottom: 10px;
 	}
 
-	.jumbotron{
+	.loginSignup{
 		width: 50%;
-		float:left;
+		margin: 0 auto;
 		height: 100%;
 	}
 
-	.jumbotron form{
+	.loginSignup form{
 		margin: 0 auto;
 		width: 50%;
 	}
 	
-	.jumbotron form button{
+	.loginSignup form button{
 		margin-top: 10px;
 	}
 
-	.jumbotron input {
+	.loginSignup input {
 		margin-top: 10px;
+	}
+
+	.loginSignup a{
+		position: relative;
+		color: #797979;
+	}
+
+	.loginSignup .btn.std-btn{
+		background-color: #1479C9;
+		color: white;
+		margin-left: 96px;
 	}
 
 	.std-btn{
@@ -1272,9 +1283,15 @@ a{
 	.full-page-white-wrapper{
 		width:100%;
 		background-color: #fff;
-
 		margin-top:30px;
-		height: 200px;
+	}
+
+	.full-page-white-center-50{
+		width: 50%;
+		margin: 0 auto;
+		height: 100%;
+		padding-top: 15px;
+		padding-bottom: 10px;
 	}
 
 	.full-page-white-center{

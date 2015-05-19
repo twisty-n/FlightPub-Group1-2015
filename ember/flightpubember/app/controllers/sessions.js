@@ -32,6 +32,9 @@ export default Ember.ObjectController.extend({
   token:               Ember.$.cookie('access_token'),
   currentUser:         Ember.$.cookie('auth_user'),
 
+  //for switching between displays or login and register
+  loginShowing: true,
+
   // create a observer binded to the token property of this controller
   // to set/remove the authentication tokens
   tokenChanged: (function() {
@@ -139,6 +142,21 @@ export default Ember.ObjectController.extend({
         password_confirmation: null
       })
       this.get('controllers.users/signup').send('createUser', data);
+    },
+
+    toggleLoginShowing: function(){
+      if(this.get('loginShowing')){
+          $("#login-section").hide();
+          $("#signup-section").show();
+          this.set('loginShowing', false);
+      }
+      else
+      {
+          $("#login-section").show();
+          $("#signup-section").hide();
+          this.set('loginShowing', true);
+
+      }
     }
   }
 });

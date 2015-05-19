@@ -1,6 +1,7 @@
 <div id="signup-wrapper">
 <div id="signup">
-    <div class="jumbotron">
+    <div id="login-section" class="loginSignup">
+     
       <form class="form-horizontal" {{action "loginUser" on="submit"}}>
         <div class="form-group">
           {{input value=email type="text" class="form-control input-lg" id="email" placeholder="Enter email"}}
@@ -10,10 +11,11 @@
         </div>
         <button type="submit" class="btn std-btn">Login</button>
       </form>
+
+      <a href="" {{action "toggleLoginShowing"}}>Signup</a>
     </div>
 
-    <!-- Need to make this so that its not hidoues with both of them displayed -->
-    <div class="jumbotron">
+    <div id="signup-section" style="display:none;" class="loginSignup">
       <form class="form-horizontal" {{action "registerUser" on="submit"}}>
         <!-- get email -->
         <div class="form-group">
@@ -29,6 +31,7 @@
         <div class="form-group">
           {{input value=password_confirmation type="password" class="form-control input-lg" id="password_confirmation" placeholder="Confirm password"}}
         </div>
+        <a href="" {{action "toggleLoginShowing"}}>Login</a>
         <button type="submit" class="btn std-btn">Register</button>
       </form>
     </div>
