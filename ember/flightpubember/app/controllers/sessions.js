@@ -115,7 +115,6 @@ export default Ember.ObjectController.extend({
               attemptedTrans.retry();
               _this.set('attemptedTransition', null);
             } else {
-
               if(user.get('role') === 'admin')
               {
                 _this.transitionToRoute('admin');
