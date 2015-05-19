@@ -34,12 +34,8 @@ export default Ember.ObjectController.extend({
 
   //for switching between displays or login and register
   loginShowing: true,
-
-  //for switching between admin and user
-  userShowing: true/*function(){
-    return true;
-    //return ( this.get('role') != 'admin' );
-  }*/, 
+  pageTitle: 'Login',
+  
 
   // create a observer binded to the token property of this controller
   // to set/remove the authentication tokens
@@ -155,12 +151,14 @@ export default Ember.ObjectController.extend({
           $("#login-section").hide();
           $("#signup-section").show();
           this.set('loginShowing', false);
+          this.set('pageTitle', 'Signup');
       }
       else
       {
           $("#login-section").show();
           $("#signup-section").hide();
           this.set('loginShowing', true);
+          this.set('pageTitle', 'Login');
 
       }
     },
