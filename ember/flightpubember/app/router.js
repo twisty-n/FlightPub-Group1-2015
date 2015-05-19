@@ -28,6 +28,7 @@ Router.map(function() {
   });
 
   this.route('profile');
+  this.route('admin');
   this.route('secret');
 
 
