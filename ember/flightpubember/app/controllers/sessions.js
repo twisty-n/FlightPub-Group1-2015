@@ -32,8 +32,7 @@ export default Ember.ObjectController.extend({
   token:               Ember.$.cookie('access_token'),
   currentUser:         Ember.$.cookie('auth_user'),
 
-  //for switching between displays or login and register
-  loginShowing: true,
+  //for switching between displays of login and register
   pageTitle: 'Login',
   
 
@@ -116,7 +115,15 @@ export default Ember.ObjectController.extend({
               attemptedTrans.retry();
               _this.set('attemptedTransition', null);
             } else {
-              _this.transitionToRoute('secret');
+
+              if(user.get('role') === 'admin')
+              {
+                _this.transitionToRoute('admin');
+              }
+              else
+              {
+                _this.transitionToRoute('profile');
+              }
             }
 
           });
