@@ -10,6 +10,7 @@
 # Replace this later with a flights fixture thang
 
 
+
 # To specify our own Fixtures, use a thing similar to below, 
 # changing the 'resource.yml' and Rsource.create! as needed
 
