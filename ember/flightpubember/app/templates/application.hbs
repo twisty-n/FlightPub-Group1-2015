@@ -4,7 +4,7 @@
         
 		<div id="login">
         {{# if isAuthenticated}}
-             {{#link-to 'secret'}}<!-- Will need to go to profile -->Profile{{/link-to}}            
+             {{#link-to 'profile'}}Profile{{/link-to}}            
              <a href="#" {{action "logout"}} >Logout</a>
              {{else}}
             {{#link-to 'sessions.index'}}Login{{/link-to}}
