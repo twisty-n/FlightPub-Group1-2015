@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150519131223) do
+ActiveRecord::Schema.define(version: 20150519140808) do
 
   create_table "airlines", force: :cascade do |t|
     t.string   "airline_code", limit: 255
@@ -94,6 +94,20 @@ ActiveRecord::Schema.define(version: 20150519131223) do
   add_index "saved_flights", ["flight_id"], name: "index_saved_flights_on_flight_id", using: :btree
   add_index "saved_flights", ["save_identifier_id"], name: "index_saved_flights_on_save_identifier_id", using: :btree
   add_index "saved_flights", ["user_id"], name: "index_saved_flights_on_user_id", using: :btree
+
+  create_table "ticket_availabilities", force: :cascade do |t|
+    t.integer  "flight_id",       limit: 4
+    t.integer  "ticket_type_id",  limit: 4
+    t.integer  "ticket_class_id", limit: 4
+    t.integer  "seats_available", limit: 4
+    t.integer  "price",           limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "ticket_availabilities", ["flight_id"], name: "index_ticket_availabilities_on_flight_id", using: :btree
+  add_index "ticket_availabilities", ["ticket_class_id"], name: "index_ticket_availabilities_on_ticket_class_id", using: :btree
+  add_index "ticket_availabilities", ["ticket_type_id"], name: "index_ticket_availabilities_on_ticket_type_id", using: :btree
 
   create_table "ticket_classes", force: :cascade do |t|
     t.string   "class_code", limit: 255
