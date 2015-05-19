@@ -35,6 +35,11 @@ export default Ember.ObjectController.extend({
   //for switching between displays or login and register
   loginShowing: true,
 
+  //for switching between admin and user
+  userShowing: function(){
+    return ( this.get('role') != 'admin' );
+  }, 
+
   // create a observer binded to the token property of this controller
   // to set/remove the authentication tokens
   tokenChanged: (function() {
@@ -157,6 +162,8 @@ export default Ember.ObjectController.extend({
           this.set('loginShowing', true);
 
       }
-    }
+    },
+
+
   }
 });

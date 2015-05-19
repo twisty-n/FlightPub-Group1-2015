@@ -1301,3 +1301,13 @@ a{
 		padding-top: 15px;
 		padding-bottom: 10px;
 	}
+
+	/* Admin Page */
+
+	.admin-inside{
+		margin-left: 30px;
+	}
+	
+	.admin-inside-2{
+		margin-left: 20px;
+	}
