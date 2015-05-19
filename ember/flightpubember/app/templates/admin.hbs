@@ -1,0 +1,152 @@
+<h1 id="page-title-small">Administration</h1>
+<div id="user-info" class="full-page-white-wrapper">
+	<div class="full-page-white-center-50">
+		<!-- TODO: fix this up once we have users list going -->
+		<div id="users-admin">
+			<h2>User Admin</h2>	
+			<div class="admin-inside">
+				{{#if users}}
+				<div id="user-filter-wrapper">
+					{{input value=userFilter type="text" class="" id="user-filter" placeholder="Search"}}
+				</div>
+				<div id="user-list">
+					<ul>
+						{{#each user}}
+						<li>
+							<div class="user-name">Al</div>
+							<div class="user-email">Al@PartyTime.com</div>
+							<div class="disable-account">Disabled: <input type="checkbox" checked></div>
+							<div class="account-type">AccountType: 
+								<select>
+									<option value="user">User</option>
+									<option value="admin">Admin</option>
+								</select>
+							</div>
+						</li>
+						{{/each}}
+					</ul>
+				</div>
+				<a href="" {{action "expandList"}}>expand</a>
+				{{else}}
+				<div id="no-users">No Users</div>
+				{{/if}}
+			</div>
+		</div>
+
+		<div id="flight-admin">
+			<h2>Flight Admin</h2>
+			<div class="admin-inside">
+				<div id="new-flight">
+					<h3>Flight Creation</h3>
+
+					<div class="admin-inside-2">
+						<form >
+							<input type="text" placeholder="Airline"><br/>
+							<input type="text" placeholder="Origin"><br/>
+							<input type="text" placeholder="Destination"><br/>
+							<input type="text" placeholder="Price"><br/>
+
+							<label>Departure Time</label>
+							<input type="text" placeholder="dd-mm-yyyy"><br/>
+							<label>Arrival Time</label>
+							<input type="text" placeholder="dd-mm-yyyy"><br/>
+
+							Tell me what other shit we need here<br/>
+							<button>create</button>
+						</form>
+					</div>
+
+				</div>
+				<div id="remove-flight">
+					<h3>Flight Removal</h3>
+
+					<div class="admin-inside-2">
+						<div id="remove-flight-search">
+							<input type="text" placeholder="Flight Number">
+							<input type="text" placeholder="Airline">
+							<button>find flight</button>
+						</div>
+						<div id="remove-flight-results">
+							<!-- {each flight in flightsForRemoval} -->
+							<div class="flight-to-remove">
+								<div>Airline</div>
+								<div>Flight Number</div>
+								<div>From: Origin</div>
+								<div>To: Destination</div>
+								<button>Delete</button>
+							</div>
+							<!-- {/each} -->
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+		<div id="airline-admin">
+			<h2>Airline Admin</h2>
+			<div class="admin-inside">
+				<div id="purchase-policy">
+					<h3>Purchase Policy</h3>
+
+					<div class="admin-inside-2">
+						<textarea placeholder="flight purchase policy"></textarea>
+						<br/>
+						<button>submit</button>
+					</div>
+
+				</div>
+
+				<div id="new-airline">
+					<h3>Add an Airline</h3>
+
+					<div class="admin-inside-2">
+						<input type="text" placeholder="Name">
+						<input type="text" placeholder="AirlineCode">
+						<input type="text" placeholder="Country">
+						<button>create</button>
+					</div>
+				</div>
+
+				<div id="existing-airlines">
+					<h3>Airlines</h3>
+
+					<div class="admin-inside-2">
+						<div id="airlines-list">
+							<!-- {each airline in airlines} -->
+							<div class="airline">
+								<div>Ariline Name</div>
+								<div>Airline Code</div>
+								<div>Airline Country</div>
+								<button>Delete</button>
+							</div>
+							<!-- {/each} -->
+						</div>
+						<a href="" {{action "expandAirlinesList"}}>expand</a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div id="promotions-admin">
+			<h2>Promotions</h2>
+			<div class="admin-inside">
+
+
+			</div>
+		</div>
+
+		<div id="admin-settings">
+			<h2>Settings</h2>
+			<div class="admin-inside">
+				<input type="text" placeholder="email">
+				<input type="text" placeholder="new password">
+				<input type="text" placeholder="confirm password">
+
+				<button>save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
