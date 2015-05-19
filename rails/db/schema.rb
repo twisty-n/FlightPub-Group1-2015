@@ -53,9 +53,9 @@ ActiveRecord::Schema.define(version: 20150514125408) do
   create_table "flights", force: :cascade do |t|
     t.string   "flight_number",       limit: 255
     t.decimal  "price",                           precision: 10
-    t.string   "seatsAvailable",      limit: 255
-    t.string   "departureTime",       limit: 255
-    t.string   "arrivalTime",         limit: 255
+    t.string   "seats_available",      limit: 255
+    t.string   "departure_time",       limit: 255
+    t.string   "arrival_time",         limit: 255
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
     t.integer  "trip_length",         limit: 4

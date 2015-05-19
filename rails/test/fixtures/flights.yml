@@ -1,6 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 flight_1:
-  flight_time:   4000
+  trip_length:   4000
   flight_number:     AAA111    
   price:            8456    
   seats_available:   10    
@@ -10,7 +10,7 @@ flight_1:
   origin:           Boston
 
 flight_2:
-  flight_time:   3200
+  trip_length:   3200
   flight_number:     BBB111    
   price:            852    
   seats_available:   9    
@@ -20,7 +20,7 @@ flight_2:
   origin:           BoganVille
 
 flight_3:
-  flight_time:   7860
+  trip_length:   7860
   flight_number:     CCC111    
   price:            963    
   seats_available:   10    
@@ -30,7 +30,7 @@ flight_3:
   origin:           Sydney
 
 flight_4:
-  flight_time:   2700
+  trip_length:   2700
   flight_number:     DDD111    
   price:            1340    
   seats_available:   25    
@@ -40,7 +40,7 @@ flight_4:
   origin:           Orange  
 
 flight_5:
-  flight_time:   890404
+  trip_length:   890404
   flight_number:     HEX111    
   price:            420    
   seats_available:   100    
@@ -50,7 +50,7 @@ flight_5:
   origin:           Our load and saviour Cheezus  
 
 flight_6:
-  flight_time:   72000
+  trip_length:   72000
   flight_number:     HEX222    
   price:            120    
   seats_available:   1    
