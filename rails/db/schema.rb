@@ -11,8 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+ActiveRecord::Schema.define(version: 20150519122259) do
 
-ActiveRecord::Schema.define(version: 20150514125408) do
+  create_table "airlines", force: :cascade do |t|
+    t.string   "airline_code", limit: 255
+    t.string   "airline_name", limit: 255
+    t.integer  "country_id",   limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "airlines", ["country_id"], name: "index_airlines_on_country_id", using: :btree
 
   create_table "api_keys", force: :cascade do |t|
     t.integer  "user_id",      limit: 4
@@ -53,9 +62,9 @@ ActiveRecord::Schema.define(version: 20150514125408) do
   create_table "flights", force: :cascade do |t|
     t.string   "flight_number",       limit: 255
     t.decimal  "price",                           precision: 10
-    t.string   "seats_available",      limit: 255
-    t.string   "departure_time",       limit: 255
-    t.string   "arrival_time",         limit: 255
+    t.string   "seats_available",     limit: 255
+    t.string   "departure_time",      limit: 255
+    t.string   "arrival_time",        limit: 255
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
     t.integer  "trip_length",         limit: 4
@@ -65,6 +74,9 @@ ActiveRecord::Schema.define(version: 20150514125408) do
     t.integer  "leg_1_id",            limit: 4
     t.integer  "leg_2_id",            limit: 4
   end
+
+  add_index "flights", ["leg_1_id"], name: "fk_rails_addabd29ea", using: :btree
+  add_index "flights", ["leg_2_id"], name: "fk_rails_739ad5a492", using: :btree
 
   create_table "save_identifiers", force: :cascade do |t|
     t.string "s_type",       limit: 255
@@ -85,12 +97,8 @@ ActiveRecord::Schema.define(version: 20150514125408) do
     t.string   "class_code", limit: 255
     t.string   "details",    limit: 255
     t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false  
+    t.datetime "updated_at",             null: false
   end
-  
-  add_index "flights", ["leg_1_id"], name: "fk_rails_addabd29ea", using: :btree
-  add_index "flights", ["leg_2_id"], name: "fk_rails_739ad5a492", using: :btree
-
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name",       limit: 255, default: ""
@@ -109,6 +117,7 @@ ActiveRecord::Schema.define(version: 20150514125408) do
   add_index "users", ["email"], name: "index_Users_on_email", unique: true, using: :btree
   add_index "users", ["id"], name: "userID", unique: true, using: :btree
 
+  add_foreign_key "airlines", "countries"
   add_foreign_key "api_keys", "users"
   add_foreign_key "flights", "flights", column: "leg_1_id"
   add_foreign_key "flights", "flights", column: "leg_2_id"
