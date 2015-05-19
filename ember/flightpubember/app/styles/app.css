@@ -47,6 +47,22 @@ body{
 	text-decoration: underline;
 }
 
+/* cross page */
+#page-title{
+	width: 90%;
+	margin: 0 auto;
+	margin-top: 25px;
+	color: #fff;
+}
+
+#page-title-small{
+	width: 70%;
+	margin: 0 auto;
+	margin-top: 25px;
+	color: #fff;	
+}
+
+
 
 /* Search Bar */
 #search-wrapper{  
@@ -855,12 +871,6 @@ a{
 
 /* Flight Results */ 
 
-#result-header{
-  width: 90%;
-  margin: 0 auto;
-  margin-top: 25px;
-  color: #fff;
-}
 
 #results{
 	width:100%;
@@ -1244,6 +1254,7 @@ a{
 
 	.loginSignup{
 		width: 50%;
+		min-width: 225px;
 		margin: 0 auto;
 		height: 100%;
 	}
@@ -1290,7 +1301,7 @@ a{
 	.full-page-white-wrapper{
 		width:100%;
 		background-color: #fff;
-		margin-top:30px;
+		/*margin-top:30px;*/
 	}
 
 	.full-page-white-center-50{
