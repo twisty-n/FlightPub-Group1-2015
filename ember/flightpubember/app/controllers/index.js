@@ -20,8 +20,14 @@ export default Ember.ArrayController.extend({
 
     //TODO: cleanup this mess, remove repeated code
     toDestinationSearch: function(test){
-        
+
         var filter = this.get('toDestination');
+
+        if(filter === null)
+        {
+            return;
+        }
+        
 
         if(filter === undefined)
         {
@@ -58,6 +64,11 @@ export default Ember.ArrayController.extend({
 
     fromDestinationSearch: function(){
         var filter = this.get('fromDestination');
+        if(filter === null)
+        {
+            return;
+        }
+
         if(filter === undefined)
         {
             filter = '';
@@ -130,7 +141,7 @@ export default Ember.ArrayController.extend({
                     _this.send('correctValue', field);
                 }
             }
-        
+
             validateCode(fromCode, 'from');
             validateCode(toCode, 'to');
             
@@ -170,6 +181,10 @@ export default Ember.ArrayController.extend({
                 //TODO: figure out how to pass these values to the server
                 //      after we switch to the results page
                 this.transitionToRoute('results');
+
+                //THIS RESET COULD CAUSE TROUBLES DEPENDING ON HOW WE SEND
+                // THE DATA
+                this.send('reset');
             }
             else
             {
@@ -188,10 +203,6 @@ export default Ember.ArrayController.extend({
         correctValue: function(value){
             //use this to reset fields which were once deemed invalid
             $("#"+value).css({'border-color':'#FFFFFF'});
-        },
-
-        setFrom: function(value){
-            console.log("gotta set from value to "+value);
         },
 
         hideSuggestions: function(){
@@ -231,6 +242,21 @@ export default Ember.ArrayController.extend({
 
             $('#'+suggestionBox).val($('#'+destinationCode).text());
         },
+
+        //TODO: call this when the page has been routed away to search results
+        reset: function(){
+            this.setProperties({
+                fromDestination: null,
+                fromCode: '',
+                toDestination: null, 
+                toCode: '',
+                departDate: '',
+                returnDate: '',
+                selectedClass: '',
+                numberOfPeople: '1',
+                hoveringResults: false,
+            });
+        }
     }
 
 });
