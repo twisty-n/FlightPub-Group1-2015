@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150519125023) do
+ActiveRecord::Schema.define(version: 20150519131223) do
 
   create_table "airlines", force: :cascade do |t|
     t.string   "airline_code", limit: 255
@@ -66,17 +66,19 @@ ActiveRecord::Schema.define(version: 20150519125023) do
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.integer  "flight_time",         limit: 4
-    t.string   "destination",         limit: 255
-    t.string   "origin",              limit: 255
     t.boolean  "is_composite_flight", limit: 1
     t.integer  "leg_1_id",            limit: 4
     t.integer  "leg_2_id",            limit: 4
+    t.integer  "destination_id",      limit: 4
+    t.integer  "origin_id",           limit: 4
     t.integer  "airlines_id",         limit: 4
   end
 
   add_index "flights", ["airlines_id"], name: "index_flights_on_airlines_id", using: :btree
+  add_index "flights", ["destination_id"], name: "fk_rails_ae9de3d0f9", using: :btree
   add_index "flights", ["leg_1_id"], name: "fk_rails_addabd29ea", using: :btree
   add_index "flights", ["leg_2_id"], name: "fk_rails_739ad5a492", using: :btree
+  add_index "flights", ["origin_id"], name: "fk_rails_34f4351407", using: :btree
 
   create_table "save_identifiers", force: :cascade do |t|
     t.string "s_type",       limit: 255
@@ -130,6 +132,8 @@ ActiveRecord::Schema.define(version: 20150519125023) do
 
   add_foreign_key "airlines", "countries"
   add_foreign_key "api_keys", "users"
+  add_foreign_key "flights", "destinations"
+  add_foreign_key "flights", "destinations", column: "origin_id"
   add_foreign_key "flights", "flights", column: "leg_1_id"
   add_foreign_key "flights", "flights", column: "leg_2_id"
 end
