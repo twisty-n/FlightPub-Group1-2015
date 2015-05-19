@@ -20,7 +20,7 @@ export default Ember.ArrayController.extend({
 
     //TODO: cleanup this mess, remove repeated code
     toDestinationSearch: function(test){
-        alert(test);
+        
         var filter = this.get('toDestination');
 
         if(filter === undefined)
