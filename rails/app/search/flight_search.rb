@@ -5,22 +5,6 @@ require 'errors/invalid_input_error'
 	
 class FlightSearch
 
-# This is the basic algorithm, implemented in ruby and not MySQL. 
-# It lacks important parameters atm (like times). It works like this:
-# Step 1: x <- Origin
-# Step 2: y <- Desired destination
-# 
-# Step 3: Mark X as a visited city
-# Step 4: Check if any flights that depart X go to Y?
-#			yes?
-#				Return that flight.
-#			No and there are linking cities that are not visited?
-#				Go to first departing flight's destination.
-#				x <- Flights destination
-#				Run from step 3 on that destination city.
-#			No, and all cities have been checked
-#				Stop. Return "Finished."
-
 #	GETTERS & SETTERS	#############################################
 
 attr_accessor :output_on
@@ -71,7 +55,24 @@ output_on = true		#Make true
 		if target == nill || target.blank
 			raise InvalidInputError "The input is invalid"
 		end
-	
+		
+		# create the data structures needed:
+		candidate_queue = Queue.new			# List of cities to check
+		discovered_array = Array.new		# List of cities known
+		candidate_place						# Temporary object to check. Begin with origin.
+		
+		# Label origin as known to exist
+		discovered_array << candidate_place
+		candidate_queue << candidate_place
+		
+		#Now search my pretties! Search!
+		while !candidate_place.empty?
+			#Get the next candidate to check
+			
+		end
+		
+		
+		
 	end	#eof search function
 	
 end
