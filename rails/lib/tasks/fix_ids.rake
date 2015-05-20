@@ -66,6 +66,10 @@ namespace :fix_ids do
             airline.save!
 =end
         
+        dev_null = Logger.new("/dev/null")
+        Rails.logger = dev_null
+        ActiveRecord::Base.logger = dev_null
+
         Flight.destroy_all
         TicketAvailability.destroy_all
 
@@ -76,6 +80,103 @@ namespace :fix_ids do
             if raw_flight.StopOverCode != nil
 
                 # Then we have a composite flight, so deal with it
+
+                comp_flight = Flight.new
+                flight_1 = Flight.new
+                flight_2 = Flight.new
+
+                comp_flight.flight_number = raw_flight.FlightNumber
+                flight_1.flight_number = raw_flight.FlightNumber
+                flight_2.flight_number = raw_flight.FlightNumber
+
+                comp_flight.departure_time = raw_flight.DepartureTime
+                comp_flight.arrival_time = raw_flight.ArrivalTime
+                comp_flight.flight_time = raw_flight.Duration + raw_flight.DurationSecondLeg
+                comp_flight.is_composite_flight = true
+                comp_flight.destination_id = Destination.find_by(destination_code: raw_flight.DestinationCode).id
+                comp_flight.origin_id = Destination.find_by(destination_code: raw_flight.DepartureCode).id
+                comp_flight.airlines_id = Airline.find_by(airline_code: raw_flight.AirlineCode).id
+
+                flight_1.departure_time = raw_flight.DepartureTime
+                flight_1.arrival_time = raw_flight.ArrivalTimeStopOver
+                flight_1.flight_time = raw_flight.Duration
+                flight_1.is_composite_flight = false
+                flight_1.destination_id = Destination.find_by(destination_code: raw_flight.StopOverCode).id
+                flight_1.origin_id = Destination.find_by(destination_code: raw_flight.DepartureCode).id
+                flight_1.airlines_id = Airline.find_by(airline_code: raw_flight.AirlineCode).id
+
+                flight_2.departure_time = raw_flight.DepartureTimeStopOver
+                flight_2.arrival_time = raw_flight.ArrivalTime
+                flight_2.flight_time = raw_flight.DurationSecondLeg
+                flight_2.is_composite_flight = false
+                flight_2.destination_id = Destination.find_by(destination_code: raw_flight.DestinationCode).id
+                flight_2.origin_id = Destination.find_by(destination_code: raw_flight.StopOverCode).id
+                flight_2.airlines_id = Airline.find_by(airline_code: raw_flight.AirlineCode).id
+
+                comp_flight.save!
+                flight_1.save!
+                flight_2.save!
+
+                print("The id of flight one is #{flight_1.id}")
+                print("The id of flight two is #{flight_2.id}")
+
+                comp_flight.leg_1_id = flight_1.id
+                comp_flight.leg_2_id = flight_2.id
+
+                comp_flight.save!
+
+                Availability.where("FlightNumber = :f_no AND DepartureTime = :d_time", {
+                    f_no: raw_flight.FlightNumber, d_time: raw_flight.DepartureTime
+                    }).find_each do |availability|
+
+
+                    # We need a ticket availability for each flight, where the number of seats for the
+                    # compostite flight is floored to the lowest number of seats for one of the legs
+
+                    # First create the main availability
+                    composite_ticket_availability = TicketAvailability.new
+                    composite_ticket_availability.flight_id = comp_flight.id
+                    composite_ticket_availability.ticket_type_id = TicketType.find_by(ticket_code: availability.TicketCode).id
+                    composite_ticket_availability.ticket_class_id = TicketClass.find_by(class_code: availability.ClassCode).id
+                    composite_ticket_availability.seats_available = [availability.NumberAvailableSeatsLeg1, availability.NumberAvailableSeatsLeg2].min
+                   # begin
+                    price = Price.where("FlightNumber = :f_no 
+                            AND StartDate <= :av_date 
+                            AND EndDate >= :av_date 
+                            AND TicketCode = :tic_code
+                            AND ClassCode = :c_code", {
+                                f_no: comp_flight.flight_number, 
+                                av_date: availability.DepartureTime,
+                                tic_code: availability.TicketCode,
+                                c_code: availability.ClassCode
+                            }).first
+
+                    composite_ticket_availability.price = price.Price
+                   # rescue NoMethodError
+                      #  composite_ticket_availability.price = -1
+                    #end
+                    composite_ticket_availability.save!
+
+                    flight_1_ticket = TicketAvailability.new
+                    flight_1_ticket.flight_id = comp_flight.id
+                    flight_1_ticket.ticket_type_id = composite_ticket_availability.ticket_type_id
+                    flight_1_ticket.ticket_class_id = composite_ticket_availability.ticket_class_id
+                    flight_1_ticket.seats_available = availability.NumberAvailableSeatsLeg1
+                    flight_1_ticket.price = price.PriceLeg1
+                    flight_1_ticket.save!
+
+
+                    flight_2_ticket = TicketAvailability.new
+                    flight_2_ticket.flight_id = comp_flight.id
+                    flight_2_ticket.ticket_type_id = composite_ticket_availability.ticket_type_id
+                    flight_2_ticket.ticket_class_id = composite_ticket_availability.ticket_class_id
+                    flight_2_ticket.seats_available = availability.NumberAvailableSeatsLeg2
+                    flight_2_ticket.price = price.PriceLeg2
+                    flight_2_ticket.save!
+
+                end
+
+
             else
 
                 # Else its a single flight
@@ -87,9 +188,9 @@ namespace :fix_ids do
                 flight.arrival_time = raw_flight.ArrivalTime.to_s
                 flight.flight_time = raw_flight.Duration
                 flight.is_composite_flight = false
-                flight.destination_id = Destination.find_by(destination_code: raw_flight.DestinationCode)
-                flight.origin_id = Destination.find_by(destination_code: raw_flight.DepartureCode)
-                flight.airlines_id = Airline.find_by(airline_code: raw_flight.AirlineCode)
+                flight.destination_id = Destination.find_by(destination_code: raw_flight.DestinationCode).id
+                flight.origin_id = Destination.find_by(destination_code: raw_flight.DepartureCode).id
+                flight.airlines_id = Airline.find_by(airline_code: raw_flight.AirlineCode).id
 
                 flight.save!
 
@@ -103,7 +204,7 @@ namespace :fix_ids do
                     ticket_availability.ticket_type_id = TicketType.find_by(ticket_code: availability.TicketCode).id
                     ticket_availability.ticket_class_id = TicketClass.find_by(class_code: availability.ClassCode).id
                     ticket_availability.seats_available = availability.NumberAvailableSeatsLeg1
-                    begin
+                   # begin
                         ticket_availability.price = Price.where("FlightNumber = :f_no 
                             AND StartDate <= :av_date 
                             AND EndDate >= :av_date 
@@ -114,9 +215,9 @@ namespace :fix_ids do
                                 tic_code: availability.TicketCode,
                                 c_code: availability.ClassCode
                             }).first.Price
-                    rescue NoMethodError
-                        ticket_availability.price = -1
-                    end
+                    #rescue NoMethodError
+                     #   ticket_availability.price = -1
+                   # end
                     ticket_availability.save!
 
                 end
