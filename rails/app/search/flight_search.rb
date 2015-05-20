@@ -5,16 +5,16 @@ require 'errors/invalid_input_error'
 	
 class FlightSearch
 
-#	GETTERS & SETTERS	#############################################
+# ------------------------------- Getters and Setters --------------------------------- #
 
 attr_accessor :output_on
 				
-#	CLASS VARIABLES		#############################################
+# ------------------------------- Class Variables --------------------------------- #
 
 output_on = true		#Make true 
 
 
-#	CLASS METHODS		#############################################
+# ------------------------------- Class Methods --------------------------------- #
 
 	# This is a test method
 	def self.speak
@@ -43,9 +43,10 @@ output_on = true		#Make true
 	# This is the main search method. 
 	# Accepts a target city and origin as an argument (at the moment, more params later)
 	# and then runs a breadthfirst search on it
-	
-
 	def self.search(origin, target)
+	
+		old_logger = ActiveRecord::Base.logger
+		ActiveRecord::Base.logger = nil
 	
 		puts 'The target is: ' + target + " And the origin is: " + origin
 		
@@ -70,16 +71,24 @@ output_on = true		#Make true
 		puts 'Now starting the search algorithm. Current candidate is:'
 		p candidate_queue
 		
-		#Now search my pretties! SEARCH!!!
+		# Now search my pretties! SEARCH!!!
 		while candidate_queue.empty? == false do
-		
 			#Get the next candidate to check
 			current_place = candidate_queue.shift
+			#Get the flights that leave
 			leaving_flights = get_leaving_flights(current_place)
-			printFlights(leaving_flights)
-			
-			
-			
+			# Print off the candidate destinations if they are not visited:
+			leaving_flights.each do |flight|
+				flight.each do |k,v|
+					if k == "destination" and !discovered_array.include? v
+						puts 'Connecting node: ' + v
+						# Add this place to the queue of places to check
+						candidate_queue << v
+						# Then add this place to list of discovered
+						discovered_array << v
+					end
+				end
+			end		
 		end
 		
 		
@@ -90,8 +99,8 @@ output_on = true		#Make true
 	
 	# This method returns an array of adjacent airports
 	def self.get_adjacent_airports(airport)
-		
 	end	#eof get adjacent airports function
+	
 	
 	# This method returns an array of flights leaving a target city
 	def self.get_leaving_flights(airport)
