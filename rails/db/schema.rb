@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150520052407) do
+ActiveRecord::Schema.define(version: 20150520054008) do
 
   create_table "airlines", force: :cascade do |t|
     t.string   "airline_code", limit: 255
@@ -71,10 +71,10 @@ ActiveRecord::Schema.define(version: 20150520052407) do
     t.integer  "leg_2_id",            limit: 4
     t.integer  "destination_id",      limit: 4
     t.integer  "origin_id",           limit: 4
-    t.integer  "airlines_id",         limit: 4
+    t.integer  "airline_id",          limit: 4
   end
 
-  add_index "flights", ["airlines_id"], name: "index_flights_on_airlines_id", using: :btree
+  add_index "flights", ["airline_id"], name: "index_flights_on_airline_id", using: :btree
   add_index "flights", ["destination_id"], name: "fk_rails_ae9de3d0f9", using: :btree
   add_index "flights", ["leg_1_id"], name: "fk_rails_addabd29ea", using: :btree
   add_index "flights", ["leg_2_id"], name: "fk_rails_739ad5a492", using: :btree
