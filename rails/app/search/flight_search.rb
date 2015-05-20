@@ -2,6 +2,7 @@
 # API. To alter the search algorithm, replace this file, and don't touch anything else.
 
 require 'errors/invalid_input_error'
+require 'fligh_path'
 	
 class FlightSearch
 
@@ -45,6 +46,7 @@ output_on = true		#Make true
 	# and then runs a breadthfirst search on it
 	def self.search(origin, target)
 	
+		# Turn off SQL output
 		old_logger = ActiveRecord::Base.logger
 		ActiveRecord::Base.logger = nil
 	
@@ -60,7 +62,8 @@ output_on = true		#Make true
 		# create the data structures needed:
 		candidate_queue = Array.new			# List of cities to check
 		discovered_array = Array.new		# List of cities known
-		candidate_place	= origin		# Temporary object to check. Begin with origin.
+		candidate_place	= origin			# Temporary object to check. Begin with origin.
+		paths = Array.new(FlightPath)		# Array of identified flight paths
 		
 		puts 'Data structures now created.'
 		
