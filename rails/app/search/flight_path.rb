@@ -6,9 +6,9 @@ class FlightPath
 
 # ------------------------------- Class Variables --------------------------------- #
 
-id
-origin
-destination
+id = String.new
+origin = String.new
+destination = String.new
 no_of_connecting_flights = Array.new
 
 

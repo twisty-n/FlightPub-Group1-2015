@@ -2,7 +2,7 @@
 # API. To alter the search algorithm, replace this file, and don't touch anything else.
 
 require 'errors/invalid_input_error'
-require 'fligh_path'
+require 'flight_path'
 	
 class FlightSearch
 
@@ -63,7 +63,7 @@ output_on = true		#Make true
 		candidate_queue = Array.new			# List of cities to check
 		discovered_array = Array.new		# List of cities known
 		candidate_place	= origin			# Temporary object to check. Begin with origin.
-		paths = Array.new(FlightPath)		# Array of identified flight paths
+		paths = Array.new		# Array of identified flight paths
 		
 		puts 'Data structures now created.'
 		
