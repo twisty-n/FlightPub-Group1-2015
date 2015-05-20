@@ -9,7 +9,27 @@ export default Ember.ArrayController.extend({
   maxStops: -1,
   mustStopAt: '',
 
+  averageFlightTime: Ember.computed('sortedFlights', function(){
+
+    var flights = this.get('sortedFlights');
+
+    //thinking we might actually want to use the average length
+    // and stretch based on the average time.
+    // but for now we will get the longest.
+
+    var timeCount = 0;
+
+    flights.forEach(function(flight){
+      timeCount += flight.get('tripLength');
+    });
+
+    var average = timeCount/flights.length;
+
+    return average;
+  }),
+
   filteredFlights: function(){
+    
     var flights = this.get('model');
 
     if(!flights)
@@ -17,8 +37,9 @@ export default Ember.ArrayController.extend({
       return flights;
     }
 
+    
     return flights.filter(function(flight, index, enumerable){
-      return flight.get('price') >= 600;
+      return flight.get('price') >= 0;
     });
 
 
@@ -65,11 +86,10 @@ export default Ember.ArrayController.extend({
       {
         this.get('sortProperties').removeObject(property);
       }
-      console.log(this.get('sortProperties'));
     },
 
     filterBy: function(property){
-
+      console.log("filter by: "+property);
     },
 
     selected: function(flight){
