@@ -11,4 +11,22 @@ class Flight < ActiveRecord::Base
     has_many :saved_flights
     has_many :users, :through => :saved_flights
 
+=begin
+    Custom JSON method for a flight
+=end
+    
+    # TODO: edit this later to return information based on the search
+    def as_json(options={})
+        
+        {   
+            :id => self.id,
+            :flightNumber => self.flight_number,
+            :price => self.ticket_availabilities.first.price,
+            :departure_time => self.departure_time,
+            :arrival_time => self.arrival_time,
+            :seats_available => self.ticket_availabilities.first.seats_available
+        }
+
+    end 
+
 end

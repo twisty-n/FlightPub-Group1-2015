@@ -15,11 +15,18 @@ class Api::FlightsController < ApplicationController
 
 =end
   def index
-    render json: Flight.all
+
+    # Search will need to be done here and accept params
+
+    render json: Flight.take(10)
   end
 
   def show
     render json: Flight.find(params[:id])
+  end
+
+  def search
+
   end
 
 end
