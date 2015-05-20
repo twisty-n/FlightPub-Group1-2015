@@ -9,6 +9,6 @@ rake db:reset
 # we will insert the data directly into the database
 
 # 
-mysql -u rails -p password rails_test < mysql_dumps/full_database.sql
+mysql -u rails --password=password rails_test < mysql_dumps/full_database.sql
 
 # Then we load any fixtures that we need
