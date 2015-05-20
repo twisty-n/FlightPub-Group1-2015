@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150519143236) do
+ActiveRecord::Schema.define(version: 20150520052407) do
 
   create_table "airlines", force: :cascade do |t|
     t.string   "airline_code", limit: 255
@@ -33,18 +33,6 @@ ActiveRecord::Schema.define(version: 20150519143236) do
 
   add_index "api_keys", ["access_token"], name: "index_api_keys_on_access_token", unique: true, using: :btree
   add_index "api_keys", ["user_id"], name: "index_api_keys_on_user_id", using: :btree
-
-  create_table "availabilities", force: :cascade do |t|
-    t.string   "AirlineCode",              limit: 255
-    t.string   "FlightNumber",             limit: 255
-    t.datetime "DepartureTime"
-    t.string   "ClassCode",                limit: 255
-    t.string   "TicketCode",               limit: 255
-    t.integer  "NumberAvailableSeatsLeg1", limit: 4
-    t.integer  "NumberAvailableSeatsLeg2", limit: 4
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-  end
 
   create_table "countries", force: :cascade do |t|
     t.string   "country_code_2",         limit: 255
@@ -91,37 +79,6 @@ ActiveRecord::Schema.define(version: 20150519143236) do
   add_index "flights", ["leg_1_id"], name: "fk_rails_addabd29ea", using: :btree
   add_index "flights", ["leg_2_id"], name: "fk_rails_739ad5a492", using: :btree
   add_index "flights", ["origin_id"], name: "fk_rails_34f4351407", using: :btree
-
-  create_table "flights_raws", force: :cascade do |t|
-    t.string   "AirlineCode",           limit: 255
-    t.string   "FlightNumber",          limit: 255
-    t.string   "DepartureCode",         limit: 255
-    t.string   "StopOverCode",          limit: 255
-    t.string   "DestinationCode",       limit: 255
-    t.datetime "DepartureTime"
-    t.datetime "ArrivalTimeStopOver"
-    t.datetime "DepartureTimeStopOver"
-    t.datetime "ArrivalTime"
-    t.string   "PlaneCode",             limit: 255
-    t.integer  "Duration",              limit: 4
-    t.integer  "DurationSecondLeg",     limit: 4
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-  end
-
-  create_table "prices", force: :cascade do |t|
-    t.string   "AirlineCode",  limit: 255
-    t.string   "FlightNumber", limit: 255
-    t.string   "ClassCode",    limit: 255
-    t.string   "TicketCode",   limit: 255
-    t.datetime "StartDate"
-    t.datetime "EndDate"
-    t.decimal  "Price",                    precision: 10
-    t.decimal  "PriceLeg1",                precision: 10
-    t.decimal  "PriceLeg2",                precision: 10
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-  end
 
   create_table "save_identifiers", force: :cascade do |t|
     t.string "s_type",       limit: 255
