@@ -22,17 +22,12 @@ output_on = true		#Make true
 	end
 	
 	
-	# This method does a breadth first search of the flights table.
-	# It will return an array of path objects that match
-	def self.outputFlightsTable
-		raw_flights = Flight.all
+	# This method is for internal use, prints out a pretty flight syntax.
+	def self.printFlights(input_array)
 		
-		puts "Converting flight activerecord associations to array of hash browns..."
-		array_of_hash_flights = raw_flights.as_json
-		puts "\n THE FLIGHT VALUES IN THE DATABASE ARE:\n"
+#		array_of_hash_flights = input_array.as_json
 		
-		array_of_hash_flights.each do |value|
-			
+		input_array.each do |value|
 			# Load the flight from the array
 			flight = value
 			# Print out details of the flight
@@ -41,7 +36,6 @@ output_on = true		#Make true
 			end
 			puts "\n ---------------------------------------------------- \n"
 		end
-	puts "\nEND OF FLIGHT VALUES\n"
 	
 	end	#eof search function
 	
@@ -49,30 +43,65 @@ output_on = true		#Make true
 	# This is the main search method. 
 	# Accepts a target city and origin as an argument (at the moment, more params later)
 	# and then runs a breadthfirst search on it
-	def self.search(target, origin)
 	
+
+	def self.search(origin, target)
+	
+		puts 'The target is: ' + target + " And the origin is: " + origin
+		
 		# verify the input is not blank or empty
-		if target == nill || target.blank
+		if target == nil || target.blank?
 			raise InvalidInputError "The input is invalid"
 		end
 		
-		# create the data structures needed:
-		candidate_queue = Queue.new			# List of cities to check
-		discovered_array = Array.new		# List of cities known
-		candidate_place						# Temporary object to check. Begin with origin.
+		puts 'The input is acceptable.'
 		
-		# Label origin as known to exist
+		# create the data structures needed:
+		candidate_queue = Array.new			# List of cities to check
+		discovered_array = Array.new		# List of cities known
+		candidate_place	= origin		# Temporary object to check. Begin with origin.
+		
+		puts 'Data structures now created.'
+		
+		# Label origin as known to exist, and make it the first candidate to check.
 		discovered_array << candidate_place
 		candidate_queue << candidate_place
 		
-		#Now search my pretties! Search!
-		while !candidate_place.empty?
+		puts 'Now starting the search algorithm. Current candidate is:'
+		p candidate_queue
+		
+		#Now search my pretties! SEARCH!!!
+		while candidate_queue.empty? == false do
+		
 			#Get the next candidate to check
+			current_place = candidate_queue.shift
+			leaving_flights = get_leaving_flights(current_place)
+			printFlights(leaving_flights)
+			
+			
 			
 		end
 		
 		
 		
+	puts 'The search function has finished.'
 	end	#eof search function
+	
+	
+	# This method returns an array of adjacent airports
+	def self.get_adjacent_airports(airport)
+		
+	end	#eof get adjacent airports function
+	
+	# This method returns an array of flights leaving a target city
+	def self.get_leaving_flights(airport)
+		raw_array = Array.new
+		
+		Flight.where(origin: airport).find_each do |flight|
+			raw_array << flight
+		end
+		raw_array = raw_array.as_json
+		return raw_array
+	end	# eof get leaving flights function
 	
 end

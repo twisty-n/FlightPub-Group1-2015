@@ -95,7 +95,19 @@ Flight.create(
               trip_length:              '5500',
               destination:              'Newcastle',
               origin:                   'Rome',
-              is_composite_flight:      false)				  	  		  	
+              is_composite_flight:      false)
+              
+Country.create(
+  country_name:   'Surabaya'
+)			
+
+Country.create(
+  country_name:   'Darwin'
+)	
+
+Country.create(
+  country_name:   'Newcastle'
+)		  	  		  	
 
 
 # To specify our own Fixtures, use a thing similar to below, 
