@@ -50,6 +50,72 @@ namespace :fix_ids do
 
     end
 
+    desc "Fix the magic"
+    task :fix_avs => :environment do
+
+
+        # Iterate over each composite flight
+
+        Flight.where(is_composite_flight: true).each do |c_flight|
+
+            # Look up all the availabilities that relate to this flight
+            # Do this based on FlightNumber and departureTime
+            # NEeded to adjust the departureTime to have UTC as well
+            AvailabilityFix.where("FlightNumber = :f_no AND DepartureTime = :d_time", {
+                    f_no: c_flight.flight_number, d_time: c_flight.departure_time
+                    }).find_each do |availability|
+
+                print ("Entered availability creation!")
+
+                leg_1_av = TicketAvailability.new
+                leg_2_av = TicketAvailability.new
+
+                # Set up flight id's
+                leg_1_av.flight_id = c_flight.leg_1_id
+                leg_2_av.flight_id = c_flight.leg_2_id
+
+                # Set up ticket type ids
+                leg_1_av.ticket_type_id = TicketType.find_by(ticket_code: availability.TicketCode).id
+                leg_2_av.ticket_type_id = leg_1_av.ticket_type_id
+
+                # set up ticket class id's
+                leg_1_av.ticket_class_id = TicketClass.find_by(class_code: availability.ClassCode).id
+                leg_2_av.ticket_class_id = leg_1_av.ticket_class_id
+
+                # Set up number of seats
+                leg_1_av.seats_available = availability.NumberAvailableSeatsLeg1
+                leg_2_av.seats_available = availability.NumberAvailableSeatsLeg2
+
+                # Set up price
+                price_var = PriceFix.where("FlightNumber = :f_no 
+                            AND StartDate <= :av_date 
+                            AND EndDate >= :av_date 
+                            AND TicketCode = :tic_code
+                            AND ClassCode = :c_code", {
+                                f_no: c_flight.flight_number, 
+                                av_date: availability.DepartureTime,
+                                tic_code: availability.TicketCode,
+                                c_code: availability.ClassCode
+                            }).first
+
+                leg_1_av.price = price_var.PriceLeg1
+                leg_2_av.price = price_var.PriceLeg2
+
+                leg_1_av.save!
+                leg_2_av.save!
+
+
+            end
+
+            # for each availability, we will create one for each leg, using the information 
+            # from our c_flight, and information gathered from the price table
+
+        end
+
+
+    end
+
+
     desc "Magic the flights"
     task :fix_flights => :environment do
 =begin
