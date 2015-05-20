@@ -1102,8 +1102,9 @@ a{
 	}
 
 	#cheapest-first-filter:hover{
-		background-color: #1479C9;
-		color: #fff;
+		/*background-color: #1479C9;
+		color: #fff;*/
+		cursor: pointer;
 	}
 
 	#cheapest-first-filter{
@@ -1126,8 +1127,9 @@ a{
 	}
 
 	#shortest-first-filter:hover{
-		background-color: #1479C9;
-		color: #fff;
+		/*background-color: #1479C9;
+		color: #fff;*/
+		cursor: pointer;
 	}
 
 	#shortest-first-filter{
@@ -1149,8 +1151,9 @@ a{
 	}
 
 	#no-stops-filter:hover{
-		background-color: #1479C9;
-		color: #fff;
+		/*background-color: #1479C9;
+		color: #fff;*/
+		cursor: pointer;
 	}
 
 	#no-stops-filter{

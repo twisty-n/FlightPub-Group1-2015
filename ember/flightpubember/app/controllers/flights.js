@@ -3,6 +3,8 @@ import Ember from 'ember';
 export default Ember.ArrayController.extend({
   itemController: 'flight',
   sortProperties: Ember.A([]),
+  filterProperties: Ember.A([]),
+
   sortedFlights: Ember.computed.sort('filteredFlights', 'sortProperties'),
 
   noStops: false,
@@ -74,10 +76,13 @@ export default Ember.ArrayController.extend({
   }.property('model.isLoaded', 'model', 'sortProperties'),
 
 
+
   selectedFlight: null,
   
   actions: {
     sortBy: function(property) {
+
+      this.send('updatePropertyStyle', property);
 
       var index = this.get('sortProperties').indexOf(property);
       if(index < 0)
@@ -90,15 +95,64 @@ export default Ember.ArrayController.extend({
       }
     },
 
-    filterBy: function(property){
-      console.log("filter by: "+property);
-    },
 
-    selected: function(flight){
-      var currentSelectedFlight = this.get('selectedFlight'); 
-      
-      if(currentSelectedFlight)
-      {
+  filterBy: function(property){
+
+    this.send('updatePropertyStyle', property);
+
+    var filterProperties = this.get('filterProperties');
+
+    var index = filterProperties.indexOf(property);
+    
+    if(index < 0)
+    {
+      filterProperties.pushObject(property);
+    }
+    else
+    {
+      filterProperties.removeObject(property);
+    }
+
+  },
+
+  updatePropertyStyle: function(property){
+    var id = "";
+    var on = false;
+
+
+    if(this.get('sortProperties').indexOf(property) === -1 
+    && this.get('filterProperties').indexOf(property) === -1)
+    {
+      on = true;
+    }
+
+    switch(property)
+    {
+      case 'price:asc': id = "#cheapest-first-filter"; break;
+      case 'tripLength:asc': id = "#shortest-first-filter"; break;
+      case 'noStops': id = "#no-stops-filter"; break; 
+    }
+
+    if(id === "")
+    {
+      return;
+    }
+
+    if(on)
+    {
+      $(id).css({'background-color':'#1479C9', 'color':'#FFF'});
+    }
+    else
+    {
+      $(id).css({'background-color':'#FFF', 'color':'#17AEE5'});
+    }
+  },
+
+  selected: function(flight){
+    var currentSelectedFlight = this.get('selectedFlight'); 
+
+    if(currentSelectedFlight)
+    {
         //hide the current flight because no matter what click 
         // happens we want it to hide again
         var id = '#'+currentSelectedFlight.get('flightNumber');

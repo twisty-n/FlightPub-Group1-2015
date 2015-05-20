@@ -7,5 +7,7 @@ export default DS.Model.extend({
     arrivalTime:        DS.attr('number'), //number for now, we probably want date-time
     seatsAvailable:     DS.attr('number'),
   	tripLength: 		DS.attr('number'),
+  	origin: 			DS.attr('string'),
+  	destination: 		DS.attr('string'),
 
 });
