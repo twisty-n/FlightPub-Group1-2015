@@ -24,9 +24,9 @@ export default Ember.ObjectController.extend({
 	timeBarStyle: function(){
 		var avgLength = this.get('controllers.flights.averageFlightTime');
 
-		var thisLength = this.get('tripLength');
+		var tripLength = this.get('tripLength');
 
-		var lengthRatio = thisLength/avgLength;
+		var lengthRatio = tripLength/avgLength;
 
 		var widthPercent = 100;
 		var widthChange = 0;
@@ -59,7 +59,17 @@ export default Ember.ObjectController.extend({
 		widthPercent *= widthChange;
 
 
-		return "width:"+widthPercent+"%; left: 10%;";
+		var leftPercent = 8; // we have a base of 10 for style
+
+
+		var departureTime = this.get('departureTime');
+		var departurePercentage = departureTime/2400; //this is just using the current data, not correct at all
+
+		console.log(departurePercentage);
+
+		leftPercent += 10*departurePercentage;
+
+		return "width:"+widthPercent+"%; left: "+leftPercent+"%;";
 
 	}.property('controllers.flights.averageFlightTime'),
 
