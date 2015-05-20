@@ -29,6 +29,8 @@ export default Ember.ArrayController.extend({
   }),
 
   filteredFlights: function(){
+
+    console.log(this.get('sortProperties'));
     
     var flights = this.get('model');
 

@@ -28,27 +28,38 @@ export default Ember.ObjectController.extend({
 
 		var lengthRatio = thisLength/avgLength;
 
-		var widthPercent = 85;
+		var widthPercent = 100;
+		var widthChange = 0;
 
-		console.log(avgLength+"/"+thisLength+" = "+lengthRatio);
 
 
-		if(lengthRatio < 1)
+		if(lengthRatio < 0.1)
 		{
-			widthPercent = widthPercent*lengthRatio*10;
+			widthChange = (lengthRatio);
+		}
+		else if(lengthRatio < 1)
+		{
+			widthChange = (lengthRatio);
+		}
+		else
+		{
+			widthChange = (lengthRatio);
 		}
 
-		if(widthPercent < 10)
+		if(widthChange > 1)
 		{
-			widthPercent = 20;
+			widthChange = Math.log10(lengthRatio);
+		}
+		else
+		{
+			widthChange += 0.2; 
 		}
 
-		if(widthPercent > 85)
-		{
-			widthPercent = 85;
-		}
 
-		return "width:"+widthPercent+"%; left: 0%;";
+		widthPercent *= widthChange;
+
+
+		return "width:"+widthPercent+"%; left: 10%;";
 
 	}.property('controllers.flights.averageFlightTime'),
 

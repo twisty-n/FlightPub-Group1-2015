@@ -45,7 +45,7 @@
 			<div id="result-filters">
 				<div id="main-filters">
 					<button {{action "sortBy" "price:asc"}} id="cheapest-first-filter">cheapest first</button> 
-					<button {{action "sortBy" "departureTime:asc"}}id="shortest-first-filter">quickest first</button> 
+					<button {{action "sortBy" "tripLength:asc"}}id="shortest-first-filter">quickest first</button> 
 					<button id="no-stops-filter" {{action "filterBy" "noStops"}}>no stops</button> <!-- this button acts like a checkbox? -->	
 				</div>
 				<select id="max-stops-filter">
@@ -107,7 +107,7 @@
 							<div class="details-l2">
 								<div class="total-time">
 									<div class="time-img"><img src="/assets/glyphicons-58-history.png"></div> 
-									<div class="time">9h 5m</div>
+									<div class="time">{{flight.tripLength}}</div>
 								</div>
 							</div>
 
