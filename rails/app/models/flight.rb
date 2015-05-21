@@ -31,7 +31,8 @@ class Flight < ActiveRecord::Base
             :seats_available => self.ticket_availabilities.first.seats_available,
             :flight_time => self.flight_time,
             :destination => self.destination.destination_code,
-            :origin => self.origin.destination_code
+            :origin => self.origin.destination_code,
+            :is_return_flight => [true, false].sample
         }
 
     end 
