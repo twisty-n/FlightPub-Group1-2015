@@ -178,8 +178,26 @@ export default Ember.ArrayController.extend({
             if(incorrectValues.length == 0)
             {
 
+
+                    /*
+
+                        fromCode: '', //airport destinationCode
+                        toCode: '', //airport destinationCode
+                        departDate: '',
+                        returnDate: '',
+                        selectedClass: '',
+                        numberOfPeople: '1',
+
+                     */
                 // First we are going to set a property
-                this.set('searchFields', 'SUPER BUTTS');
+                this.set('searchFields', {
+                    'originCode': fromCode,
+                    'destinationCode': toCode,
+                    'departureDate': departDate,
+                    'returnDate': returnDate,
+                    'ticketClass': selectedClass,
+                    'numberOfPeople': numberOfPeople
+                });
                
                 //success!
                 //we pass this valid shit to the server
