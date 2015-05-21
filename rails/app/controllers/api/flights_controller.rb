@@ -17,6 +17,7 @@ class Api::FlightsController < ApplicationController
   def index
 
     # Search will need to be done here and accept params
+    Rails.logger.info(params)
 
     render json: Flight.take(10)
   end
