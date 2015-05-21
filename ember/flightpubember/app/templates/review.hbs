@@ -2,168 +2,48 @@
 <div class="full-page-white-wrapper">
 	<div class="full-page-white-center">
 
+				<!-- note this is optional, need to have a flag in models -->
+		{{#if DepartureFlight}}
 		<div class="flight-review">
-			<h2>Departure</h2>
-			<div class="result-item rounded" {{action  "selected" flight}}>
-					<div class="result-left">
-						<div class="airline">
-							<div class="airline-image">
-								<img src="assets/glyphicons-39-airplane.png">
-							</div>
-						</div>
-						<div class="price">
-							<div class="price-inner">${{flight.price}}</div>
-						</div>
-					</div>
-					<div class="time-wrapper">
-						<div class="time-bar" {{bind-attr style='flight.timeBarStyle'}}>
-							<div class="time" style="right:100%;">{{flight.departureTimeHourDay}}</div>
-							<div class="time" style="left:100%;">{{flight.arrivalTimeHourDay}}</div>
-						</div>
-						<div class="col" style="left:16.6666666%;"></div>
-						<div class="col" style="left:33.3333333%;"></div>
-						<div class="col" style="left:50%;"></div>
-						<div class="col" style="left:66.6666666%;"></div>
-						<div class="col" style="left:83.3333333%;"></div>
-					</div>
-				</div>
-				<div class="flight-details">
-					<div class="flight-details-inner" {{bind-attr id="flight.id"}}>
-						<!-- {#if flight.hasStops}
-							
-							<div class="stops">{{flight.numberOfStops}}</div>
-
-							{#else} -->
-							<div class="details-l1">
-								<div class="flight-number">
-									{{flight.flightNumber}}
-								</div>
-								<div class="direct">Direct Flight</div>
-							</div>
-							<div class="details-l2">
-								<div class="total-time">
-									<div class="time-img"><img src="/assets/glyphicons-58-history.png"></div> 
-									<div class="time">{{flight.flightLengthMinutesHours}}</div>
-								</div>
-							</div>
-
-							<div class="details-center">
-								<div class="trip">
-
-									<div class="trip-left">
-										<div class="from">from</div>
-										<div class="trip-from">{{flight.origin}}</div>
-									</div>
-									<div class="trip-right">
-										<div class="to">to</div>
-										<div class="trip-to">{{flight.destination}}</div>
-									</div>
-								</div>
-									
-									<div class="trip-times">
-										<div class="arrive"><span class="grey detail-time-label">Depart:</span> {{flight.departureTime}}</div>
-										<div class="depart"><span class="grey detail-time-label">Arrive:</span> {{flight.arrivalTime}}</div>
-									</div>
-							</div>
-
-							<div class="details-right">
-								<div class="flight-select">
-									<button class="btn" {{action "chooseFlight" flight}}><img src="/assets/glyphicons-207-ok-2.png"></button>
-								</div>
-								<div class="extra-buttons-wrapper">
-									<div class="flight-save"><button class="btn" {{action "saveFlight" flight}} >Save</button></div>
-									<div class="flight-compare"><button class="btn">Compare</button></div>
-								</div>
-							</div>
-
-							<!-- {/if} -->
-						</div>
-					</div>
+			<h2>Depature</h2>
+			 ${{DepartureFlight.price}}
+		<!-- {#if DepartureFlight.hasStops}
+				<div class="stops">{{DepartureFlight.numberOfStops}}</div>
+			{#else} -->
+			
+			{{DepartureFlight.flightNumber}}
+			Direct Flight
+			<img src="/assets/glyphicons-58-history.png">{{DepartureFlight.flightLengthMinutesHours}}
+			from {{DepartureFlight.origin}}
+			to {{DepartureFlight.destination}}
+			Depart:{{DepartureFlight.departureTime}}
+			Arrive:{{DepartureFlight.arrivalTime}}
+		<!-- {/if} -->
 		</div>
+		{{/if}}
 
 		<!-- note this is optional, need to have a flag in models -->
+		{{#if ReturnFlight}}
 		<div class="flight-review">
 			<h2>Return</h2>
-			<div class="result-item rounded" {{action  "selected" flight}}>
-					<div class="result-left">
-						<div class="airline">
-							<div class="airline-image">
-								<img src="assets/glyphicons-39-airplane.png">
-							</div>
-						</div>
-						<div class="price">
-							<div class="price-inner">${{flight.price}}</div>
-						</div>
-					</div>
-					<div class="time-wrapper">
-						<div class="time-bar" {{bind-attr style='flight.timeBarStyle'}}>
-							<div class="time" style="right:100%;">{{flight.departureTimeHourDay}}</div>
-							<div class="time" style="left:100%;">{{flight.arrivalTimeHourDay}}</div>
-						</div>
-						<div class="col" style="left:16.6666666%;"></div>
-						<div class="col" style="left:33.3333333%;"></div>
-						<div class="col" style="left:50%;"></div>
-						<div class="col" style="left:66.6666666%;"></div>
-						<div class="col" style="left:83.3333333%;"></div>
-					</div>
-				</div>
-				<div class="flight-details">
-					<div class="flight-details-inner" {{bind-attr id="flight.id"}}>
-						<!-- {#if flight.hasStops}
-							
-							<div class="stops">{{flight.numberOfStops}}</div>
-
-							{#else} -->
-							<div class="details-l1">
-								<div class="flight-number">
-									{{flight.flightNumber}}
-								</div>
-								<div class="direct">Direct Flight</div>
-							</div>
-							<div class="details-l2">
-								<div class="total-time">
-									<div class="time-img"><img src="/assets/glyphicons-58-history.png"></div> 
-									<div class="time">{{flight.flightLengthMinutesHours}}</div>
-								</div>
-							</div>
-
-							<div class="details-center">
-								<div class="trip">
-
-									<div class="trip-left">
-										<div class="from">from</div>
-										<div class="trip-from">{{flight.origin}}</div>
-									</div>
-									<div class="trip-right">
-										<div class="to">to</div>
-										<div class="trip-to">{{flight.destination}}</div>
-									</div>
-								</div>
-									
-									<div class="trip-times">
-										<div class="arrive"><span class="grey detail-time-label">Depart:</span> {{flight.departureTime}}</div>
-										<div class="depart"><span class="grey detail-time-label">Arrive:</span> {{flight.arrivalTime}}</div>
-									</div>
-							</div>
-
-							<div class="details-right">
-								<div class="flight-select">
-									<button class="btn" {{action "chooseFlight" flight}}><img src="/assets/glyphicons-207-ok-2.png"></button>
-								</div>
-								<div class="extra-buttons-wrapper">
-									<div class="flight-save"><button class="btn" {{action "saveFlight" flight}} >Save</button></div>
-									<div class="flight-compare"><button class="btn">Compare</button></div>
-								</div>
-							</div>
-
-							<!-- {/if} -->
-						</div>
-					</div>
+			 ${{ReturnFlight.price}}
+		<!-- {#if ReturnFlight.hasStops}
+				<div class="stops">{{ReturnFlight.numberOfStops}}</div>
+			{#else} -->
+			
+			{{ReturnFlight.flightNumber}}
+			Direct Flight
+			<img src="/assets/glyphicons-58-history.png">{{ReturnFlight.flightLengthMinutesHours}}
+			from {{ReturnFlight.origin}}
+			to {{ReturnFlight.destination}}
+			Depart:{{ReturnFlight.departureTime}}
+			Arrive:{{ReturnFlight.arrivalTime}}
+		<!-- {/if} -->
 		</div>
-
+		{{/if}}
 
 		<div id="purchase-flights">
-			<button class="rounded">Purchase</button>
+			<button class="rounded" {{action "purchase"}}>Purchase</button>
 		</div>
 	</div>
 </div>
