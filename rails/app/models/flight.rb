@@ -24,7 +24,10 @@ class Flight < ActiveRecord::Base
             :price => self.ticket_availabilities.first.price,
             :departure_time => self.departure_time,
             :arrival_time => self.arrival_time,
-            :seats_available => self.ticket_availabilities.first.seats_available
+            :seats_available => self.ticket_availabilities.first.seats_available,
+            :flight_time => self.flight_time,
+            :destination => self.destination.destination_code,
+            :origin => self.origin.destination_code
         }
 
     end 

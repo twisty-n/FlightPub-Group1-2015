@@ -22,7 +22,7 @@ export default Ember.ArrayController.extend({
     var timeCount = 0;
 
     flights.forEach(function(flight){
-      timeCount += flight.get('tripLength');
+      timeCount += flight.get('flightTime');
     });
 
     var average = timeCount/flights.length;
