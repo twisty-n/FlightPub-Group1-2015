@@ -2,43 +2,99 @@
 <div class="full-page-white-wrapper">
 	<div class="full-page-white-center">
 
-				<!-- note this is optional, need to have a flag in models -->
 		{{#if DepartureFlight}}
 		<div class="flight-review">
-			<h2>Depature</h2>
-			 ${{DepartureFlight.price}}
-		<!-- {#if DepartureFlight.hasStops}
-				<div class="stops">{{DepartureFlight.numberOfStops}}</div>
-			{#else} -->
-			
-			{{DepartureFlight.flightNumber}}
-			Direct Flight
-			<img src="/assets/glyphicons-58-history.png">{{DepartureFlight.flightLengthMinutesHours}}
-			from {{DepartureFlight.origin}}
-			to {{DepartureFlight.destination}}
-			Depart:{{DepartureFlight.departureTime}}
-			Arrive:{{DepartureFlight.arrivalTime}}
-		<!-- {/if} -->
+			<h2>Depature from MLB</h2>
+
+			<div class="flight-review-details">
+				
+				<div class="review-top">
+					<div class="review-flight-price">${{DepartureFlight.price}}</div>
+
+					<div class="review-flightNumber">{{DepartureFlight.flightNumber}}</div>
+
+					<div class="review-direct">Direct Flight</div>
+				</div>
+
+				
+				<div class="review-middle">
+					
+					<div class="review-flight-time">{{DepartureFlight.flightTimeHoursMinutes}}</div>
+
+				</div>
+				
+
+				<div class="review-from">
+					<div class="from">from</div>
+					<div class="trip-from">{{DepartureFlight.origin}}</div>
+				</div>
+
+				<div class="depart">
+					<div class="grey detail-time-label">Depart:</div>
+					<div class="review-departure-time">
+						{{DepartureFlight.departureTime}}
+					</div>
+				</div>
+				
+				<div class="review-to">
+					<div class="to">to</div>
+					<div class="trip-to">{{DepartureFlight.destination}}</div>
+				</div>
+				<div class="arrive">
+					<class class="grey detail-time-label">Arrive:</class>
+					<div class="review-arrival-time">
+						{{DepartureFlight.departureTime}}
+					</div>
+				</div>
+			</div>
 		</div>
 		{{/if}}
 
-		<!-- note this is optional, need to have a flag in models -->
 		{{#if ReturnFlight}}
 		<div class="flight-review">
-			<h2>Return</h2>
-			 ${{ReturnFlight.price}}
-		<!-- {#if ReturnFlight.hasStops}
-				<div class="stops">{{ReturnFlight.numberOfStops}}</div>
-			{#else} -->
-			
-			{{ReturnFlight.flightNumber}}
-			Direct Flight
-			<img src="/assets/glyphicons-58-history.png">{{ReturnFlight.flightLengthMinutesHours}}
-			from {{ReturnFlight.origin}}
-			to {{ReturnFlight.destination}}
-			Depart:{{ReturnFlight.departureTime}}
-			Arrive:{{ReturnFlight.arrivalTime}}
-		<!-- {/if} -->
+			<h2>Return from MLB</h2>
+
+			<div class="flight-review-details">
+				
+				<div class="review-top">
+					<div class="review-flight-price">${{ReturnFlight.price}}</div>
+
+					<div class="review-flightNumber">{{ReturnFlight.flightNumber}}</div>
+
+					<div class="review-direct">Direct Flight</div>
+				</div>
+
+				
+				<div class="review-middle">
+					
+					<div class="review-flight-time">{{ReturnFlight.flightTimeHoursMinutes}}</div>
+
+				</div>
+				
+
+				<div class="review-from">
+					<div class="from">from</div>
+					<div class="trip-from">{{ReturnFlight.origin}}</div>
+				</div>
+
+				<div class="depart">
+					<div class="grey detail-time-label">Depart:</div>
+					<div class="review-departure-time">
+						{{ReturnFlight.departureTime}}
+					</div>
+				</div>
+				
+				<div class="review-to">
+					<div class="to">to</div>
+					<div class="trip-to">{{ReturnFlight.destination}}</div>
+				</div>
+				<div class="arrive">
+					<class class="grey detail-time-label">Arrive:</class>
+					<div class="review-arrival-time">
+						{{ReturnFlight.departureTime}}
+					</div>
+				</div>
+			</div>
 		</div>
 		{{/if}}
 
