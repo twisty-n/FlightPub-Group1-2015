@@ -4,7 +4,6 @@ export default Ember.Route.extend({
     controllerName: 'flights',
     model: function() {
 
-    	console.log("Loggggggbbbbbbbbbbbbbbberrrrrrrr");
     	var searchFields = this.controllerFor('index').get('searchFields');
 
     	console.log(searchFields);
