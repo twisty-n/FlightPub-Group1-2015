@@ -1,11 +1,18 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
+<<<<<<< HEAD
   needs: ['application'],
 
   DepartureFlight: null,
   ReturnFlight: null,
   oneWay: true,
+=======
+
+  DepartureFlight: null,
+  ReturnFlight: null,
+  oneWay: false,
+>>>>>>> ed4f948ca151dc91260cea9e5a0c699cea70a72f
   currentSelection: 'departure',
 
   pageTitlte: 'SYD to MLB', //change this to get the to and from data from the form
@@ -68,6 +75,9 @@ export default Ember.ArrayController.extend({
    return flights.filter(function(flight, index, enumerable){
     return flight.get('price') >= 0;
   });
+
+
+    //TODO: we also need to filter by the 'departure' or 'return'
 
 
     //TODO: we also need to filter by the 'departure' or 'return'
@@ -217,6 +227,7 @@ export default Ember.ArrayController.extend({
 
       if(this.get('oneWay') || (this.get('DepartureFlight') != null && this.get('ReturnFlight') != null))
       {
+<<<<<<< HEAD
         this.transitionToRoute('review');
       }
     },
@@ -244,7 +255,6 @@ export default Ember.ArrayController.extend({
       });
 
     },
-
   },
 
 });
