@@ -1,10 +1,17 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
+
+  DepartureFlight: null,
+  ReturnFlight: null,
+  oneWay: false,
+  currentSelection: 'departure',
+
+  pageTitlte: 'SYD to MLB', //change this to get the to and from data from the form
+
   itemController: 'flight',
   sortProperties: Ember.A([]),
-  filterProperties: Ember.A([]),
-
+  filterProperties: Ember.A(['departure']),
   sortedFlights: Ember.computed.sort('filteredFlights', 'sortProperties'),
 
   noStops: false,
@@ -45,6 +52,9 @@ export default Ember.ArrayController.extend({
     return flights.filter(function(flight, index, enumerable){
       return flight.get('price') >= 0;
     });
+
+
+    //TODO: we also need to filter by the 'departure' or 'return'
 
 
     //TODO: make sure this is working, I don't think we
@@ -176,6 +186,43 @@ export default Ember.ArrayController.extend({
         $(flightID).animate({height: 93}, 93);
 
       }
+    },
+
+    chooseFlight: function(flight){
+      if(this.get('currentSelection') === 'departure')
+      {
+        this.set('DepartureFlight', flight);
+        this.send('toggleDepartureReturnFlights');
+      }
+      else if(!this.get('oneWay'))
+      {
+        this.set('ReturnFlight', flight);
+      }
+
+      if(this.get('oneWay') || (this.get('DepartureFlight') != null && this.get('ReturnFlight') != null))
+      {
+          this.transitionToRoute('review');
+      }
+    },
+
+    toggleDepartureReturnFlights: function(){
+        this.set('currentSelection', 'ReturnFlight');
+        var filterProperties = this.get('filterProperties');
+
+        if(filterProperties.indexOf('departure') > 0)
+        {
+
+          //also need to update the title
+
+          filterProperties.removeObject('departure');
+          filterProperties.pushObject('return');
+        }
+        else if(filterProperties.indexOf('return') > 0)
+        {
+          filterProperties.removeObject('return');
+          filterProperties.pushObject('departure');
+        }
+
     }
 
   },

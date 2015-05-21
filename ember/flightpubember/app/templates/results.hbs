@@ -22,7 +22,7 @@
 	-->
 
 
-	<h1 id="page-title">SYD to MLB</h1>
+	<h1 id="page-title">{{pageTitlte}}</h1>
 
 	<div id="results">
 		<div id="result-graph-wrapper">
@@ -132,7 +132,7 @@
 
 							<div class="details-right">
 								<div class="flight-select">
-									<button class="btn"><img src="/assets/glyphicons-207-ok-2.png"></button>
+									<button class="btn" {{action "chooseFlight" flight}}><img src="/assets/glyphicons-207-ok-2.png"></button>
 								</div>
 								<div class="extra-buttons-wrapper">
 									<div class="flight-save"><button class="btn" {{action "saveFlight" flight}} >Save</button></div>
