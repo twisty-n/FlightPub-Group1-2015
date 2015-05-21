@@ -179,7 +179,8 @@ export default Ember.ArrayController.extend({
             {
 
                 // First we are going to set a property
-                this.setProperties({searchFields: "HERPADERPAHERP"});
+                this.set('searchFields', 'SUPER BUTTS');
+               
                 //success!
                 //we pass this valid shit to the server
                 // and redirect to the results page
