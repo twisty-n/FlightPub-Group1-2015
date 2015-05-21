@@ -206,31 +206,53 @@ export default Ember.ArrayController.extend({
       }
     },
 
+    saveFlight: function(flight){
+      if(this.get('controllers.application.isAuthenticated'))
+      {
+        var data = {flightID: flight.id, userID: this.get('controllers.application.currentUser.id')};
+
+        Ember.$.get('apli/save', data).then(function(response){
+            alert("Flight Saved!"); 
+            //TODO: change this response to a cute little thing in the corner
+            //      and update the save button to say saved
+        }, function(error){
+            if(error.status === 404)
+            {
+              alert('Unable to save, there was an issue connecting with the server');
+            }
+        });
+      }
+    },
+
     purchase: function(){
       //we need user id, so we need to have the user sign up if they're not logged in
       console.log(this.get('controllers.application.isAuthenticated'));
       console.log(this.get('controllers.application.currentUser'));
 
-      var data =  this.getProperties('ReturnFlight.id', 'DepartureFlight.id');
+      var data =  this.getProperties('ReturnFlight.id', 'DepartureFlight.id', 'controllers.application.currentUser.id');
 
       console.log(data);
 
+      var _this = this;
 
       Ember.$.get('api/purchse', data).then(function(response) {
-        this.transitionToRoute('complete'); 
+        _this.transitionToRoute('complete'); 
 
-        this.setProperties({
+        _this.setProperties({
           ReturnFlight: null,
           DepartureFlight: null
         });
 
       }, function(error) {
-        if (error.status === 401) {
-          alert("Something went wrong!");
+        if (error.status === 404) {
+          alert("Something went wrong! The server may be down.");
         }
+        alert("we will continue to the completed page because I want to show user flow");
+        _this.transitionToRoute('complete');
       });
 
     },
+
   },
 
 });
