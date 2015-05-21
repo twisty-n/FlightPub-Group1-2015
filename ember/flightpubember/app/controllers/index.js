@@ -11,6 +11,8 @@ export default Ember.ArrayController.extend({
     selectedClass: '',
     numberOfPeople: '1',
 
+    searchFields: "BUTTS",
+
 
 
     //these are the same destination search but for different inputs
@@ -175,6 +177,9 @@ export default Ember.ArrayController.extend({
 
             if(incorrectValues.length == 0)
             {
+
+                // First we are going to set a property
+                this.setProperties({searchFields: "HERPADERPAHERP"});
                 //success!
                 //we pass this valid shit to the server
                 // and redirect to the results page
@@ -184,7 +189,8 @@ export default Ember.ArrayController.extend({
 
                 //THIS RESET COULD CAUSE TROUBLES DEPENDING ON HOW WE SEND
                 // THE DATA
-                this.send('reset');
+                // We are going to send the reset after we have obtained the data from the controller in our route
+                //this.send('reset');
             }
             else
             {
