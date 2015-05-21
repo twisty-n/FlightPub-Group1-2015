@@ -22,26 +22,17 @@ export default Ember.ArrayController.extend({
   averageFlightTime: Ember.computed('sortedFlights', function(){
 
     var flights = this.get('sortedFlights');
-
-    //thinking we might actually want to use the average length
-    // and stretch based on the average time.
-    // but for now we will get the longest.
-
     var timeCount = 0;
 
     flights.forEach(function(flight){
       timeCount += flight.get('flightTime');
     });
 
-    var average = timeCount/flights.length;
-
-    return average;
+    return timeCount/flights.length;
   }),
 
   filteredFlights: function(){
 
-    console.log(this.get('sortProperties'));
-    
     var flights = this.get('model');
 
     if(!flights)
@@ -49,9 +40,6 @@ export default Ember.ArrayController.extend({
       return flights;
     }
 
-
-
-    
     if(this.get('currentSelection') === 'departure')
     {
       flights = flights.filter(function(flight){
@@ -63,14 +51,9 @@ export default Ember.ArrayController.extend({
       flights = flights.filter(function(flight){
         return (flight.get('isReturnFlight') === true);        
       });
-   }
+    }
 
-   return flights.filter(function(flight, index, enumerable){
-    return flight.get('price') >= 0;
-  });
-
-
-    //TODO: we also need to filter by the 'departure' or 'return'
+    return flights;
 
 
     //TODO: make sure this is working, I don't think we
@@ -221,26 +204,49 @@ export default Ember.ArrayController.extend({
       }
     },
 
+    saveFlight: function(flight){
+      if(this.get('controllers.application.isAuthenticated'))
+      {
+        var data = {flightID: flight.id, userID: this.get('controllers.application.currentUser.id')};
+
+        Ember.$.get('apli/save', data).then(function(response){
+            alert("Flight Saved!"); 
+            //TODO: change this response to a cute little thing in the corner
+            //      and update the save button to say saved
+        }, function(error){
+            if(error.status === 404)
+            {
+              alert('Unable to save, there was an issue connecting with the server');
+            }
+        });
+      }
+    },
+
     purchase: function(){
       //we need user id, so we need to have the user sign up if they're not logged in
       console.log(this.get('controllers.application.isAuthenticated'));
       console.log(this.get('controllers.application.currentUser'));
 
-      var data =  this.getProperties('ReturnFlight.id', 'DepartureFlight.id');
+      var data =  this.getProperties('ReturnFlight.id', 'DepartureFlight.id', 'controllers.application.currentUser.id');
 
       console.log(data);
 
-      this.setProperties({
-        ReturnFlight: null,
-        DepartureFlight: null
-      });
+      var _this = this;
 
       Ember.$.get('api/purchse', data).then(function(response) {
-          this.transitionToRoute('complete'); 
-        }, function(error) {
-        if (error.status === 401) {
-          alert("YOU FUCKED UP");
+        _this.transitionToRoute('complete'); 
+
+        _this.setProperties({
+          ReturnFlight: null,
+          DepartureFlight: null
+        });
+
+      }, function(error) {
+        if (error.status === 404) {
+          alert("Something went wrong! The server may be down.");
         }
+        alert("we will continue to the completed page because I want to show user flow");
+        _this.transitionToRoute('complete');
       });
 
     },
