@@ -21,6 +21,23 @@ export default Ember.ObjectController.extend({
 	// 	return width + ' ' + left;
 	// }),
 
+	flightLengthMinutesHours: function(){
+		var tripLength = this.get('tripLength');
+		var hours = Math.floor(tripLength/60);
+		var minutes = tripLength - (hours*60);
+
+		if(hours > 0)
+		{
+			var result = hours+"h ";
+		}
+		if(minutes > 0)
+		{
+			result += minutes+"m";
+		}
+
+		return result;
+	}.property('tripLength'),
+
 	timeBarStyle: function(){
 		var avgLength = this.get('controllers.flights.averageFlightTime');
 
