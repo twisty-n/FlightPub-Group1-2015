@@ -1,10 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
+  needs: ['application'],
 
   DepartureFlight: null,
   ReturnFlight: null,
-  oneWay: false,
+  oneWay: true,
   currentSelection: 'departure',
 
   pageTitlte: 'SYD to MLB', //change this to get the to and from data from the form
@@ -48,10 +49,25 @@ export default Ember.ArrayController.extend({
       return flights;
     }
 
+
+
     
-    return flights.filter(function(flight, index, enumerable){
-      return flight.get('price') >= 0;
-    });
+    if(this.get('currentSelection') === 'departure')
+    {
+      flights = flights.filter(function(flight){
+        return (flight.get('isReturnFlight') === false);        
+      });
+    }
+    else
+    {
+      flights = flights.filter(function(flight){
+        return (flight.get('isReturnFlight') === true);        
+      });
+   }
+
+   return flights.filter(function(flight, index, enumerable){
+    return flight.get('price') >= 0;
+  });
 
 
     //TODO: we also need to filter by the 'departure' or 'return'
@@ -83,7 +99,7 @@ export default Ember.ArrayController.extend({
 
 
 
-  }.property('model.isLoaded', 'model', 'sortProperties'),
+  }.property('model.isLoaded', 'model', 'sortProperties', 'currentSelection'),
 
 
 
@@ -106,63 +122,63 @@ export default Ember.ArrayController.extend({
     },
 
 
-  filterBy: function(property){
+    filterBy: function(property){
 
-    this.send('updatePropertyStyle', property);
+      this.send('updatePropertyStyle', property);
 
-    var filterProperties = this.get('filterProperties');
+      var filterProperties = this.get('filterProperties');
 
-    var index = filterProperties.indexOf(property);
-    
-    if(index < 0)
-    {
-      filterProperties.pushObject(property);
-    }
-    else
-    {
-      filterProperties.removeObject(property);
-    }
+      var index = filterProperties.indexOf(property);
 
-  },
+      if(index < 0)
+      {
+        filterProperties.pushObject(property);
+      }
+      else
+      {
+        filterProperties.removeObject(property);
+      }
 
-  updatePropertyStyle: function(property){
-    var id = "";
-    var on = false;
+    },
+
+    updatePropertyStyle: function(property){
+      var id = "";
+      var on = false;
 
 
-    if(this.get('sortProperties').indexOf(property) === -1 
-    && this.get('filterProperties').indexOf(property) === -1)
-    {
-      on = true;
-    }
+      if(this.get('sortProperties').indexOf(property) === -1 
+        && this.get('filterProperties').indexOf(property) === -1)
+      {
+        on = true;
+      }
 
-    switch(property)
-    {
-      case 'price:asc': id = "#cheapest-first-filter"; break;
-      case 'flightTime:asc': id = "#shortest-first-filter"; break;
-      case 'noStops': id = "#no-stops-filter"; break; 
-    }
+      switch(property)
+      {
+        case 'price:asc': id = "#cheapest-first-filter"; break;
+        case 'flightTime:asc': id = "#shortest-first-filter"; break;
+        case 'noStops': id = "#no-stops-filter"; break; 
+      }
 
-    if(id === "")
-    {
-      return;
-    }
+      if(id === "")
+      {
+        return;
+      }
 
-    if(on)
-    {
-      $(id).css({'background-color':'#1479C9', 'color':'#FFF'});
-    }
-    else
-    {
-      $(id).css({'background-color':'#FFF', 'color':'#17AEE5'});
-    }
-  },
+      if(on)
+      {
+        $(id).css({'background-color':'#1479C9', 'color':'#FFF'});
+      }
+      else
+      {
+        $(id).css({'background-color':'#FFF', 'color':'#17AEE5'});
+      }
+    },
 
-  selected: function(flight){
-    var currentSelectedFlight = this.get('selectedFlight'); 
+    selected: function(flight){
+      var currentSelectedFlight = this.get('selectedFlight'); 
 
-    if(currentSelectedFlight)
-    {
+      if(currentSelectedFlight)
+      {
         //hide the current flight because no matter what click 
         // happens we want it to hide again
         var id = '#'+currentSelectedFlight.get('id');
@@ -192,7 +208,7 @@ export default Ember.ArrayController.extend({
       if(this.get('currentSelection') === 'departure')
       {
         this.set('DepartureFlight', flight);
-        this.send('toggleDepartureReturnFlights');
+        this.set('currentSelection', 'return')
       }
       else if(!this.get('oneWay'))
       {
@@ -201,29 +217,34 @@ export default Ember.ArrayController.extend({
 
       if(this.get('oneWay') || (this.get('DepartureFlight') != null && this.get('ReturnFlight') != null))
       {
-          this.transitionToRoute('review');
+        this.transitionToRoute('review');
       }
     },
 
-    toggleDepartureReturnFlights: function(){
-        this.set('currentSelection', 'ReturnFlight');
-        var filterProperties = this.get('filterProperties');
+    purchase: function(){
+      //we need user id, so we need to have the user sign up if they're not logged in
+      console.log(this.get('controllers.application.isAuthenticated'));
+      console.log(this.get('controllers.application.currentUser'));
 
-        if(filterProperties.indexOf('departure') > 0)
-        {
+      var data =  this.getProperties('ReturnFlight.id', 'DepartureFlight.id');
 
-          //also need to update the title
+      console.log(data);
 
-          filterProperties.removeObject('departure');
-          filterProperties.pushObject('return');
+      this.setProperties({
+        ReturnFlight: null,
+        DepartureFlight: null
+      });
+
+      Ember.$.get('api/purchse', data).then(function(response) {
+          this.transitionToRoute('complete'); 
+        }, function(error) {
+        if (error.status === 401) {
+          alert("YOU FUCKED UP");
         }
-        else if(filterProperties.indexOf('return') > 0)
-        {
-          filterProperties.removeObject('return');
-          filterProperties.pushObject('departure');
-        }
+      });
 
-    }
+    },
 
   },
+
 });
