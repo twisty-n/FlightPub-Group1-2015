@@ -19,7 +19,16 @@ class Api::FlightsController < ApplicationController
     # Search will need to be done here and accept params
     Rails.logger.info(params)
 
-    render json: Flight.take(10)
+    # Started GET "/api/flights?
+    #     originCode=HBA&
+    #     destinationCode=VIE&
+    #     departureDate=25-05-2015&
+    #     returnDate=27-05-2015&
+    #     ticketClass=&
+    #     numberOfPeople=4" 
+
+    # render json: Flight.take(10)
+    render json: Flight.where(10)
   end
 
   def show
