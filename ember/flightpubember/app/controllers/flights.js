@@ -22,26 +22,17 @@ export default Ember.ArrayController.extend({
   averageFlightTime: Ember.computed('sortedFlights', function(){
 
     var flights = this.get('sortedFlights');
-
-    //thinking we might actually want to use the average length
-    // and stretch based on the average time.
-    // but for now we will get the longest.
-
     var timeCount = 0;
 
     flights.forEach(function(flight){
       timeCount += flight.get('flightTime');
     });
 
-    var average = timeCount/flights.length;
-
-    return average;
+    return timeCount/flights.length;
   }),
 
   filteredFlights: function(){
 
-    console.log(this.get('sortProperties'));
-    
     var flights = this.get('model');
 
     if(!flights)
@@ -49,9 +40,6 @@ export default Ember.ArrayController.extend({
       return flights;
     }
 
-
-
-    
     if(this.get('currentSelection') === 'departure')
     {
       flights = flights.filter(function(flight){
@@ -63,17 +51,11 @@ export default Ember.ArrayController.extend({
       flights = flights.filter(function(flight){
         return (flight.get('isReturnFlight') === true);        
       });
-   }
+    }
 
-   return flights.filter(function(flight, index, enumerable){
-    return flight.get('price') >= 0;
-  });
-
-
-    //TODO: we also need to filter by the 'departure' or 'return'
-
-
-    //TODO: we also need to filter by the 'departure' or 'return'
+    return flights.filter(function(flight, index, enumerable){
+      return flight.get('price') >= 0;
+    });
 
 
     //TODO: make sure this is working, I don't think we
@@ -220,7 +202,6 @@ export default Ember.ArrayController.extend({
 
       if(this.get('oneWay') || (this.get('DepartureFlight') != null && this.get('ReturnFlight') != null))
       {
-<<<<<<< HEAD
         this.transitionToRoute('review');
       }
     },
@@ -234,16 +215,18 @@ export default Ember.ArrayController.extend({
 
       console.log(data);
 
-      this.setProperties({
-        ReturnFlight: null,
-        DepartureFlight: null
-      });
 
       Ember.$.get('api/purchse', data).then(function(response) {
-          this.transitionToRoute('complete'); 
-        }, function(error) {
+        this.transitionToRoute('complete'); 
+
+        this.setProperties({
+          ReturnFlight: null,
+          DepartureFlight: null
+        });
+
+      }, function(error) {
         if (error.status === 401) {
-          alert("YOU FUCKED UP");
+          alert("Something went wrong!");
         }
       });
 
