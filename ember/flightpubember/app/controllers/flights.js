@@ -1,18 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
-<<<<<<< HEAD
   needs: ['application'],
 
   DepartureFlight: null,
   ReturnFlight: null,
   oneWay: true,
-=======
-
-  DepartureFlight: null,
-  ReturnFlight: null,
-  oneWay: false,
->>>>>>> ed4f948ca151dc91260cea9e5a0c699cea70a72f
   currentSelection: 'departure',
 
   pageTitlte: 'SYD to MLB', //change this to get the to and from data from the form
