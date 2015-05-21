@@ -45,7 +45,7 @@
 			<div id="result-filters">
 				<div id="main-filters">
 					<button {{action "sortBy" "price:asc"}} id="cheapest-first-filter">cheapest first</button> 
-					<button {{action "sortBy" "tripLength:asc"}}id="shortest-first-filter">quickest first</button> 
+					<button {{action "sortBy" "flightTime:asc"}}id="shortest-first-filter">quickest first</button> 
 					<button id="no-stops-filter" {{action "filterBy" "noStops"}}>no stops</button> <!-- this button acts like a checkbox? -->	
 				</div>
 				<select id="max-stops-filter">
@@ -81,8 +81,8 @@
 					</div>
 					<div class="time-wrapper">
 						<div class="time-bar" {{bind-attr style='flight.timeBarStyle'}}>
-							<div class="time" style="right:100%;">{{flight.departureTime}}</div>
-							<div class="time" style="left:100%;">{{flight.arrivalTime}}</div>
+							<div class="time" style="right:100%;">{{flight.departureTimeHourDay}}</div>
+							<div class="time" style="left:100%;">{{flight.arrivalTimeHourDay}}</div>
 						</div>
 						<div class="col" style="left:16.6666666%;"></div>
 						<div class="col" style="left:33.3333333%;"></div>
@@ -125,8 +125,8 @@
 								</div>
 									
 									<div class="trip-times">
-										<div class="arrive"><span class="grey">Depart:</span> {{flight.arrivalTime}}</div>
-										<div class="depart"><span class="grey">Arrive:</span> {{flight.departureTime}}</div>
+										<div class="arrive"><span class="grey detail-time-label">Depart:</span> {{flight.departureTime}}</div>
+										<div class="depart"><span class="grey detail-time-label">Arrive:</span> {{flight.arrivalTime}}</div>
 									</div>
 							</div>
 
@@ -135,7 +135,7 @@
 									<button class="btn"><img src="/assets/glyphicons-207-ok-2.png"></button>
 								</div>
 								<div class="extra-buttons-wrapper">
-									<div class="flight-save"><button class="btn">Save</button></div>
+									<div class="flight-save"><button class="btn" {{action "saveFlight" flight}} >Save</button></div>
 									<div class="flight-compare"><button class="btn">Compare</button></div>
 								</div>
 							</div>

@@ -129,7 +129,7 @@ export default Ember.ArrayController.extend({
     switch(property)
     {
       case 'price:asc': id = "#cheapest-first-filter"; break;
-      case 'tripLength:asc': id = "#shortest-first-filter"; break;
+      case 'flightTime:asc': id = "#shortest-first-filter"; break;
       case 'noStops': id = "#no-stops-filter"; break; 
     }
 

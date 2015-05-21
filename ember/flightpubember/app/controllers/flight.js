@@ -3,24 +3,6 @@ import Ember from 'ember';
 export default Ember.ObjectController.extend({
 	needs: ['flights'],
 
-	// timeBarStyle: Ember.computed('timeBarWidth', 'timeBarLeft', function() {
-	// 	var width = 'width:20%;';
-	// 	var left = 'left:50%;';
-
-	// 	console.log(this.get('controller.longestFlightTime'));
-
-	// 	// console.log(this.get('flight_time'));
-
-	// 	// //we can use this to get the longest flight and make everything relative to that
-	// 	// console.log("YOOO");
-	// 	// console.log(this.get('controllers.flights').get('sortedFlights'));
-
-	// 	// var f = this.get('controllers.flights.model');
-	// 	// console.log(f);
-
-	// 	return width + ' ' + left;
-	// }),
-
 	flightLengthMinutesHours: function(){
 		var flightTime = this.get('flightTime');
 
@@ -38,6 +20,72 @@ export default Ember.ObjectController.extend({
 
 		return result;
 	}.property('flightTime'),
+
+	departureTimeHourDay: Ember.computed('depatureTime', function(){
+		var flightTime = this.get('departureTime');
+
+		var hour = flightTime.getHours();
+		var period = "am";
+		var day = flightTime.getDay();
+
+		if(hour == 0){
+			hour = 12;
+		}
+		else if(hour >= 12)
+		{
+			period = "pm";
+			if(hour > 12)
+			{
+				hour -= 12;
+			}
+		}
+
+		switch(day)
+		{
+			case 0: day = "Sun"; break;
+			case 1: day = "Mon"; break;
+			case 2: day = "Tue"; break;
+			case 3: day = "Wed"; break;
+			case 4: day = "Thu"; break;
+			case 5: day = "Fri"; break;
+			case 6: day = "Sat"; break;
+		}
+
+		return hour+" "+period+" "+day;
+	}),
+
+	arrivalTimeHourDay: Ember.computed('arrivalTime', function(){
+		var flightTime = this.get('arrivalTime');
+
+		var hour = flightTime.getHours();
+		var period = "am";
+		var day = flightTime.getDay();
+
+		if(hour == 0){
+			hour = 12;
+		}
+		else if(hour >= 12)
+		{
+			period = "pm";
+			if(hour > 12)
+			{
+				hour -= 12;
+			}
+		}
+
+		switch(day)
+		{
+			case 0: day = "Sun"; break;
+			case 1: day = "Mon"; break;
+			case 2: day = "Tue"; break;
+			case 3: day = "Wed"; break;
+			case 4: day = "Thu"; break;
+			case 5: day = "Fri"; break;
+			case 6: day = "Sat"; break;
+		}
+
+		return hour+" "+period+" "+day;
+	}),
 
 	timeBarStyle: function(){
 		var avgLength = this.get('controllers.flights.averageFlightTime');
