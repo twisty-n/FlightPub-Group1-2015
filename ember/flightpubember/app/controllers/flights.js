@@ -155,7 +155,7 @@ export default Ember.ArrayController.extend({
     {
         //hide the current flight because no matter what click 
         // happens we want it to hide again
-        var id = '#'+currentSelectedFlight.get('flightNumber');
+        var id = '#'+currentSelectedFlight.get('id');
 
         $(id).animate({height: 1}, 93, function(){
           $(id).css({'display':'none'});
@@ -171,7 +171,7 @@ export default Ember.ArrayController.extend({
         this.set('selectedFlight', flight);
 
         //display the newly selected flight
-        var flightID = '#' + flight.get('flightNumber');
+        var flightID = '#' + flight.get('id');
         $(flightID).css({'display':'block'});
         $(flightID).animate({height: 93}, 93);
 
