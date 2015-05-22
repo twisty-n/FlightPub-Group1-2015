@@ -1,65 +1,89 @@
-
 	<div id="search-wrapper">
 
 		<div id="flight-search">
-				<!-- NOT A REAL FORM 
-					We need to create a model and bind data to that, then when search is
-					pressed we need to make a call with the search data to the api
-
-				-->
-	
-				<div id="left-box" class="flight-search-box place-input">
+			<form class="form-horizontal" {{action "flightSearch" on="submit"}}>
+				
+				<div id="from-box" class="flight-search-box place-input">
 					<div id="departure">
-						<div class="input-title">From:</div> 
-						<input class="city-input rounded" type="text">
-					</div>
-					<div id="departure-date">
-						Depart: 
-						<input type="date">
-						<!-- <img src="png/glyphicons-55-clock.png"> -->
-					</div>
+						{{input value=fromDestination type="text" class="city-input rounded" id="from" placeholder="From" focus-out="hideSuggestions"
+					}}
 				</div>
 
-				<div class="flight-search-box place-input">
-					<div class="return">
-						<div class="input-title">To:</div> 
-						<input class="city-input rounded" type="text">
+				<div class="arrow"></div>
+				<div class="drop-down">
+					{{#view 'destination-suggestion'}}
+					<div class="arrow_box rounded suggestions-box" id="departure-suggestions">
+						<ul class="suggestions">
+							{{#each destination in fromDestinationSearch itemController="destination"}}
+
+							<li {{bind-attr id="destination.destinationCode"}} {{action "fromSelected"}}>{{destination.detail}}</li>
+							{{/each}}
+						</ul>
 					</div>
-					<div id="return-date">
-						Return:
-						<input class="date-input" type="date">
-						<!-- <img src="png/glyphicons-55-clock.png"> -->
-					</div>
+					{{/view}}
 				</div>
 
-				<div class="flight-search-box seat-input">
-					<div class="value-select">
-						People:
-						<select name="people">
-							<option value=1>1</option>
-							<option value=2>2</option>
-							<option value=3>3</option>
-							<option value=4>4</option>
-							<option value=5>5</option>
-							<option value=6>6</option>
-						</select>
+
+				<div id="departure-date">
+					Depart: 
+					{{input value=departDate type="text" class="date-input" id="departure-datepicker" placeholder="dd-mm-yyyy"}}
+				</div>
+			</div>
+
+			<div id="to-box" class="flight-search-box place-input">
+				<div class="return">
+					{{input value=toDestination placeholder="To" class="city-input rounded" id="to" type="text" focus-out="hideSuggestions"}}
+				</div>
+				<div class="arrow"></div>
+				<div class="drop-down">
+					{{#view 'destination-suggestion'}}
+					<div class="arrow_box rounded suggestions-box" id="return-suggestions">
+						<ul class="suggestions">
+							{{#each destination in toDestinationSearch itemController="destination"}}
+							<li {{bind-attr id="destination.destinationCode"}} {{action "toSelected"}}>{{destination.detail}}</li>
+							{{/each}}
+						</ul>
 					</div>
-					<div class="value-select">
-						Class: 
-						<select>
-							<option value="economy">Economy</option>
-							<option value="business">Business</option>
-							<option value="first">First Class</option>
-						</select>
-					</div>
+					{{/view}}
 				</div>
 
-				<div class="flight-search-box" id="search-button-wrapper">
-					{{#link-to 'results'}}<input id="search-button" class="rounded" type="submit" value="Search">{{/link-to}}
+				<div id="return-date">
+					Return:						
+					{{input value=returnDate type="text" id="return-datepicker"  class="date-input" placeholder="dd-mm-yyyy"}}
 				</div>
-		</div>
+			</div>
+
+			<div class="flight-search-box seat-input">
+				<div class="value-select">
+					People:
+					{{view "select"
+					value=numberOfPeople
+					content=controller.people
+					optionValuePath="content.number"
+					optionLabelPath="content.number"
+					defaultvalue=1
+					id="people-selection"}}
+
+				</div>
+				<div class="value-select">
+					Class: 
+					{{view "select"
+
+					contentBinding="controller.tickets"
+					optionValuePath="content.classCode"
+					optionLabelPath="content.details"
+					id="class-selection"}}
+				</div>
+			</div>
+
+			<div class="flight-search-box" id="search-button-wrapper">
+				<button id="search-button" class="rounded" type="submit">Search</button>
+			</div>
+
+		</form>
 	</div>
+</div>
 
-	<div id="description">
-		<p>Sit back, have a drink, and we'll do the work for you.</p>
-	</div>
+<div id="description">
+	<p>Sit back, have a drink, and we'll do the work for you.</p>
+</div>

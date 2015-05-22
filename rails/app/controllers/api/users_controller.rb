@@ -68,7 +68,7 @@ class Api::UsersController < ApplicationController
 	# Define the permitted user paramaters. Anything listed will be allowed as a provided paramater
 	# note that the password defintions are automatically inluded in this list
 	def user_params
-		params.require(:user).permit(:first_ame, :last_name, :password, :password_confirmation, :info_string, :email, :role)
+		params.require(:user).permit(:first_name, :last_name, :password, :password_confirmation, :info_string, :email, :role, :account_status)
 	end
 
 end

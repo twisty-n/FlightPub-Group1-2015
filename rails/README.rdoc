@@ -1,18 +1,14 @@
 == README
 
 To get this application up and running on your local machine:
-NOTE: OUT OF DATE. App ported to use Postgre to match deployment env
 
 - Clone the repo
 - Run bundle install from the app root
 - If this throws errors, try to manually install the gem that fails with 'gem install my_failed_gem gen_version'
-- You may have to install additional things to take care of any dependancies that the gems require. e.g. MySQl requires MySQL to be installed along with its dev libraries and such
-- Ensure that MySQL is installed
-- Create a user 'rails'@'localhost' with the password 'secure_password'
-- Create two databases as follows 'rails_test' 'rails_test_testdb'
-- Grant all on the above databases to 'rails'@'localhost'
-- Open app_root/config/database.yml and set the config to point to the socket that MySQL is running from
-- Edit the database connection information in the same file, adjusting username and password, the dev and prod db's
-- Run the following terminal command from the applicatgion root 'rake db:migrate'
+- You may have to install additional things to take care of any dependancies that the gems require. e.g. PostgreSQL requires PostgreSQL to be installed along with its dev libraries and such
+- Ensure that PostgreSQL is installed
+- Create the user listed in the `config/database.yaml` with the relevant details
+- Open app_root/config/database.yml and set the config details appropriately. 
+- Run the following terminal command from the application root `rake db:create db:migrate`
 - You should now be ready to launch the server with 'rails server'
 - Access the application from 'localhost:3000'

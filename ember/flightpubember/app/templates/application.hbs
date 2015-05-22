@@ -1,11 +1,15 @@
 <div id="navbar-wrapper">
 	<div id="navbar">
 		<div id="logo">{{#link-to 'index'}}<img src="assets/flightpub-logo.png">{{/link-to}}</div>
+        
+		<div id="login">
         {{# if isAuthenticated}}
-            <div id='TO_BE_FILLED'> {{#link-to 'secret'}}TEST AUTH{{/link-to}} </div>
-             <div id='TO_BE_FILLED_2'> <a href="#" {{action "logout"}} >Logout</a> </div>
+             {{#link-to 'profile'}}Profile{{/link-to}}            
+             <a href="#" {{action "logout"}} >Logout</a>
+             {{else}}
+            {{#link-to 'sessions.index'}}Login{{/link-to}}
         {{/if}}
-		<div id="login">{{#link-to 'sessions.index'}}Login{{/link-to}}</div>
+        </div>
 	</div>
 </div>
 

@@ -5,5 +5,5 @@ import DS from 'ember-data';
 //to ensure this works, requests need to be proxied to localhost:3000
 //Which is serviced by Rails
 export default DS.ActiveModelAdapter.extend({
-    namespace: 'api'
+    namespace: 'api',
 });

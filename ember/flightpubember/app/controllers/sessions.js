@@ -8,6 +8,9 @@ which is why it is cut and pasted back in
 */
 
 export default Ember.ObjectController.extend({
+
+  needs: ['users/signup'],
+
 // initialization method to verify if there is a access_token cookie set
   // so we can set our ajax header with it to access the protected pages
   content: {},
@@ -28,6 +31,10 @@ export default Ember.ObjectController.extend({
   // create and set the token & current user objects based on the respective cookies
   token:               Ember.$.cookie('access_token'),
   currentUser:         Ember.$.cookie('auth_user'),
+
+  //for switching between displays of login and register
+  pageTitle: 'Login',
+  
 
   // create a observer binded to the token property of this controller
   // to set/remove the authentication tokens
@@ -108,7 +115,14 @@ export default Ember.ObjectController.extend({
               attemptedTrans.retry();
               _this.set('attemptedTransition', null);
             } else {
-              _this.transitionToRoute('secret');
+              if(user.get('role') === 'admin')
+              {
+                _this.transitionToRoute('admin');
+              }
+              else
+              {
+                _this.transitionToRoute('profile');
+              }
             }
 
           });
@@ -119,5 +133,42 @@ export default Ember.ObjectController.extend({
         }
       });
     }
+    ,
+    registerUser: function() {
+      console.log("register user called!");
+
+      var _this = this;
+
+//http://stackoverflow.com/questions/25632567/javascript-code-with-ember-js-password-confirm-password-matching-fields-with-em
+//TODO: password and email confirmation checking
+
+      var data = this.getProperties('email', 'password', 'email_confirmation', 'password_confirmation');
+      _this.setProperties({
+        email: null,
+        email_confirmation: null,
+        password: null,
+        password_confirmation: null
+      })
+      this.get('controllers.users/signup').send('createUser', data);
+    },
+
+    toggleLoginShowing: function(){
+      if(this.get('loginShowing')){
+          $("#login-section").hide();
+          $("#signup-section").show();
+          this.set('loginShowing', false);
+          this.set('pageTitle', 'Signup');
+      }
+      else
+      {
+          $("#login-section").show();
+          $("#signup-section").hide();
+          this.set('loginShowing', true);
+          this.set('pageTitle', 'Login');
+
+      }
+    },
+
+
   }
 });

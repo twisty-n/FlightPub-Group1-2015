@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150514125408) do
+ActiveRecord::Schema.define(version: 20150520080654) do
+
+  create_table "airlines", force: :cascade do |t|
+    t.string   "airline_code", limit: 255
+    t.string   "airline_name", limit: 255
+    t.integer  "country_id",   limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "airlines", ["country_id"], name: "index_airlines_on_country_id", using: :btree
 
   create_table "api_keys", force: :cascade do |t|
     t.integer  "user_id",      limit: 4
@@ -51,26 +61,75 @@ ActiveRecord::Schema.define(version: 20150514125408) do
 
   create_table "flights", force: :cascade do |t|
     t.string   "flight_number",       limit: 255
-    t.decimal  "price",                           precision: 10
-    t.string   "seatsAvailable",      limit: 255
-    t.string   "departureTime",       limit: 255
-    t.string   "arrivalTime",         limit: 255
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
-    t.integer  "trip_length",         limit: 4
-    t.string   "destination",         limit: 255
-    t.string   "origin",              limit: 255
+    t.string   "departure_time",      limit: 255
+    t.string   "arrival_time",        limit: 255
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "flight_time",         limit: 4
     t.boolean  "is_composite_flight", limit: 1
     t.integer  "leg_1_id",            limit: 4
     t.integer  "leg_2_id",            limit: 4
+    t.integer  "destination_id",      limit: 4
+    t.integer  "origin_id",           limit: 4
+    t.integer  "airline_id",          limit: 4
   end
 
+  add_index "flights", ["airline_id"], name: "index_flights_on_airline_id", using: :btree
+  add_index "flights", ["destination_id"], name: "fk_rails_ae9de3d0f9", using: :btree
   add_index "flights", ["leg_1_id"], name: "fk_rails_addabd29ea", using: :btree
   add_index "flights", ["leg_2_id"], name: "fk_rails_739ad5a492", using: :btree
+  add_index "flights", ["origin_id"], name: "fk_rails_34f4351407", using: :btree
+
+  create_table "save_identifiers", force: :cascade do |t|
+    t.string "s_type",       limit: 255
+    t.string "account_type", limit: 255
+  end
+
+  create_table "saved_flights", force: :cascade do |t|
+    t.integer "flight_id",          limit: 4
+    t.integer "user_id",            limit: 4
+    t.integer "save_identifier_id", limit: 4
+  end
+
+  add_index "saved_flights", ["flight_id"], name: "index_saved_flights_on_flight_id", using: :btree
+  add_index "saved_flights", ["save_identifier_id"], name: "index_saved_flights_on_save_identifier_id", using: :btree
+  add_index "saved_flights", ["user_id"], name: "index_saved_flights_on_user_id", using: :btree
+
+  create_table "ticket_availabilities", force: :cascade do |t|
+    t.integer  "flight_id",       limit: 4
+    t.integer  "ticket_type_id",  limit: 4
+    t.integer  "ticket_class_id", limit: 4
+    t.integer  "seats_available", limit: 4
+    t.integer  "price",           limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "ticket_availabilities", ["flight_id"], name: "index_ticket_availabilities_on_flight_id", using: :btree
+  add_index "ticket_availabilities", ["ticket_class_id"], name: "index_ticket_availabilities_on_ticket_class_id", using: :btree
+  add_index "ticket_availabilities", ["ticket_type_id"], name: "index_ticket_availabilities_on_ticket_type_id", using: :btree
+
+  create_table "ticket_classes", force: :cascade do |t|
+    t.string   "class_code", limit: 255
+    t.string   "details",    limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "ticket_types", force: :cascade do |t|
+    t.string   "ticket_code",           limit: 255
+    t.string   "name",                  limit: 255
+    t.boolean  "transferable",          limit: 1
+    t.boolean  "refundable",            limit: 1
+    t.boolean  "exchangeable",          limit: 1
+    t.boolean  "frequent_flyer_points", limit: 1
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
 
   create_table "users", force: :cascade do |t|
-    t.string   "first_name",       limit: 40,  default: "", null: false
-    t.string   "last_name",        limit: 40,  default: "", null: false
+    t.string   "first_name",       limit: 255, default: ""
+    t.string   "last_name",        limit: 255, default: ""
     t.string   "info_string",      limit: 200
     t.string   "password_digest",  limit: 255
     t.string   "role",             limit: 255
@@ -85,7 +144,10 @@ ActiveRecord::Schema.define(version: 20150514125408) do
   add_index "users", ["email"], name: "index_Users_on_email", unique: true, using: :btree
   add_index "users", ["id"], name: "userID", unique: true, using: :btree
 
+  add_foreign_key "airlines", "countries"
   add_foreign_key "api_keys", "users"
+  add_foreign_key "flights", "destinations"
+  add_foreign_key "flights", "destinations", column: "origin_id"
   add_foreign_key "flights", "flights", column: "leg_1_id"
   add_foreign_key "flights", "flights", column: "leg_2_id"
 end

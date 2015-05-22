@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :urails
 
   # OUR API ENPOINTS ===========================================================================
   namespace :api do
@@ -16,9 +15,16 @@ Rails.application.routes.draw do
       post 'reactivate'
     end
 
-    get 'session' => 'session#create'
+    # Route that allows the client to create a session
+    # a session is used to access secure details like a user
+    # profile
+    get 'session'       => 'session#create'
 
-    get 'destinations' => 'destinations#index'
+    # Route the allows client to get complete list of destinations
+    get 'destinations'  => 'destinations#index'
+
+    # Route that allows client to get list of ticket classes
+    get 'ticket_classes'       => 'ticket_classes#index'
 
   end
 
