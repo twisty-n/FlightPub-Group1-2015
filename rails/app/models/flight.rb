@@ -13,7 +13,7 @@ class Flight < ActiveRecord::Base
 
     # We create some custom scopes that represnt common queries
     
-    scope :departs_on_day, -> (time) { where(" departure_time >= ? AND departure_time < ?", time) }
+    scope :departs_on_day, -> (affDate, befDate) { where(" departure_time > ? AND departure_time < ?", affDate, befDate) }
 
 =begin
     Custom JSON method for a flight

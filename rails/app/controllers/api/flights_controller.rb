@@ -34,15 +34,21 @@ class Api::FlightsController < ApplicationController
     # formatted_date = date.strftime('%a %b %d %H:%M:%S %Z %Y')
      
     tryDate = DateTime.parse(params['departureDate']).utc
-    depDate = Time.utc(params['departureDate'])
-    
-    puts depDate
-    puts tryDate
+    befDate = tryDate.advance(:minutes => -1)
 
-    fDate = tryDate.strftime('%Y-%m-%d %H:%M:%S %Z')
-    puts "After formatting #{fDate}"
+    affDate = tryDate.advance(:days => 1)
+    affDate = affDate.advance(:minutes => -1)
+
+    #puts "Aff date #{affDate}"
+    #puts "bff date #{befDate}"
+
+    befDate = befDate.strftime('%Y-%m-%d %H:%M:%S UTC')
+    affDate = affDate.strftime('%Y-%m-%d %H:%M:%S UTC')
+
+    # Now fDate contains a correctly formatted date to query with
     
-    render json: Flight.take(1)
+    
+    render json: Flight.departs_on_day(befDate, affDate)
   end
 
   def show
