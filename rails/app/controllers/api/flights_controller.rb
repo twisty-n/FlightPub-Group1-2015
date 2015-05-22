@@ -112,7 +112,16 @@ class Api::FlightsController < ApplicationController
     render json: Flight.find(params[:id])
   end
 
-  def search
+  # Action that maps to a purchase!
+  # We will expect
+    # some kind of user id
+    # flight/s :: ids
+    # ticket class that the purchase related to
+    # ticket_type that the purchase relates to
+  # We require these in order to decrement the availability associated with that flight
+  def purchase
+
+    print("Purchase Call Params!: " + params )
 
   end
 

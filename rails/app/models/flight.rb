@@ -15,6 +15,11 @@ class Flight < ActiveRecord::Base
     
     scope :departs_on_day, -> (affDate, befDate) { where(" departure_time > ? AND departure_time < ?", affDate, befDate) }
 
+    scope :economy,         -> { joins(:ticket_availabilities).merge(TicketAvailability.economy) }
+    scope :premium_economy, -> { joins(:ticket_availabilities).merge(TicketAvailability.premium_economy) }
+    scope :business,        -> { joins(:ticket_availabilities).merge(TicketAvailability.business) }
+    scope :first_class,     -> { joins(:ticket_availabilities).merge(TicketAvailability.first_class) }
+
 =begin
 
 scope :awaiting_quote, -> { joins(:surveys).

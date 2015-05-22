@@ -225,17 +225,30 @@ export default Ember.ArrayController.extend({
     },
 
     purchase: function(){
+
       //we need user id, so we need to have the user sign up if they're not logged in
       console.log(this.get('controllers.application.isAuthenticated'));
       console.log(this.get('controllers.application.currentUser'));
 
-      var data =  this.getProperties('ReturnFlight.id', 'DepartureFlight.id', 'controllers.application.currentUser.id');
+
+      /*
+          We need to pass a certain amount of data to the server.
+          What this data is, well, its  yet to be defined.
+
+          Onwards!
+
+          First ill create a new data structure, that represents trips
+       */
+      var data =  this.getProperties(
+        'ReturnFlight.id', 
+        'DepartureFlight.id', 
+        'controllers.application.currentUser.id');
 
       console.log(data);
 
       var _this = this;
 
-      Ember.$.get('api/purchse', data).then(function(response) {
+      Ember.$.get('api/purchase', data).then(function(response) {
         _this.transitionToRoute('complete'); 
 
         _this.setProperties({
