@@ -1,3 +1,5 @@
+require 'date'
+
 class Api::FlightsController < ApplicationController
 
   skip_authorize_resource :only => [:index, :show]
@@ -28,7 +30,19 @@ class Api::FlightsController < ApplicationController
     #     numberOfPeople=4" 
 
     # render json: Flight.take(10)
-    render json: Flight.where(10)
+    
+    # formatted_date = date.strftime('%a %b %d %H:%M:%S %Z %Y')
+     
+    tryDate = DateTime.parse(params['departureDate']).utc
+    depDate = Time.utc(params['departureDate'])
+    
+    puts depDate
+    puts tryDate
+
+    fDate = tryDate.strftime('%Y-%m-%d %H:%M:%S %Z')
+    puts "After formatting #{fDate}"
+    
+    render json: Flight.take(1)
   end
 
   def show
