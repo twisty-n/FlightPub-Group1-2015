@@ -74,23 +74,42 @@ class Api::FlightsController < ApplicationController
       # The assumed ticket class will be economy
       # We are also going to resave the ticket class into the trip, so that
       # we have the information when we need to purchase or save things
-
-      price = 0
-      seats_available = elems.first.ticket_availabilities.min_seats(1).first.seats_available
-      total_duration = 0
+      # 
+      
+      # NOW WE WILL TALK ABOUT TICKETS
+      # We are going to be selected the LOWEST PRICE ticket that matches our ticket class
+      # We are going to record this information to be used in the purchase and stuff later
+      # Crying!
+      # We will ignore the amount of seats, and just try to find a ticket that matches the class
 
       # Set ticket class to sent class or ECO if its nil in params
       ticket_class = params['ticketClass']
       ticket_class ||= 'ECO'
 
+      price = 0
+      seats_available = elems.first.ticket_availabilities.t_class(ticket_class).smallest_price.seats_available
+      total_duration = 0
+
+
+
       elems.each do |flight|
-        available = flight.ticket_availabilities.min_seats(1).first
-        price += available.price
+        
+        # Set up the flight information
+        ticket = flight.ticket_availabilities.t_class(ticket_class).smallest_price
+        price += ticket.price
         total_duration += flight.flight_time
-        if available.seats_available <= seats_available
-          seats_available = available.seats_available
+        if ticket.seats_available <= seats_available
+          seats_available = ticket.seats_available
         end
+
+        # Set up the ticket information
+        flight.set_ticket_id(ticket.id)
+
       end
+
+      # In creating this JSON, we are going to 
+      # be building up the information that we need through flitering out some information
+      # about the ticket_class and type that we are working with
 
       trip = {
         id: elems.first.id,
@@ -124,7 +143,7 @@ class Api::FlightsController < ApplicationController
     # some kind of user id
     # flight/s :: ids
     # ticket class that the purchase related to
-    # ticket_type that the purchase relates to
+    # ticket_type that the purchase relates to -- NOTE THAT WE ARE IGNORING THIS FOR NOW
   # We require these in order to decrement the availability associated with that flight
   def purchase
 

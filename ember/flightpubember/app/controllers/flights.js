@@ -209,9 +209,12 @@ export default Ember.ArrayController.extend({
     saveFlight: function(flight){
       if(this.get('controllers.application.isAuthenticated'))
       {
+
+        //Note, we are going to save extra information!
+
         var data = {flightID: flight.id, userID: this.get('controllers.application.currentUser.id')};
 
-        Ember.$.get('apli/save', data).then(function(response){
+        Ember.$.get('api/save', data).then(function(response){
             alert("Flight Saved!"); 
             //TODO: change this response to a cute little thing in the corner
             //      and update the save button to say saved
@@ -221,6 +224,8 @@ export default Ember.ArrayController.extend({
               alert('Unable to save, there was an issue connecting with the server');
             }
         });
+      } else {
+        alert('You need to be signed in to save flights!');
       }
     },
 
@@ -230,6 +235,7 @@ export default Ember.ArrayController.extend({
       console.log(this.get('controllers.application.isAuthenticated'));
       console.log(this.get('controllers.application.currentUser'));
 
+      //Note, we are going to save extra information!
 
       /*
           We need to pass a certain amount of data to the server.

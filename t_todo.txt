@@ -1,4 +1,8 @@
 Purchasing Flights  -- Working on it!
+    # Finish setting up the tickettting stuff
+    # Come up with the new data structure
+    # Modify all existing areas
+    # implement implement implement!
 Saving Flights
 User profile stuf
 Admin stuff

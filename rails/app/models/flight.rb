@@ -1,5 +1,7 @@
 class Flight < ActiveRecord::Base
 
+    @ticket_id = 0
+
     belongs_to :airline
     belongs_to :destination, class_name: "Destination"
     belongs_to :origin, class_name: "Destination"
@@ -19,6 +21,8 @@ class Flight < ActiveRecord::Base
     scope :premium_economy, -> { joins(:ticket_availabilities).merge(TicketAvailability.premium_economy) }
     scope :business,        -> { joins(:ticket_availabilities).merge(TicketAvailability.business) }
     scope :first_class,     -> { joins(:ticket_availabilities).merge(TicketAvailability.first_class) }
+    scope :has_seats,       -> { joins(:ticket_availabilities).merge(TicketAvailability.min_seats(1)) }
+    scope :min_seats,       -> (min_seats) { joins(:ticket_availabilities).merge(TicketAvailability.min_seats(min_seats)) }    
 
 =begin
 
@@ -62,9 +66,19 @@ Client.joins(:orders).where('orders.created_at' => time_range)
             :flight_time => self.flight_time,
             :destination => self.destination.destination_code,
             :origin => self.origin.destination_code,
-            :is_return_flight => [false].sample
+            :ticket => @ticket_id
+            
         }
 
     end 
+
+    # Sets this flights ticket id to be used as part of payload to the server
+    def set_ticket_id(ticket_id)
+        @ticket_id = ticket_id
+    end
+
+    def ticket_id
+        @ticket_id
+    end
 
 end
