@@ -16,6 +16,31 @@ class Flight < ActiveRecord::Base
     scope :departs_on_day, -> (affDate, befDate) { where(" departure_time > ? AND departure_time < ?", affDate, befDate) }
 
 =begin
+
+scope :awaiting_quote, -> { joins(:surveys).
+  joins('LEFT OUTER JOIN quotes ON quotes.job_id = jobs.id').
+  where('survey_date < :current_time', { current_time: Time.current }).
+  where('quotes.id IS NULL')
+}
+
+Client.joins(:orders).where('orders.created_at' => time_range)
+
+ SELECT  `flights`.* FROM `flights` INNER JOIN `destinations` ON `destinations`.`id` = `flights`.`destination_id` WHERE `destinations`.`destination_code` = 'LGA'
+
+ Client.joins(:orders).where(orders: { created_at: time_range })
+
+ "INNER JOIN pricing_points \
+    ON pricing_points.minimum < products.price \
+    AND pricing_points.maximum >= products.price"
+
+=end
+    scope :destination, -> (dest_code) { joins(:destination).where('destinations.destination_code' => dest_code) }
+
+    scope :origin, -> (origin_code) { joins( 'LEFT JOIN destinations ON destinations.id = flights.origin_id' ).where(destinations: { destination_code: origin_code }) }
+
+    # scope :org_and_dest(org_code, dest_code) { joins( 'LEFT JOIN destinations ON destinations.id = flights.origin_id' ) }
+
+=begin
     Custom JSON method for a flight
 =end
     

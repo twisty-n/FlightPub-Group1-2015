@@ -48,7 +48,8 @@ class Api::FlightsController < ApplicationController
     # Now fDate contains a correctly formatted date to query with
     
     
-    render json: Flight.departs_on_day(befDate, affDate)
+    # render json: Flight.departs_on_day(befDate, affDate)
+    render json: Flight.origin(params['originCode']).departs_on_day(befDate, affDate)
   end
 
   def show
