@@ -72,14 +72,35 @@ class Api::FlightsController < ApplicationController
       # price will be the composite price
       # seats available will be the floor of the seats available
       # The assumed ticket class will be economy
+
       price = 0
+      seats_available = elems.first.ticket_availabilities.min_seats(1).first.seats_available
+      total_duration = 0
+
       elems.each do |flight|
-        price += 
+        available = flight.ticket_availabilities.min_seats(1).first
+        price += available.price
+        total_duration += flight.flight_time
+        if available.seats_available <= seats_available
+          seats_available = available.seats_available
+        end
       end
+
       trip = {
+        id: elems.first.id,
         flightNumber: elems.first.flight_number,
-        price: 
+        price: price,
+        departureTime: elems.first.departure_time,
+        arrivalTime: elems.last.arrival_time,
+        seatsAvailable: seats_available,
+        flightTime: total_duration,
+        origin: elems.first.origin.destination_code,
+        destination: elems.last.destination.destination_code,
+        isReturnFlight: [true, false].sample,
+        legs: elems
       }
+
+      flights.push(trip)
 
     end
 

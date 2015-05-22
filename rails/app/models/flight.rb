@@ -57,7 +57,7 @@ Client.joins(:orders).where('orders.created_at' => time_range)
             :flight_time => self.flight_time,
             :destination => self.destination.destination_code,
             :origin => self.origin.destination_code,
-            :is_return_flight => [true, false].sample
+            :is_return_flight => [false].sample
         }
 
     end 

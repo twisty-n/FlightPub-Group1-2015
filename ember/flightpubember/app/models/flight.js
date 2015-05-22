@@ -9,6 +9,7 @@ export default DS.Model.extend({
   	flightTime: 		DS.attr('number'),
   	origin: 			DS.attr('string'),
   	destination: 		DS.attr('string'),
-  	isReturnFlight:		DS.attr('boolean')
+  	isReturnFlight:		DS.attr('boolean'),
+    legs:               DS.attr()
 
 });
