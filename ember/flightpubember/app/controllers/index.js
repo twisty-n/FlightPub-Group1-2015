@@ -117,6 +117,8 @@ export default Ember.ArrayController.extend({
             var selectedClass = this.get('selectedClass');
             var numberOfPeople = this.get('numberOfPeople');
 
+            //alert("Just got selectedClass " + selectedClass);
+
 
             var incorrectValues = [];
 
@@ -178,6 +180,7 @@ export default Ember.ArrayController.extend({
             if(incorrectValues.length == 0)
             {
 
+                    //alert(selectedClass);
 
                     /*
 

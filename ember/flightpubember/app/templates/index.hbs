@@ -68,8 +68,8 @@
 				<div class="value-select">
 					Class: 
 					{{view "select"
-
-					contentBinding="controller.tickets"
+					value=selectedClass
+					content=controller.tickets
 					optionValuePath="content.classCode"
 					optionLabelPath="content.details"
 					id="class-selection"}}
