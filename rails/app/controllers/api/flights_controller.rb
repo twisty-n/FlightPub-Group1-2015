@@ -44,12 +44,10 @@ class Api::FlightsController < ApplicationController
 
     befDate = befDate.strftime('%Y-%m-%d %H:%M:%S UTC')
     affDate = affDate.strftime('%Y-%m-%d %H:%M:%S UTC')
-
-    # Now fDate contains a correctly formatted date to query with
-    
     
     # render json: Flight.departs_on_day(befDate, affDate)
     render json: Flight.origin(params['originCode']).departs_on_day(befDate, affDate)
+
   end
 
   def show
