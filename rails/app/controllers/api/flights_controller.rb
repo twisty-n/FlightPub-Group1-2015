@@ -15,11 +15,14 @@ class Api::FlightsController < ApplicationController
                 "arrival_time":"1300","origin":"Orange","destination":"Orgeon",
                 "flight_time":2700}, ... ]
 
-=end
+
   def index
 
+
+  Helpful information used when creating the below
+
     # Search will need to be done here and accept params
-    Rails.logger.info(params)
+    # Rails.logger.info(params)
 
     # Started GET "/api/flights?
     #     originCode=HBA&
@@ -32,7 +35,7 @@ class Api::FlightsController < ApplicationController
     # render json: Flight.take(10)
     
     # formatted_date = date.strftime('%a %b %d %H:%M:%S %Z %Y')
-     
+
     tryDate = DateTime.parse(params['departureDate']).utc
     befDate = tryDate.advance(:minutes => -1)
 
@@ -49,6 +52,40 @@ class Api::FlightsController < ApplicationController
     render json: Flight.origin(params['originCode']).departs_on_day(befDate, affDate)
 
   end
+=end
+
+  def index
+
+    # We will now load up a selection of flights variable
+    num_flights = [1..15].sample
+
+    flights = Array.new
+
+    num_flights.each do |val|
+
+      # Elms is the subarray of flights
+      elems = Flight.take(200).sample( [1,2,3,4,5,6].sample )
+
+      # For now, the top level information will just be taken from the composite information
+      # The flight number will be the flight number of the first flight
+      # origin and destination will simply be the initial origin and the final destination
+      # price will be the composite price
+      # seats available will be the floor of the seats available
+      # The assumed ticket class will be economy
+      price = 0
+      elems.each do |flight|
+        price += 
+      end
+      trip = {
+        flightNumber: elems.first.flight_number,
+        price: 
+      }
+
+    end
+
+    render json: flights
+
+    end
 
   def show
     render json: Flight.find(params[:id])

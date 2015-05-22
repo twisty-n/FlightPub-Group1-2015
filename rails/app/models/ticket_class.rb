@@ -1,6 +1,6 @@
 class TicketClass < ActiveRecord::Base
 
-    belongs_to :ticket_availability
+    #belongs_to :ticket_availability
 
     # Override the as_json method to return our custom JSON
     def as_json(options={})
