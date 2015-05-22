@@ -55,7 +55,6 @@ export default Ember.ArrayController.extend({
 
     return flights;
 
-
     //TODO: make sure this is working, I don't think we
     //      currently have stops data
     // if(this.get('noStops')){
@@ -160,30 +159,13 @@ export default Ember.ArrayController.extend({
     selected: function(flight){
       var currentSelectedFlight = this.get('selectedFlight'); 
 
-      if(currentSelectedFlight)
+      if(on)
       {
-        //hide the current flight because no matter what click 
-        // happens we want it to hide again
-        var id = '#'+currentSelectedFlight.get('id');
-
-        $(id).animate({height: 1}, 93, function(){
-          $(id).css({'display':'none'});
-        });
-      }
-
-      if(flight === currentSelectedFlight)
-      {
-        this.set('selectedFlight', null);
+        $(id).css({'background-color':'#1479C9', 'color':'#FFF'});
       }
       else
       {
-        this.set('selectedFlight', flight);
-
-        //display the newly selected flight
-        var flightID = '#' + flight.get('id');
-        $(flightID).css({'display':'block'});
-        $(flightID).animate({height: 93}, 93);
-
+        $(id).css({'background-color':'#FFF', 'color':'#17AEE5'});
       }
     },
 
