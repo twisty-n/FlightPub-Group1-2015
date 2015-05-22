@@ -10,6 +10,7 @@ export default DS.Model.extend({
   	origin: 			DS.attr('string'),
   	destination: 		DS.attr('string'),
   	isReturnFlight:		DS.attr('boolean'),
+    ticketClass:        DS.attr('string'),
     legs:               DS.attr()
 
 });

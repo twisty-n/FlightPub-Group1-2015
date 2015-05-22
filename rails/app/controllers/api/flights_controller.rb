@@ -57,14 +57,14 @@ class Api::FlightsController < ApplicationController
   def index
 
     # We will now load up a selection of flights variable
-    num_flights = [1..15].sample
+    num_flights = [1..10].sample
 
     flights = Array.new
 
     num_flights.each do |val|
 
       # Elms is the subarray of flights
-      elems = Flight.take(200).sample( [1,2,3,4,5,6].sample )
+      elems = Flight.take(200).sample( [1,2,3].sample )
 
       # For now, the top level information will just be taken from the composite information
       # The flight number will be the flight number of the first flight
@@ -72,10 +72,16 @@ class Api::FlightsController < ApplicationController
       # price will be the composite price
       # seats available will be the floor of the seats available
       # The assumed ticket class will be economy
+      # We are also going to resave the ticket class into the trip, so that
+      # we have the information when we need to purchase or save things
 
       price = 0
       seats_available = elems.first.ticket_availabilities.min_seats(1).first.seats_available
       total_duration = 0
+
+      # Set ticket class to sent class or ECO if its nil in params
+      ticket_class = params['ticketClass']
+      ticket_class ||= 'ECO'
 
       elems.each do |flight|
         available = flight.ticket_availabilities.min_seats(1).first
@@ -97,6 +103,7 @@ class Api::FlightsController < ApplicationController
         origin: elems.first.origin.destination_code,
         destination: elems.last.destination.destination_code,
         isReturnFlight: [true, false].sample,
+        ticketClass: ticket_class,
         legs: elems
       }
 
