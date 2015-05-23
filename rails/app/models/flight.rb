@@ -59,10 +59,10 @@ Client.joins(:orders).where('orders.created_at' => time_range)
         {   
             :id => self.id,
             :flightNumber => self.flight_number,
-            :price => self.ticket_availabilities.first.price,
+            :price => self.ticket_availabilities.find_by(id: @ticket_id).price,
             :departure_time => self.departure_time,
             :arrival_time => self.arrival_time,
-            :seats_available => self.ticket_availabilities.first.seats_available,
+            :seats_available => self.ticket_availabilities.find_by(id: @ticket_id).seats_available,
             :flight_time => self.flight_time,
             :destination => self.destination.destination_code,
             :origin => self.origin.destination_code,
@@ -73,6 +73,8 @@ Client.joins(:orders).where('orders.created_at' => time_range)
     end 
 
     # Sets this flights ticket id to be used as part of payload to the server
+    # Setting the ticket id also allows us to look up the price of the flight later
+    # on
     def set_ticket_id(ticket_id)
         @ticket_id = ticket_id
     end
