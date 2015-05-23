@@ -42,7 +42,7 @@ class Api::JourneyController < ApplicationController
         
         # The expected params are
         {
-            'numberOfTickets':
+            'tickets_to_purchase':
             'return_journey_id':        OPTIONAL
             'departure_journey_id':
             'user_id': 
@@ -59,14 +59,26 @@ class Api::JourneyController < ApplicationController
         
         dep_purchase_status = purchase_tickets(params['user_id'], 
             params['departure_tickets'], 
-            params['numberOfTickets'])
+            params['tickets_to_purchase'])
 
-        if dep_purchase_status != PurchasingStatus.TRANSACTION_COMPLETE
+        if dep_purchase_status != PurchasingStatus::TRANSACTION_COMPLETE
 
             # Look up which error to return
+            case dep_purchase_status
 
+            when PurchasingStatus::DUPLICATE_PURCHASE
+                render json: {'errorCode' => 'duplicate_purchase'}, status: 422
+                return
+            when PurchasingStatus::NO_SEATS_AVAILABLE
+                render json: {'errorCode' => 'no_seats_available'}, status: 422
+                return
+            when PurchasingStatus::INSUFFICIENT_NUMBER_OF_SEATS
+                render json: {'errorCode' => 'not_enough_seats'}, status: 422
+                return
+            end
         end
 
+        # 2. Set up the departure journey
         # Implicit else
         departure_journey = build_journey(
             params['user_id'],
@@ -74,28 +86,53 @@ class Api::JourneyController < ApplicationController
             params['save_type'],
             params['account_type']
         ) 
-        
-        
-        # 2. Set up the departure journey
 
-        
-        # 3. IF there is a return journey
-        #   3-1. Set up the return journey
-        #   3-2. 'Purchase all of the return tickets'
-        # 4. Send an email to the user with their Journey details 
-        
+        if ! departure_journey.save
 
-
-        if success
-
-            render json: {
-                    }, status: 201
-        else
-             render json: {
-                    'status_message' => 'Unable to purchase flight!'
-                    }, status: 422
+            # Return error json!
+            render json: {'errorCode' => 'internal_error'}, status: 422
+            return
 
         end
+        
+        if ! params['return_journey_id'].blank?
+
+            # 3. IF there is a return journey
+            #   3-1. Set up the return journey
+            #   3-2. 'Purchase all of the return tickets'
+
+            ret_purchase_status = purchase_tickets(params['user_id'], 
+            params['return_tickets'], 
+            params['tickets_to_purchase'])
+
+            if ret_purchase_status != PurchasingStatus.TRANSACTION_COMPLETE
+
+                # Look up which error to return
+
+            end
+
+            # 2. Set up the departure journey
+            # Implicit else
+            return_journey = build_journey(
+                params['user_id'],
+                params['return_journey_id'],
+                params['save_type'],
+                params['account_type']
+            )
+
+            if ! return_journey.save
+
+            # Return error json!
+
+            end
+
+        end
+
+        
+        # 4. Send an email to the user with their Journey details 
+        PurchaseMailer.purchase_flight_email.deliver_now
+
+        render json: {}, status: 201
 
 
     end
@@ -142,11 +179,17 @@ class Api::JourneyController < ApplicationController
 
             ticket = TicketAvailability.find_by(id: ticket_id)
 
-            if ticket.seats_available == 0 return PurchasingStatus.NO_SEATS_AVAILABLE end
-            if ticket.seats_available < number_to_purchase return PurchasingStatus.INSUFFICIENT_NUMBER_OF_SEATS end
+            if ticket.seats_available == 0 
+                return PurchasingStatus::NO_SEATS_AVAILABLE 
+            end
+            if ticket.seats_available < number_to_purchase.to_i 
+                return PurchasingStatus::INSUFFICIENT_NUMBER_OF_SEATS 
+            end
 
-            duplicate = PurchasedTickets.where( 'user_id = ? AND ticket_availability_id = ?', user_id, ticket_id )
-            if duplicate != nil return PurchasingStatus.DUPLICATE_PURCHASE end
+            
+            if ! PurchasedTicket.where( 'user_id = ? AND ticket_availability_id = ?', user_id, ticket_id ).blank? 
+                return PurchasingStatus::DUPLICATE_PURCHASE 
+            end
 
         end
 
@@ -158,31 +201,35 @@ class Api::JourneyController < ApplicationController
 
             # Update the seats
             ticket = TicketAvailability.find_by(id: ticket_id)
-            ticket.seats_available = ticket.seats_available - number_to_purchase
+            print( "Ticket before saving #{ticket.inspect}" )
+            
+            ticket.seats_available = ticket.seats_available - number_to_purchase.to_i
             ticket.save!
+
+            print( "Ticket after saving #{ticket.inspect}" )
 
             # Create the purchase
             purchase = PurchasedTicket.new
             purchase.user_id = user_id
             purchase.ticket_availability_id = ticket_id
-            purchase.number_purcahased = number_to_purchase
+            purchase.number_purchased = number_to_purchase.to_i
             purchase.save!
 
         end    
 
-        return PurchasingStatus.TRANSACTION_COMPLETE        
+        return PurchasingStatus::TRANSACTION_COMPLETE        
 
     end
 
     class PurchasingStatus
 
         # Error conditions
-        NO_SEATS_AVAILABLE='There are no more seats available on this journey'
-        INSUFFICIENT_NUMBER_OF_SEATS='The amount of seats available is less then the number of tickets wanted for purchase'
-        DUPLICATE_PURCHASE='You have already performed a transaction for this journey'
+        NO_SEATS_AVAILABLE=1
+        INSUFFICIENT_NUMBER_OF_SEATS=2
+        DUPLICATE_PURCHASE=3
 
         # Success condition
-        TRANSACTION_COMPLETE='Your transaction has been processed'
+        TRANSACTION_COMPLETE=4
 
     end
 

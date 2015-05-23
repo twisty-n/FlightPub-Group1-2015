@@ -303,6 +303,8 @@ export default Ember.ArrayController.extend({
 
       Ember.$.post('api/purchase', serverData).then(function(response) {
         
+        alert('Flight purchased. Details will be emailed');
+
         _this.transitionToRoute('complete'); 
 
         _this.setProperties({
@@ -315,7 +317,8 @@ export default Ember.ArrayController.extend({
         if (error.status === 404) {
           alert("Something went wrong! The server may be down.");
         } else if (error.status === 422) {
-          alert('Unable to purchase flight! You\'e on the no flt list HOHOHO')
+          console.log(error);
+          alert('Unable to purchase flight. '+ error.responseJSON.errorCode)
           //Handle
         } else if (error.status === 500) {
           alert("An internal server error has occured. :(");
