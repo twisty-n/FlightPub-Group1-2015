@@ -1,11 +1,6 @@
 Purchasing Flights  -- Working on it!
-    # Finish setting up the tickettting stuff ###### DONE
-    # Come up with the new data structure
-        # Journey                             ###### DONE
-        # Journey map                         ###### DONE
-    # Modify all existing areas               ###### DONE
-    # implement implement implement!
-Saving Flights
+Saving Flights      -- DONE!
 User profile stuf
 Admin stuff
+Write a site wide login action that doesn't redirect
 Promotions
