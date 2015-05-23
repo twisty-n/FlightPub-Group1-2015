@@ -4,6 +4,6 @@ import AuthenticatedRoute from 'flightpubember/routes/authenticated'
 
 export default AuthenticatedRoute.extend({
     setupController: function(controller, model) {
-     controller.set('model', this.store.find('user'));
+     controller.set('model', this.store.find('user', this.controllerFor('sessions').get('currentUser')));
     }
 });
