@@ -273,23 +273,42 @@ export default Ember.ArrayController.extend({
           First ill create a new data structure, that represents trips
        */
       
+
+      // Iterate over each flight in the journey to get the list of tickets
+      var flights = this.get('DepartureFlight').get('legs');
+      var flight;
+      var departureTickets = new Array();
+      var returnTickets = null;
+      for (flight of flights) {
+        departureTickets.push( flight['ticket'] );
+      }
+
+      // Don't include return tickets if its a one way trip
+      if (! this.get('oneWay') ) {
+        returnTickets = new Array();
+        flights = this.get('ReturnFlight').get('legs');
+        for (flight of flights) {
+          returnTicketsTickets.push( flight['ticket'] );
+        }
+      }
+
+
+      // Set up our data to get to the server
       var data =  this.getProperties(
         'ReturnFlight.id', 
         'DepartureFlight.id');
 
-      console.log(this.get('controllers.application.currentUser'));
-
       var serverData = {
         'return_journey_id': data['ReturnFlight.id'],
         'departure_journey_id': data['DepartureFlight.id'],
-        'user_id': this.get('controllers.application.currentUser')
+        'user_id': this.get('controllers.application.currentUser'),
+        'departure_tickets': departureTickets,
+        'returnTickets': returnTickets
       }
-
-      console.log(data);
 
       var _this = this;
 
-      Ember.$.get('api/purchase', serverData).then(function(response) {
+      Ember.$.post('api/purchase', serverData).then(function(response) {
         
         _this.transitionToRoute('complete'); 
 

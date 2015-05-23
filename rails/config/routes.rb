@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     get 'ticket_classes'  => 'ticket_classes#index'
 
     get 'save'            => 'journey#save'
+    post 'purchase'       => 'journey#purchase'
 
   end
 

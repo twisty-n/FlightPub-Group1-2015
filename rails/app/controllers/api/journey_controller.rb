@@ -40,6 +40,22 @@ class Api::JourneyController < ApplicationController
         # Called to purchase a journey
         # Purchasing a flight will map the flight to the users account
         # It will also adjust the availabilities for each of flights that make up a journey
+
+        print(params)
+        success = false
+        
+        if success
+
+            render json: {
+                    }, status: 201
+        else
+             render json: {
+                    'status_message' => 'Unable to purchase flight!'
+                    }, status: 422
+
+        end
+
+
     end
 
     def user_saved_flights
