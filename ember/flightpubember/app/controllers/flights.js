@@ -216,8 +216,10 @@ export default Ember.ArrayController.extend({
         console.log(this.get('controllers.application.currentUser'));  
         var data = {
           'journey_id': flight.id, 
-          'user_id': this.get('controllers.application.currentUser')
-        };
+          'user_id': this.get('controllers.application.currentUser'),
+          'save_type': 'saved_flight',
+          'account_type': 'regular'  //TODO: Adjust this later to look up the account type       
+         };
 
         Ember.$.get('api/save', data).then(function(response){
             alert("Flight Saved!"); 
