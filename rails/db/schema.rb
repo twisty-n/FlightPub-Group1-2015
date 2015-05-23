@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150520080654) do
+ActiveRecord::Schema.define(version: 20150523020659) do
 
   create_table "airlines", force: :cascade do |t|
     t.string   "airline_code", limit: 255
@@ -79,6 +79,27 @@ ActiveRecord::Schema.define(version: 20150520080654) do
   add_index "flights", ["leg_1_id"], name: "fk_rails_addabd29ea", using: :btree
   add_index "flights", ["leg_2_id"], name: "fk_rails_739ad5a492", using: :btree
   add_index "flights", ["origin_id"], name: "fk_rails_34f4351407", using: :btree
+
+  create_table "journey_maps", force: :cascade do |t|
+    t.integer  "journey_id",       limit: 4
+    t.integer  "flight_id",        limit: 4
+    t.integer  "order_in_journey", limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "journey_maps", ["flight_id"], name: "index_journey_maps_on_flight_id", using: :btree
+  add_index "journey_maps", ["journey_id"], name: "index_journey_maps_on_journey_id", using: :btree
+
+  create_table "journeys", force: :cascade do |t|
+    t.integer  "user_id",            limit: 4
+    t.integer  "save_identifier_id", limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "journeys", ["save_identifier_id"], name: "index_journeys_on_save_identifier_id", using: :btree
+  add_index "journeys", ["user_id"], name: "index_journeys_on_user_id", using: :btree
 
   create_table "save_identifiers", force: :cascade do |t|
     t.string "s_type",       limit: 255
@@ -150,4 +171,8 @@ ActiveRecord::Schema.define(version: 20150520080654) do
   add_foreign_key "flights", "destinations", column: "origin_id"
   add_foreign_key "flights", "flights", column: "leg_1_id"
   add_foreign_key "flights", "flights", column: "leg_2_id"
+  add_foreign_key "journey_maps", "flights"
+  add_foreign_key "journey_maps", "journeys"
+  add_foreign_key "journeys", "save_identifiers"
+  add_foreign_key "journeys", "users"
 end

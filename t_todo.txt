@@ -1,5 +1,5 @@
 Purchasing Flights  -- Working on it!
-    # Finish setting up the tickettting stuff
+    # Finish setting up the tickettting stuff ###### DONE
     # Come up with the new data structure
     # Modify all existing areas
     # implement implement implement!
