@@ -1,7 +1,9 @@
 Purchasing Flights  -- Working on it!
     # Finish setting up the tickettting stuff ###### DONE
     # Come up with the new data structure
-    # Modify all existing areas
+        # Journey                             ###### DONE
+        # Journey map                         ###### DONE
+    # Modify all existing areas               ###### DONE
     # implement implement implement!
 Saving Flights
 User profile stuf
