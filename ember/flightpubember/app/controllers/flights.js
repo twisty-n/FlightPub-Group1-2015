@@ -210,10 +210,8 @@ export default Ember.ArrayController.extend({
       if(this.get('controllers.application.isAuthenticated'))
       {
 
-        //Note, we are going to save extra information!
-        //
-        //
         console.log(this.get('controllers.application.currentUser'));  
+
         var data = {
           'journey_id': flight.id, 
           'user_id': this.get('controllers.application.currentUser'),
@@ -222,23 +220,28 @@ export default Ember.ArrayController.extend({
          };
 
         Ember.$.get('api/save', data).then(function(response){
+
             alert("Flight Saved!"); 
+
             //TODO: change this response to a cute little thing in the corner
             //      and update the save button to say saved
+
         }, function(error){
-            // Handle all of our errors
-            if(error.status === 404)
-            {
+
+            if(error.status === 404) {
               alert('Unable to save, there was an issue connecting with the server');
             } else if (error.status === 422) {
               alert(error.responseJSON.status_message);
             } else if (error.status === 500) {
               alert('Unknown server error. Flight unable to be saved');
             }
+
         });
       } else {
+
         //The user isn't signed in. Tell them as such!
         alert('You need to be signed in to save flights!');
+
       }
     },
 
@@ -247,6 +250,17 @@ export default Ember.ArrayController.extend({
       //we need user id, so we need to have the user sign up if they're not logged in
       console.log(this.get('controllers.application.isAuthenticated'));
       console.log(this.get('controllers.application.currentUser'));
+
+      if (! this.get('controllers.application.isAuthenticated')) {
+
+        // Currently the user needs to be signed in in order to purchase a flight
+        // we will allow this inline, but for now, alert and about
+        
+        alert('You must be signed in in order to purchase a flight!');
+        this.transitionToRoute('results');
+        return;
+
+      }
 
       //Note, we are going to save extra information!
 
@@ -258,16 +272,25 @@ export default Ember.ArrayController.extend({
 
           First ill create a new data structure, that represents trips
        */
+      
       var data =  this.getProperties(
         'ReturnFlight.id', 
-        'DepartureFlight.id', 
-        'controllers.application.currentUser.id');
+        'DepartureFlight.id');
+
+      console.log(this.get('controllers.application.currentUser'));
+
+      var serverData = {
+        'return_journey_id': data['ReturnFlight.id'],
+        'departure_journey_id': data['DepartureFlight.id'],
+        'user_id': this.get('controllers.application.currentUser')
+      }
 
       console.log(data);
 
       var _this = this;
 
-      Ember.$.get('api/purchase', data).then(function(response) {
+      Ember.$.get('api/purchase', serverData).then(function(response) {
+        
         _this.transitionToRoute('complete'); 
 
         _this.setProperties({
@@ -276,11 +299,21 @@ export default Ember.ArrayController.extend({
         });
 
       }, function(error) {
+
         if (error.status === 404) {
           alert("Something went wrong! The server may be down.");
+        } else if (error.status === 422) {
+          //Handle
+        } else if (error.status === 500) {
+          alert("An internal server error has occured. :(");
+        } else {
+          //Handle
         }
+
         alert("we will continue to the completed page because I want to show user flow");
+        
         _this.transitionToRoute('complete');
+
       });
 
     },
