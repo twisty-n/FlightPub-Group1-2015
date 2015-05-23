@@ -226,12 +226,18 @@ export default Ember.ArrayController.extend({
             //TODO: change this response to a cute little thing in the corner
             //      and update the save button to say saved
         }, function(error){
-            if(error.status === 404 || error.status === 422 || error.status === 500)
+            // Handle all of our errors
+            if(error.status === 404)
             {
               alert('Unable to save, there was an issue connecting with the server');
+            } else if (error.status === 422) {
+              alert(error.responseJSON.status_message);
+            } else if (error.status === 500) {
+              alert('Unknown server error. Flight unable to be saved');
             }
         });
       } else {
+        //The user isn't signed in. Tell them as such!
         alert('You need to be signed in to save flights!');
       }
     },

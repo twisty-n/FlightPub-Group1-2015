@@ -20,25 +20,16 @@ class Api::JourneyController < ApplicationController
         }
 
 =end
-        
-        # TODO some validation
+        journey = build_journey(params['user_id'], params['journey_id'],params['save_type'], params['account_type'])
+        success = journey.save
 
-        s_journ = SavedJourney.new
-
-        s_journ.user_id = params['user_id']
-        s_journ.journey_id = params['journey_id']
-        s_journ.save_identifier_id = SaveIdentifier.where('s_type = ? AND account_type = ?',
-            params['save_type'],
-            params['account_type'] ).first.id
-
-        if s_journ.save!
+        if success
 
             render json: {
-                    "status" => "success"
                     }, status: 201
         else
              render json: {
-                    "status" => "butts"
+                    'status_message' => 'Unable to save the same flight multiple times'
                     }, status: 422
 
         end
@@ -56,4 +47,38 @@ class Api::JourneyController < ApplicationController
 
     end
 
+    private
+
+    def build_journey(user_id, journey_id, save_type, account_type)
+
+        # saves a journey based on the informatoin provided in the params
+
+        s_journ = SavedJourney.new
+
+        s_journ.user_id = user_id
+        s_journ.journey_id = journey_id
+        s_journ.save_identifier_id = SaveIdentifier.where('s_type = ? AND account_type = ?',
+            params['save_type'],
+            params['account_type'] ).first.id
+
+        return s_journ
+
+    end
+
 end
+
+=begin
+
+
+begin
+  @ticket.transaction do
+    @ticket.save!
+    @user.save!
+  end
+  #handle success here
+rescue ActiveRecord::RecordInvalid => invalid
+   #handle failure here
+end
+
+    
+=end
