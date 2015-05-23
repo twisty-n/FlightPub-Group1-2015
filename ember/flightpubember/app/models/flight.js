@@ -2,18 +2,23 @@ import DS from 'ember-data';
 
 // Note that this no longer really represents a flight
 // Rather, it represents a trip that is made up of 
-// flights
+// flights, which is what i like to say, a 'JOURNEY'
 
 export default DS.Model.extend({
-    flightNumber: 		DS.attr('string'),
+    //Represents the flightNumber of the first flight in the trip
+    flightNumber: 		DS.attr('string'),     
+    //Composite price of the trip
     price:              DS.attr('number'),
     departureTime:      DS.attr('date'),
     arrivalTime:        DS.attr('date'),
+    //Floor of the seats available for the trip
     seatsAvailable:     DS.attr('number'),
+    //Total time in the air for the trip
   	flightTime: 		DS.attr('number'),
   	origin: 			DS.attr('string'),
   	destination: 		DS.attr('string'),
   	isReturnFlight:		DS.attr('boolean'),
+    //The searched for ticket class for the trip
     ticketClass:        DS.attr('string'),
 
     // Each leg of the flight is represented as a hash

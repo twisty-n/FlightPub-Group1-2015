@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150523030946) do
+ActiveRecord::Schema.define(version: 20150523033403) do
 
   create_table "airlines", force: :cascade do |t|
     t.string   "airline_code", limit: 255
@@ -92,16 +92,20 @@ ActiveRecord::Schema.define(version: 20150523030946) do
   add_index "journey_maps", ["journey_id"], name: "index_journey_maps_on_journey_id", using: :btree
 
   create_table "journeys", force: :cascade do |t|
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.integer  "price",          limit: 4
-    t.integer  "flight_time",    limit: 4
-    t.integer  "origin_id",      limit: 4
-    t.integer  "destination_id", limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "price",           limit: 4
+    t.integer  "flight_time",     limit: 4
+    t.integer  "origin_id",       limit: 4
+    t.integer  "destination_id",  limit: 4
+    t.datetime "departure_time"
+    t.datetime "arrival_time"
+    t.integer  "ticket_class_id", limit: 4
   end
 
   add_index "journeys", ["destination_id"], name: "fk_rails_df6c4aabe5", using: :btree
   add_index "journeys", ["origin_id"], name: "fk_rails_6b5c29487e", using: :btree
+  add_index "journeys", ["ticket_class_id"], name: "index_journeys_on_ticket_class_id", using: :btree
 
   create_table "save_identifiers", force: :cascade do |t|
     t.string "s_type",       limit: 255
@@ -179,6 +183,7 @@ ActiveRecord::Schema.define(version: 20150523030946) do
   add_foreign_key "journey_maps", "journeys"
   add_foreign_key "journeys", "destinations"
   add_foreign_key "journeys", "destinations", column: "origin_id"
+  add_foreign_key "journeys", "ticket_classes"
   add_foreign_key "saved_journeys", "journeys"
   add_foreign_key "saved_journeys", "save_identifiers"
   add_foreign_key "saved_journeys", "users"

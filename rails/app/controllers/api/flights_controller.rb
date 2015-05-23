@@ -110,9 +110,35 @@ class Api::FlightsController < ApplicationController
       # In creating this JSON, we are going to 
       # be building up the information that we need through flitering out some information
       # about the ticket_class and type that we are working with
+      # 
+      # Additionally, a trip is now represented by our journey model, which we are saving
+      
+      journey = Journey.new
+      journey.price           = price
+      journey.flight_time     = total_duration
+      journey.origin_id       = elems.first.origin.id
+      journey.destination_id  = elems.last.destination.id
+      journey.departure_time  = elems.first.departure_time
+      journey.arrival_time    = elems.last.arrival_time
+      journey.ticket_class_id = TicketClass.find_by(class_code: ticket_class).id
+
+      journey.save!
+
+      # After creating the journey model, map the flights onto our journey, 
+      # setting up a dependancy between them for the journey
+       
+      elems.each_with_index do |flight, index|
+
+        mapping = JourneyMap.new
+        mapping.journey_id = journey.id
+        mapping.flight_id = flight.id
+        mapping.order_in_journey = index + 1
+        mapping.save!
+
+      end
 
       trip = {
-        id: elems.first.id,
+        id: journey.id,
         flightNumber: elems.first.flight_number,
         price: price,
         departureTime: elems.first.departure_time,
