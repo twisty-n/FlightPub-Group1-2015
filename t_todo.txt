@@ -1,4 +1,7 @@
 Purchasing Flights  -- Working on it!
+    -- Implement a set purcahsing table
+        -- Will map user ID to purchased ticket, number purchased
+    -- Complete the implementation of the purchase method
 Saving Flights      -- DONE!
 User profile stuf
 Admin stuff

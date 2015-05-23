@@ -3,12 +3,13 @@ import Ember from 'ember';
 export default Ember.ArrayController.extend({
   needs: ['application'],
 
-  DepartureFlight: null,
-  ReturnFlight: null,
+  DepartureFlight: null,          // The journey that represents origin to dest
+  ReturnFlight: null,             // Journey that represents dest to org(y)
   oneWay: true,
-  currentSelection: 'departure',
+  currentSelection: 'departure',  
+  numberOfTickets: 1,             // The number of tickets that the want to purchase
 
-  pageTitlte: 'SYD to MLB', //change this to get the to and from data from the form
+  pageTitlte: 'SYD to MLB',       // Change this to get the to and from data from the form
 
   itemController: 'flight',
   sortProperties: Ember.A([]),
@@ -262,18 +263,6 @@ export default Ember.ArrayController.extend({
 
       }
 
-      //Note, we are going to save extra information!
-
-      /*
-          We need to pass a certain amount of data to the server.
-          What this data is, well, its  yet to be defined.
-
-          Onwards!
-
-          First ill create a new data structure, that represents trips
-       */
-      
-
       // Iterate over each flight in the journey to get the list of tickets
       var flights = this.get('DepartureFlight').get('legs');
       var flight;
@@ -299,11 +288,15 @@ export default Ember.ArrayController.extend({
         'DepartureFlight.id');
 
       var serverData = {
+        'tickets_to_purchase': this.get('numberOfTickets'),
         'return_journey_id': data['ReturnFlight.id'],
         'departure_journey_id': data['DepartureFlight.id'],
         'user_id': this.get('controllers.application.currentUser'),
         'departure_tickets': departureTickets,
-        'returnTickets': returnTickets
+        'returnTickets': returnTickets,
+        'save_type': 'purchased_flight',
+        'account_type': 'regular'       
+        // TODO: Change this ^^  if we implement business accounts
       }
 
       var _this = this;
@@ -322,6 +315,7 @@ export default Ember.ArrayController.extend({
         if (error.status === 404) {
           alert("Something went wrong! The server may be down.");
         } else if (error.status === 422) {
+          alert('Unable to purchase flight! You\'e on the no flt list HOHOHO')
           //Handle
         } else if (error.status === 500) {
           alert("An internal server error has occured. :(");

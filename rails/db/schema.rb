@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150523033403) do
+ActiveRecord::Schema.define(version: 20150523130337) do
 
   create_table "airlines", force: :cascade do |t|
     t.string   "airline_code", limit: 255
@@ -107,6 +107,17 @@ ActiveRecord::Schema.define(version: 20150523033403) do
   add_index "journeys", ["origin_id"], name: "fk_rails_6b5c29487e", using: :btree
   add_index "journeys", ["ticket_class_id"], name: "index_journeys_on_ticket_class_id", using: :btree
 
+  create_table "purchased_tickets", force: :cascade do |t|
+    t.integer  "ticket_availability_id", limit: 4
+    t.integer  "user_id",                limit: 4
+    t.integer  "number_purchased",       limit: 4
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "purchased_tickets", ["ticket_availability_id"], name: "index_purchased_tickets_on_ticket_availability_id", using: :btree
+  add_index "purchased_tickets", ["user_id"], name: "index_purchased_tickets_on_user_id", using: :btree
+
   create_table "save_identifiers", force: :cascade do |t|
     t.string "s_type",       limit: 255
     t.string "account_type", limit: 255
@@ -184,6 +195,8 @@ ActiveRecord::Schema.define(version: 20150523033403) do
   add_foreign_key "journeys", "destinations"
   add_foreign_key "journeys", "destinations", column: "origin_id"
   add_foreign_key "journeys", "ticket_classes"
+  add_foreign_key "purchased_tickets", "ticket_availabilities"
+  add_foreign_key "purchased_tickets", "users"
   add_foreign_key "saved_journeys", "journeys"
   add_foreign_key "saved_journeys", "save_identifiers"
   add_foreign_key "saved_journeys", "users"

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ticket_availability_id: 
+  user_id: 
+  number_purchased: 1
+
+two:
+  ticket_availability_id: 
+  user_id: 
+  number_purchased: 1
