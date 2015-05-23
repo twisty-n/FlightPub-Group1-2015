@@ -65,6 +65,7 @@ Client.joins(:orders).where('orders.created_at' => time_range)
             :flight_time => self.flight_time,
             :destination => self.destination.destination_code,
             :origin => self.origin.destination_code,
+            :airline => self.airline.airline_name,
             :ticket => @ticket_id
             
         }

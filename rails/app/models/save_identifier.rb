@@ -1,4 +1,4 @@
 class SaveIdentifier < ActiveRecord::Base
 
-    has_many :journeys
+    has_many :saved_journeys
 end
