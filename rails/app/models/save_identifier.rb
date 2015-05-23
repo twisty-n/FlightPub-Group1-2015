@@ -1,5 +1,4 @@
 class SaveIdentifier < ActiveRecord::Base
 
-    has_many :saved_flights
-
+    has_many :journeys
 end

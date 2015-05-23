@@ -10,8 +10,7 @@ class Flight < ActiveRecord::Base
     belongs_to :leg_2, class_name: "Flight", foreign_key: "leg_2_id"
 
     has_many :ticket_availabilities
-    has_many :saved_flights
-    has_many :users, :through => :saved_flights
+    has_many :journeys, :through => :journey_maps
 
     # We create some custom scopes that represnt common queries
     
