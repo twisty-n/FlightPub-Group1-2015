@@ -211,15 +211,20 @@ export default Ember.ArrayController.extend({
       {
 
         //Note, we are going to save extra information!
-
-        var data = {flightID: flight.id, userID: this.get('controllers.application.currentUser.id')};
+        //
+        //
+        console.log(this.get('controllers.application.currentUser'));  
+        var data = {
+          'journey_id': flight.id, 
+          'user_id': this.get('controllers.application.currentUser')
+        };
 
         Ember.$.get('api/save', data).then(function(response){
             alert("Flight Saved!"); 
             //TODO: change this response to a cute little thing in the corner
             //      and update the save button to say saved
         }, function(error){
-            if(error.status === 404)
+            if(error.status === 404 || error.status === 422 || error.status === 500)
             {
               alert('Unable to save, there was an issue connecting with the server');
             }

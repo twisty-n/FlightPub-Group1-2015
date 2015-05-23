@@ -3,6 +3,9 @@ import DS from 'ember-data';
 // Note that this no longer really represents a flight
 // Rather, it represents a trip that is made up of 
 // flights, which is what i like to say, a 'JOURNEY'
+// 
+// NOTE: The default ID that we get now on the front end is for a 
+// journey, allowing us to save them as we go
 
 export default DS.Model.extend({
     //Represents the flightNumber of the first flight in the trip

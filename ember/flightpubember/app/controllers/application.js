@@ -6,6 +6,7 @@ export default Ember.ObjectController.extend({
     needs: ['sessions'],
 
     // Define a computer property that binds to the currentUser of the session controller and returns its value
+    //We will define the current user by their ID alone
     currentUser: Ember.computed('controllers.sessions.currentUser', function() {
         return this.get('controllers.sessions.currentUser');
     }),

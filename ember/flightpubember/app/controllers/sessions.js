@@ -30,7 +30,7 @@ export default Ember.ObjectController.extend({
 
   // create and set the token & current user objects based on the respective cookies
   token:               Ember.$.cookie('access_token'),
-  currentUser:         Ember.$.cookie('auth_user'),
+  currentUser:         Ember.$.cookie('auth_user'),   //We are going to define the current user by their id alone
 
   //for switching between displays of login and register
   pageTitle: 'Login',
@@ -97,11 +97,13 @@ export default Ember.ObjectController.extend({
           // find a user based on the user_id returned from the request to the /sessions api
           _this.store.find('user', response.api_key.user_id).then(function(user) {
 
+            console.log(user);
+
             // set this controller token & current user properties
             // based on the data from the user and access_token
             _this.setProperties({
               token:       response.api_key.access_token,
-              currentUser: user.getProperties('email', 'firstName', 'lastName')
+              currentUser: user['id']//.getProperties('email', 'firstName', 'lastName')
             });
 
             // set the relationship between the User and the ApiKey models & save the apiKey object
@@ -109,6 +111,8 @@ export default Ember.ObjectController.extend({
             key.save();
 
             user.get('apiKeys').pushObject(key);
+
+            console.log(_this.get('currentUser'));
 
             // check if there is any attemptedTransition to retry it or go to the secret route
             if (attemptedTrans) {
