@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
 	validates :first_name, 	length: {maximum: 40}
 	validates :last_name,   length: {maximum: 40}
-	validates :info_string, length: {maximum: 200}
+	validates :address, length: {maximum: 200}
 	validates :email, confirmation: true, presence: true, uniqueness: true
 
 	# This will automagically ensure that the user has a password and that the

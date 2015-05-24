@@ -95,15 +95,46 @@
 			<h2>Settings</h2>
 			<!-- here we will have the settings form which can be updated asynchronously -->
 			<div class="admin-inside">
-				<form>
-					<input type="text" placeholder="email"><br/>
-					<input type="text" placeholder="enter your name"><br/>
-					<input type="text" placeholder="new password"><br/>
-					<input type="text" placeholder="confirm new password"><br/>
+				<form {{action "saveDetails" on="submit"}} >
+					
+					<!-- To have a new email address, the user must confirm it  -->
+					<div class="form-group">
+			          {{input value=email type="text" class="form-control input-lg" id="email" placeholder="Enter new email"}}
+			        </div>
+			        <div class="form-group">
+			          {{input value=email_confirmation type="text" class="form-control input-lg" id="email_confirmation" placeholder="Confirm email"}}
+			        </div>
+
+			        <!-- User can update their name and bio  -->
+		        	<div class="form-group">
+			          {{input value=firstName type="text" class="form-control input-lg" id="firstName" placeholder="First Name"}}
+			        </div>
+			        <div class="form-group">
+			          {{input value=lastName type="text" class="form-control input-lg" id="lastName" placeholder="Last Name"}}
+			        </div>
+			        <div class="form-group">
+			          {{input value=address type="text" class="form-control input-lg" id="address" placeholder="Billing Address"}}
+			        </div>
+
 					<label>Recieve Marketing Emails</label><input type="checkbox"><br/>
 
-					<button>Save Changes</button>
+					<button type="submit">Save Changes</button>
 				</form>
+				<form {{action "suspendAccount" on="submit"}} >
+
+					<button type="submit">Suspend Account</button>
+				</form>
+
+				<form {{action "saveDetails" on="submit"}} >
+								        <!-- To have a new password -->
+			        <div class="form-group">
+			          {{input value=password type="password" class="form-control input-lg" id="password_reg" placeholder="Password"}}
+			        </div>
+			        <div class="form-group">
+			          {{input value=password_confirmation type="password" class="form-control input-lg" id="password_confirmation" placeholder="Confirm password"}}
+			        </div>
+		        <button type="submit">Change Password</button>
+		        </form>
 			</div>
 		</div>
 	</div>
