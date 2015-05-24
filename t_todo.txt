@@ -1,9 +1,6 @@
-Purchasing Flights  -- Working on it!
-    -- Implement a set purcahsing table
-        -- Will map user ID to purchased ticket, number purchased
-    -- Complete the implementation of the purchase method
+Purchasing Flights  -- DONE!
 Saving Flights      -- DONE!
-User profile stuf
+User profile stuff  -- DONE!
 Admin stuff
 Write a site wide login action that doesn't redirect
 Promotions
