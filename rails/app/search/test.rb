@@ -8,6 +8,13 @@ require 'data_types/destination_connection'
 require 'reachable'
 
 class Test
+
+	# ------------------------------- Logger --------------------------------- #
+	
+	old_logger = ActiveRecord::Base.logger
+	ActiveRecord::Base.logger = nil
+	
+	# ------------------------------- Class Functions --------------------------------- #
 	
 	# This tests the destination connections
 	def self.destination_connection_test
@@ -105,5 +112,29 @@ class Test
 		puts test_queue.print
 		
 		return nil
-	end
+	end # eof destination queue test
+	
+	def self.active_record_test
+		puts '================== Active record test ================'
+		
+		test_flight = Destination.first
+		
+		puts 'Lets try to print out the results of sydney: '
+		
+		jack_reacher = Reachable.new
+		
+		raw_dc = jack_reacher.get_reachables(test_flight)
+		
+		raw_dc.each do | dc |
+		
+			puts "Flight number: " + dc.flight.flight_number + "\n"
+			puts "Flight ID: " + dc.flight.id.to_s
+			puts "Destination airport: " + dc.destination.airport
+			puts "\n ===================================== \n"
+			
+		end
+
+		
+		return nil # Clears useless data
+	end # eof active record test
 end

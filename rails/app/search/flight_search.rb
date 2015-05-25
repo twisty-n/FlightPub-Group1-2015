@@ -26,17 +26,24 @@ class FlightSearch
 		@@time_counter = input_time
 	end
 	
-	# ------------------------------- Class methods --------------------------------- #
+	
+	# ------------------------------- Initialiser --------------------------------- #
+	
+		# Empty! This class only functions as a collection of static functions.
+	
+	# ------------------------------- Class Functions --------------------------------- #
 	
 	# This is the guts of the rails side, it takes in two arguments:
 	# origin: This is the starting location and
 	# target: The destination we wish to get to
-	def self.search(origin, target)
+	# start_time: the time from which point the algorithm begins.
+	def self.search(origin, target, start_time)
 		
 		# Set up the data structures:
 		dest_queue = DestinationQueue.new		# This holds the destinations to check
 		found_paths = Array.new					# This holds the ID'd flight paths
 		discovered_nodes = Array.new			# This holds the discovered nodes
+		reach = Reachable.new					# Gets the appropriate reachable flight and nodes
 		
 		# Add the first destination to the queue to check. No connecting flight, so it's nil.
 		des_queue.add(DestinationConnection.new(nil, origin))
