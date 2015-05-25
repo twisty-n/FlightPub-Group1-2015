@@ -1,77 +1,52 @@
-# This class performs the search functionality in the assignment. It interfaces with the search
-# API. To alter the search algorithm, replace this file, and don't touch anything else.
+# Authors: msikkema
+# FlightSearch class
+# This class performs the algorithmic part of the search, with significant help from
+# other classes.
 
 require 'errors/invalid_input_error'
+require 'data_types/flight_path'
+require 'data_types/destination_connection'
+require 'reachable'
 	
 class FlightSearch
 
-# This is the basic algorithm, implemented in ruby and not MySQL. 
-# It lacks important parameters atm (like times). It works like this:
-# Step 1: x <- Origin
-# Step 2: y <- Desired destination
-# 
-# Step 3: Mark X as a visited city
-# Step 4: Check if any flights that depart X go to Y?
-#			yes?
-#				Return that flight.
-#			No and there are linking cities that are not visited?
-#				Go to first departing flight's destination.
-#				x <- Flights destination
-#				Run from step 3 on that destination city.
-#			No, and all cities have been checked
-#				Stop. Return "Finished."
+	# ------------------------------- Static Variables --------------------------------- #
 
-#	GETTERS & SETTERS	#############################################
-
-attr_accessor :output_on
-				
-#	CLASS VARIABLES		#############################################
-
-output_on = true		#Make true 
-
-
-#	CLASS METHODS		#############################################
-
-	# This is a test method
-	def self.speak
-		'This is a string from the search classss'
+	@@time_counter = 0
+	
+	# ------------------------------- Static methods --------------------------------- #
+	
+	# Ruby has surprisingly poor support for class variables, need to make the accessors manually.
+	
+	def self.get_time()
+		return @@time_counter
 	end
 	
+	def self.set_time(input_time)
+		@@time_counter = input_time
+	end
 	
-	# This method does a breadth first search of the flights table.
-	# It will return an array of path objects that match
-	def self.outputFlightsTable
-		raw_flights = Flight.all
+	# ------------------------------- Class methods --------------------------------- #
+	
+	# This is the guts of the rails side, it takes in two arguments:
+	# origin: This is the starting location and
+	# target: The destination we wish to get to
+	def self.search(origin, target)
 		
-		puts "Converting flight activerecord associations to array of hash browns..."
-		array_of_hash_flights = raw_flights.as_json
-		puts "\n THE FLIGHT VALUES IN THE DATABASE ARE:\n"
+		# Set up the data structures:
+		dest_queue = DestinationQueue.new		# This holds the destinations to check
+		found_paths = Array.new					# This holds the ID'd flight paths
+		discovered_nodes = Array.new			# This holds the discovered nodes
 		
-		array_of_hash_flights.each do |value|
+		# Add the first destination to the queue to check. No connecting flight, so it's nil.
+		des_queue.add(DestinationConnection.new(nil, origin))
+		
+		# The while loop that runs while there are nodes to check:
+		while !dest_queue.empty? do
 			
-			# Load the flight from the array
-			flight = value
-			# Print out details of the flight
-			flight.each do |k,v|
-				puts k.to_s + ":		" + v.to_s
-			end
-			puts "\n ---------------------------------------------------- \n"
-		end
-	puts "\nEND OF FLIGHT VALUES\n"
-	
-	end	#eof search function
-	
-	
-	# This is the main search method. 
-	# Accepts a target city and origin as an argument (at the moment, more params later)
-	# and then runs a breadthfirst search on it
-	def self.search(target, origin)
-	
-		# verify the input is not blank or empty
-		if target == nill || target.blank
-			raise InvalidInputError "The input is invalid"
-		end
-	
-	end	#eof search function
-	
+		end #eof while loop that runs while there are nodes to check
+		
+		puts 'End of the search method'
+		return nil #Clears useless info being returned
+	end #eof search method
 end
