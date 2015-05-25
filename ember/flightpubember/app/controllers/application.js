@@ -4,7 +4,6 @@ export default Ember.ObjectController.extend({
     
     // Require our sessions controller
     needs: ['sessions'],
-    currentUserId: Ember.computed.alias('sessions.currentUser'),
 
     // Define a computer property that binds to the currentUser of the session controller and returns its value
     //We will define the current user by their ID alone
@@ -16,9 +15,8 @@ export default Ember.ObjectController.extend({
         return !Ember.isEmpty(this.get('controllers.sessions.currentUser'));
     }).property('controllers.sessions.currentUser'),
 
-    isAdmin:(function() {
+    isAdmin: function() {
         var user_id = this.get('currentUser');
-        console.log(user_id);
         if (user_id == null || user_id == undefined) {
             return false;
         }
@@ -31,6 +29,6 @@ export default Ember.ObjectController.extend({
             console.log(error);
             return false;
         });
-    }).property('currentUser')
+    }
 
 });
