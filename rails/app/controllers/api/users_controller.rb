@@ -13,6 +13,18 @@ class Api::UsersController < ApplicationController
 		render json: User.all
 	end
 
+    # Authorizes a user as an administrator
+    def admin_auth
+        user = User.find_by(id: params[:user_id])
+        if user.is? :admin
+            render json: {}, status: 201
+        else
+            render json: {
+                "error" => "Unauthorized"
+                }, status: 401
+        end 
+    end
+
 	# Returns the details of the user
 	def show
 		#reactivate(params[:id])

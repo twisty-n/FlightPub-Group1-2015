@@ -13,6 +13,28 @@ export default Ember.ObjectController.extend({
 
     isAuthenticated: (function() {
         return !Ember.isEmpty(this.get('controllers.sessions.currentUser'));
-    }).property('controllers.sessions.currentUser')
+    }).property('controllers.sessions.currentUser'),
+
+    isAdmin: (function() {
+        var _this = this;
+        var user_id = this.controllerFor('application').get('currentUser');
+
+        console.log(user_id);
+
+        if (user_id == null || user_id == undefined) {
+            return false;
+        }
+
+        user_id = {
+            'user_id': user_id
+        }
+
+        Ember.$.post('api/auth', user_id).then(function(response) {
+            return true;
+        }, function(error) {
+            console.log(error);
+            return false;
+        });
+    })
 
 });
