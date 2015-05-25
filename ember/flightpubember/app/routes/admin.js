@@ -12,21 +12,16 @@ export default AuthenticatedRoute.extend({
         
         this._super();
 
+        console.log(this);
+        console.log('ChckingE');
+        console.log(this.controllerFor('application').get('isAdmin'));
+
         var _this = this;
-        var user_id = this.controllerFor('application').get('currentUser');
-
-        console.log(user_id);
-
-        user_id = {
-            'user_id': user_id
+        if (! this.controllerFor('application').get('isAdmin') ) {
+            console.log(_this);
+            alert('UNAUTHORIZED');
+            this.transitionTo('profile');
         }
-
-        Ember.$.post('api/auth', user_id).then(function(response) {
-            // Allow entry
-        }, function(error) {
-            alert('UNAUTHORISED');
-            _this.transitionToRoute('profile');
-        });
     },
 
     setupController: function(controller, model) {

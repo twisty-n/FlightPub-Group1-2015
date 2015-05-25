@@ -119,8 +119,6 @@ export default Ember.ObjectController.extend({
               attemptedTrans.retry();
               _this.set('attemptedTransition', null);
             } else {
-              _this.transitionToRoute('admin');
-              /*
               if(user.get('role') == 'admin')
               {
                 _this.transitionToRoute('admin');
@@ -129,7 +127,6 @@ export default Ember.ObjectController.extend({
               {
                 _this.transitionToRoute('profile');
               }
-              */
             }
 
           });
