@@ -36,6 +36,6 @@ export default AuthenticatedRoute.extend({
     },
 
     setupController: function(controller, model) {
-        controller.set('userList', this.store.find('user'));
+        controller.set('users', this.store.find('user'));
     }
 });
