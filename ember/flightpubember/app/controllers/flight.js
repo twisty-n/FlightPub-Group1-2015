@@ -55,24 +55,35 @@ export default Ember.ObjectController.extend({
 		return hour+" "+period+" "+day;
 	}),
 
-	arrivalTimeHourDay: Ember.computed('arrivalTime', function(){
+	arrivalTimeHour: Ember.computed('arrivalTime', function(){
 		var flightTime = this.get('arrivalTime');
 
 		var hour = flightTime.getHours();
-		var period = "am";
-		var day = flightTime.getDay();
 
 		if(hour == 0){
 			hour = 12;
 		}
-		else if(hour >= 12)
+		else if(hour > 12)
 		{
-			period = "pm";
-			if(hour > 12)
-			{
-				hour -= 12;
-			}
+			hour -= 12;
 		}
+
+		return hour;
+	}),
+
+	arrivalTimePeriod: Ember.computed('arrivalTimeHour', function(){
+		
+		if(this.get('arrivalTimeHour') >= 12)
+		{
+			return "pm";
+		}
+
+		return "am";
+	}),
+
+	arrivalTimeDay: Ember.computed('arrivalTime', function(){
+		var flightTime = this.get('arrivalTime');
+		var day = flightTime.getDay();
 
 		switch(day)
 		{
@@ -85,8 +96,14 @@ export default Ember.ObjectController.extend({
 			case 6: day = "Sat"; break;
 		}
 
-		return hour+" "+period+" "+day;
+		return day;
 	}),
+
+	//remove this and just call the sections from the handlebars
+	arrivalTimeHourDay: Ember.computed('arrivalTimeHour', 'arrivalTimePeriod', 'arrivalTimeDay', function(){
+		return this.get('arrivalTimeHour')+" "+this.get('arrivalTimePeriod')+" "+this.get('arrivalTimeDay');
+	}),
+
 
 	timeBarStyle: function(){
 		var avgLength = this.get('controllers.flights.averageFlightTime');
@@ -110,13 +127,207 @@ export default Ember.ObjectController.extend({
 		var leftPercent = 8; // we have a base of 8 for style
 
 
-		return "width:"+widthPercent+"%; left: "+leftPercent+"%;";
+		return "width:"+widthPercent+"%; left: "+leftPercent+"%; min-width:100px;";
 
 	}.property('controllers.flights.averageFlightTime'),
 
-	selected: false,
+	layovers: Ember.computed('controllers.flights', function(){
+		var layovers = Ember.A([]);
 
-	actions: {
-		
-	}
-});
+		var legs = this.get('legs');
+
+		if(legs.length > 1)
+		{
+
+			//create a layover object which we use
+			// to create instances of and insert into
+			// the layovers array
+			var layover = Ember.Object.extend({
+				arrivalFlight: null,
+				departureFlight: null,
+				flightLength: null,
+				flightDepartTime: null,
+				flightArrivalTime: null,
+
+				destination: Ember.computed('arrivalFlight', function(){
+					return this.get('arrivalFlight.destination');
+				}),
+
+				layoverDuration: Ember.computed('arrivalFlight', 'departureFlight', function(){
+					function parseDate(input) {
+						var parts = input.match(/(\d+)/g);
+						// new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+						return new Date(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5]); // months are 0-based
+					}
+
+					var arrival = parseDate(this.get('arrivalFlight.arrival_time'));
+					var departure = parseDate(this.get('departureFlight.departure_time'));
+
+					var diff = Math.abs(departure-arrival)/(1000*60);
+
+					return diff;
+				}),
+
+				time: Ember.computed('arrivalFlight', 'departureFlight', function(){
+					return Math.floor(this.get('layoverDuration')/60)+"h";
+				}),
+
+				arrivalHour: Ember.computed('arrivalFlight', function(){
+					function parseDate(input) {
+						var parts = input.match(/(\d+)/g);
+						// new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+						return new Date(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5]); // months are 0-based
+					}
+
+					var layoverTime = parseDate(this.get('arrivalFlight.arrival_time'));
+
+					var hour = layoverTime.getHours();
+
+					if(hour == 0){
+						hour = 12;
+					}
+					else if(hour > 12)
+					{
+						hour -= 12;
+					}
+
+					return hour;
+				}),
+
+				departureHour: Ember.computed('departureFlight', function(){
+					function parseDate(input) {
+						var parts = input.match(/(\d+)/g);
+						// new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+						return new Date(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5]); // months are 0-based
+					}
+
+					var layoverTime = parseDate(this.get('departureFlight.arrival_time'));
+
+					var hour = layoverTime.getHours();
+
+					if(hour == 0){
+						hour = 12;
+					}
+					else if(hour > 12)
+					{
+						hour -= 12;
+					}
+
+					return hour;
+				}),
+
+				arrivalPeriod: Ember.computed('arrivalFlight', function(){
+					if(this.get('arrivalHour') >= 12)
+					{
+						return "pm";
+					}
+
+					return "am";
+				}),
+
+				departurePeriod: Ember.computed('departurePeriod', function(){
+					if(this.get('departureHour') >= 12)
+					{
+						return "pm";
+					}
+
+					return "am";
+				}),
+
+				layoverStyle: function(){
+					function parseDate(input) {
+						var parts = input.match(/(\d+)/g);
+						// new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+						return new Date(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5]); // months are 0-based
+					}
+
+					
+					var layoverTimeMins = this.get('layoverDuration');
+					var tripTimeMins = this.get('flightLength');
+					
+
+
+
+					var width = (layoverTimeMins/tripTimeMins); 
+
+					var left = 8;
+
+					var layoverStartDate = parseDate(this.get('arrivalFlight.arrival_time'));
+
+					console.log(this.get('flightDepartTime'));
+					console.log(this.get('flightArrivalTime'));
+					var flightDepartureDate = this.get('flightDepartTime');
+					var flightArrivalDate = this.get('flightArrivalTime');
+					
+					left = Math.round(((flightArrivalDate - flightDepartureDate) * 100 ) / layoverStartDate);
+
+					return "width: "+width+"%; left: "+left+"%; min-width:40px; max-width:100%;";
+				}.property('layoverDuration', 'flightLength')
+
+			});
+
+			//we start at null, because each layover
+			// needs to display data from the previous and 
+			// current leg of the flight.
+			var prevLeg = null;
+
+			var self = this;
+			legs.forEach(function(leg){
+				
+				if(prevLeg)
+				{
+					var l = layover.create({
+						arrivalFlight: prevLeg,
+						departureFlight: leg,
+						flightLength: self.get('flightTime'),
+						flightDepartTime: self.get('departureTime'),
+						flightArrivalTime: self.get('arrivalTime'),
+
+					});
+					layovers.pushObject(l);
+				}
+
+				prevLeg = leg;
+			});
+			
+		}
+
+		return layovers;		
+	}),
+	/*{
+		"flights":[
+
+			{"id":651,
+			 "flightNumber":"QF824",
+			 "price":311,
+			 "departureTime":"2015-11-22 09:15:00 UTC",
+			 "arrivalTime":"2015-11-22 12:55:00 UTC",
+			 "seatsAvailable":19,
+			 "flightTime":250,
+			 "origin":"BNE",
+			 "destination":"DRW",
+			 "isReturnFlight":false,
+			 "ticketClass":"ECO",
+			 "legs":
+			 [
+			 	{"id":1034109999,
+			 	 "flightNumber":"QF824",
+			 	 "price":311,
+			 	 "departure_time":"2015-11-22 09:15:00 UTC",
+			 	 "arrival_time":"2015-11-22 12:55:00 UTC",
+			 	 "seats_available":19,
+			 	 "flight_time":250,
+			 	 "destination":"DRW",
+			 	 "origin":"BNE",
+			 	 "airline":"Qantas Airways",
+			 	 "ticket":980199758
+			 	}
+			 ]
+			}
+			*/
+			selected: false,
+
+			actions: {
+
+			}
+		});

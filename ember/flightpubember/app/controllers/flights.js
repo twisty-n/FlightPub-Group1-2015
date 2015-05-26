@@ -187,7 +187,7 @@ export default Ember.ArrayController.extend({
         var flightIDResultItem = '#' + flight.get('id')+' .result-item';
         $(flightID).css({'display':'block'});
         $(flightID).animate({height: 93}, 93);
-        $(flightIDResultItem).css({'background-color':'#43e517'})
+        $(flightIDResultItem).css({'background-color':'#4de723'})
 
       }
     },
