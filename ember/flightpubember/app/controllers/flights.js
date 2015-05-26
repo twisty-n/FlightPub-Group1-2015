@@ -17,7 +17,10 @@ export default Ember.ArrayController.extend({
   sortedFlights: Ember.computed.sort('filteredFlights', 'sortProperties'),
 
   noStops: false,
+  
   maxStops: -1,
+  maxStopsOptions: Ember.A([{max: "Max Stops", stops: -1}, {max: "1 Stop", stops: 1},{max: "2 Stops", stops: 2},{max: "3 Stops", stops: 3},{max: "4 Stops", stops: 4},{max: "5+ Stops", stops: 5}]),
+
   mustStopAt: '',
 
   averageFlightTime: Ember.computed('sortedFlights', function(){
@@ -36,23 +39,41 @@ export default Ember.ArrayController.extend({
 
     var flights = this.get('model');
 
+
     if(!flights)
     {
       return flights;
     }
 
-    if(this.get('currentSelection') === 'departure')
-    {
-      flights = flights.filter(function(flight){
-        return (flight.get('isReturnFlight') === false);        
-      });
-    }
-    else
-    {
-      flights = flights.filter(function(flight){
-        return (flight.get('isReturnFlight') === true);        
-      });
-    }
+
+    var self = this;
+    var filterProperties = this.get('filterProperties');
+
+    flights = flights.filter(function(flight){
+      var useFlight = false;
+
+      if(self.get('currentSelection') === 'departure')
+      {
+          useFlight = (flight.get('isReturnFlight') === false);
+      }
+      else
+      {
+          useFlight = (flight.get('isReturnFlight') === true); 
+      }
+
+      console.log(filterProperties); 
+      if(useFlight && filterProperties.indexOf('noStops') >= 0)
+      {
+          useFlight = (flight.get('legs').length <= 1);
+      }
+
+      if(useFlight && self.get('maxStops') > 0)
+      {
+        useFlight = (flight.get('legs').length-1 <= self.get('maxStops'));
+      }
+
+      return useFlight;
+    });
 
     return flights;
 
@@ -82,7 +103,7 @@ export default Ember.ArrayController.extend({
 
 
 
-  }.property('model.isLoaded', 'model', 'sortProperties', 'currentSelection'),
+  }.property('model.isLoaded', 'currentSelection', 'filterProperties.@each', 'maxStops'),
 
 
 
@@ -102,12 +123,14 @@ export default Ember.ArrayController.extend({
       {
         this.get('sortProperties').removeObject(property);
       }
+
     },
 
 
     filterBy: function(property){
 
       this.send('updatePropertyStyle', property);
+      console.log(property);
 
       var filterProperties = this.get('filterProperties');
 
@@ -121,7 +144,6 @@ export default Ember.ArrayController.extend({
       {
         filterProperties.removeObject(property);
       }
-
     },
 
     updatePropertyStyle: function(property){

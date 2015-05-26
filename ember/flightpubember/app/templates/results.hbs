@@ -48,14 +48,15 @@
 					<button {{action "sortBy" "flightTime:asc"}}id="shortest-first-filter">quickest first</button> 
 					<button id="no-stops-filter" {{action "filterBy" "noStops"}}>no stops</button> <!-- this button acts like a checkbox? -->	
 				</div>
-				<select id="max-stops-filter">
-					<option value="-1">Max Stops</option>
-					<option value="1">1 Stops</option>
-					<option value="2">2 Stops</option>
-					<option value="3">3 Stops</option>
-					<option value="4">4 Stops</option>
-					<option value="-2">5+ Stops</option>
-				</select> <!-- this is some sort of number selection -->				
+
+				{{view "select"
+					value=maxStops
+					content=controller.maxStopsOptions
+					optionValuePath="content.stops"
+					optionLabelPath="content.max"
+					defaultvalue=-1
+					id="max-stops-filter"
+				}}
 				<select id="stop-location-filter">
 					<option value="">Specify Stop</option>
 					<option value="syd">SYD</option>

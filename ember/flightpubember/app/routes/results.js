@@ -24,8 +24,5 @@ export default Ember.Route.extend({
     	this.controllerFor('index').send('reset');
         return this.store.findQuery('flight', searchFields);
     },
-   //  setupController: function(controller, model) {
-   //  	controller.set('model', model);
-  	// }
 });
 

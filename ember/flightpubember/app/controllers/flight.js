@@ -142,6 +142,9 @@ export default Ember.ObjectController.extend({
 			//create a layover object which we use
 			// to create instances of and insert into
 			// the layovers array
+
+			//this should probably be turned into a controller, but for
+			// now this was way easier
 			var layover = Ember.Object.extend({
 				arrivalFlight: null,
 				departureFlight: null,
@@ -254,8 +257,6 @@ export default Ember.ObjectController.extend({
 
 					var layoverStartDate = parseDate(this.get('arrivalFlight.arrival_time'));
 
-					console.log(this.get('flightDepartTime'));
-					console.log(this.get('flightArrivalTime'));
 					var flightDepartureDate = this.get('flightDepartTime');
 					var flightArrivalDate = this.get('flightArrivalTime');
 					
