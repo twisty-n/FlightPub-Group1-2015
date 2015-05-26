@@ -10,8 +10,14 @@ journeys":[
 "arrival_time":"2015-05-23T06:30:00.000Z","ticket_class_id":422391454}
 
 =end
-  attributes :id, :price, :flight_time, :origin, :destination, :departure_time, :arrival_time
-  has_many :flights, through: :saved_journeys
+  attributes :id, :price, :flight_time, :origin, :destination, :departure_time, :arrival_time, :flights
+  #has_many :flights, through: :journey_maps
+
+  def flights
+    object.journey_maps.each do | journey_map |
+      JourneyMapSerializer.new(journey_map)
+    end
+  end
   
   def destination
   	object.destination.airport
