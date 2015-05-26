@@ -20,6 +20,24 @@ class User < ActiveRecord::Base
 	# Define our CanCan roles. We dont do it in the DB as we only have two roles
 	Roles = [ :admin, :default ]
 
+=begin
+	def as_json(options={})
+		{
+			:id => self.id,
+			:first_name => self.firstName,
+			:last_name => self.lastName,
+			:email => self.email,
+			:address => self.address,
+			:account_status => self.account_status,
+			:role => self.role,
+			:include => {
+				:journeys => {
+					:only => :price, :flight_time
+				}
+			}
+		}
+	end
+=end
     def session_api_key
       api_keys.active.session.first_or_create
     end

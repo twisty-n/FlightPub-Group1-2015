@@ -6,7 +6,7 @@ class Api::UsersController < ApplicationController
   	skip_authorization_check
 
   	#Roll our own authorization in this case, things my be ongoing
-  	before_filter :ensure_authenticated_user, only: [:index]
+  	# before_filter :ensure_authenticated_user, only: [:index]
 
   	# Renders all of the users
 	def  index

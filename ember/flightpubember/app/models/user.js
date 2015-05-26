@@ -12,6 +12,7 @@ export default DS.Model.extend({
     password:                   DS.attr('string'),
     password_confirmation:      DS.attr('string'),
     apiKeys:                    DS.hasMany('apiKey'),
+    journeys:                   DS.attr,      
     errors:                     {},
 
 });
