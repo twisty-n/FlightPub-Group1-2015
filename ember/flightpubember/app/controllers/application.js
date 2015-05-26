@@ -16,19 +16,16 @@ export default Ember.ObjectController.extend({
     }).property('controllers.sessions.currentUser'),
 
     isAdmin: function() {
+        
         var user_id = this.get('currentUser');
-        if (user_id == null || user_id == undefined) {
-            return false;
-        }
-        user_id = {
-            'user_id': user_id
-        }
+
         Ember.$.post('api/auth', user_id).then(function(response) {
-            return true;
+            return  true;
         }, function(error) {
             console.log(error);
-            return false;
+            return  false;
         });
-    }
+
+    }.property('currentUser')
 
 });
