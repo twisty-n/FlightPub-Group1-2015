@@ -2,7 +2,14 @@ Purchasing Flights  -- DONE!
 Saving Flights      -- DONE!
 User profile stuff  -- DONE!
 Admin stuff         -- IN MOTION
-    -- Fix the database script
-        with acc types and roles
-Write a site wide login action that doesn't redirect
+                    -- Change DB tables to include t&c's
+                    -- FInd all the URLS
+                    -- Create API points for getting URL
+                    -- Write the email with the invoice
+                    -- Write the email with the itinerary
+
+                    -- Create API endpoints for adding flights
+                        -- Define the needed data
+                        -- Code
+
 Promotions

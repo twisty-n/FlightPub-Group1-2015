@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150524014156) do
+ActiveRecord::Schema.define(version: 20150526115638) do
 
   create_table "airlines", force: :cascade do |t|
     t.string   "airline_code", limit: 255
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20150524014156) do
     t.integer  "country_id",   limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.string   "terms_url",    limit: 255
   end
 
   add_index "airlines", ["country_id"], name: "index_airlines_on_country_id", using: :btree
