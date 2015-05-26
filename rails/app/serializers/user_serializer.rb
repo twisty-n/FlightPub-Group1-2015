@@ -1,6 +1,7 @@
 
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :email, :first_name, :last_name, :account_status, :address, :role
+  has_many :journeys
 end
 
 
