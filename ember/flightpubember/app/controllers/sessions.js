@@ -31,6 +31,7 @@ export default Ember.ObjectController.extend({
   // create and set the token & current user objects based on the respective cookies
   token:               Ember.$.cookie('access_token'),
   currentUser:         Ember.$.cookie('auth_user'),   //We are going to define the current user by their id alone
+  userAuth:            null,
 
   //for switching between displays of login and register
   pageTitle: 'Login',
@@ -98,12 +99,14 @@ export default Ember.ObjectController.extend({
           _this.store.find('user', response.api_key.user_id).then(function(user) {
 
             console.log(user);
+            console.log(user.get('role'));
 
             // set this controller token & current user properties
             // based on the data from the user and access_token
             _this.setProperties({
               token:       response.api_key.access_token,
-              currentUser: user['id']//.getProperties('email', 'firstName', 'lastName')
+              currentUser: user['id'],//.getProperties('email', 'firstName', 'lastName'),
+              userAuth:    user.get('role')
             });
 
             // set the relationship between the User and the ApiKey models & save the apiKey object

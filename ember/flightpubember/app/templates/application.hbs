@@ -5,7 +5,7 @@
 		<div id="login">
         {{# if isAuthenticated}}
              {{#link-to 'profile'}}Profile{{/link-to}}
-             {{# if isAdmin}}
+             {{#if checkAdmin}}
                 {{#link-to 'admin'}}Admin{{/link-to}}
              {{/if}}          
              <a href="#" {{action "logout"}} >Logout</a>
