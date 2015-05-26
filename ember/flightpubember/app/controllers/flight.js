@@ -21,6 +21,7 @@ export default Ember.ObjectController.extend({
 		return result;
 	}.property('flightTime'),
 
+
 	departureTimeHourDay: Ember.computed('depatureTime', function(){
 		var flightTime = this.get('departureTime');
 

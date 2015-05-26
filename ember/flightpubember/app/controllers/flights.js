@@ -160,15 +160,18 @@ export default Ember.ArrayController.extend({
     selected: function(flight){
      var currentSelectedFlight = this.get('selectedFlight'); 
 
-    if(currentSelectedFlight)
-    {
+
+     if(currentSelectedFlight)
+     {
         //hide the current flight because no matter what click 
         // happens we want it to hide again
-        var id = '#'+currentSelectedFlight.get('id');
+        var idResultItem = '#'+currentSelectedFlight.get('id')+' .result-item';
+        var idDetails = '#'+currentSelectedFlight.get('id')+' .flight-details .flight-details-inner';
 
-        $(id).animate({height: 1}, 93, function(){
-          $(id).css({'display':'none'});
+        $(idDetails).animate({height: 1}, 93, function(){
+          $(idDetails).css({'display':'none'});
         });
+        $(idResultItem).css({'background-color':'#47CEFF'})
       }
 
       if(flight === currentSelectedFlight)
@@ -180,9 +183,11 @@ export default Ember.ArrayController.extend({
         this.set('selectedFlight', flight);
 
         //display the newly selected flight
-        var flightID = '#' + flight.get('id');
+        var flightID = '#' + flight.get('id')+' .flight-details .flight-details-inner';
+        var flightIDResultItem = '#' + flight.get('id')+' .result-item';
         $(flightID).css({'display':'block'});
         $(flightID).animate({height: 93}, 93);
+        $(flightIDResultItem).css({'background-color':'#43e517'})
 
       }
     },
@@ -215,16 +220,16 @@ export default Ember.ArrayController.extend({
           'user_id': this.get('controllers.application.currentUser'),
           'save_type': 'saved_flight',
           'account_type': 'regular'  //TODO: Adjust this later to look up the account type       
-         };
+        };
 
         Ember.$.get('api/save', data).then(function(response){
 
-            alert("Flight Saved!"); 
+          alert("Flight Saved!"); 
 
             //TODO: change this response to a cute little thing in the corner
             //      and update the save button to say saved
 
-        }, function(error){
+          }, function(error){
 
             if(error.status === 404) {
               alert('Unable to save, there was an issue connecting with the server');
@@ -234,7 +239,7 @@ export default Ember.ArrayController.extend({
               alert('Unknown server error. Flight unable to be saved');
             }
 
-        });
+          });
       } else {
 
         //The user isn't signed in. Tell them as such!
@@ -299,7 +304,7 @@ export default Ember.ArrayController.extend({
       var _this = this;
 
       Ember.$.post('api/purchase', serverData).then(function(response) {
-        
+
         alert('Flight purchased. Details will be emailed');
 
         _this.transitionToRoute('complete'); 
