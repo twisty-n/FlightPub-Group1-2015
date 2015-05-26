@@ -11,11 +11,12 @@
 				</div>
 				<div id="user-list">
 					<ul>
-						{{#each user}}
+						{{#each user in controller.users itemController="user"}}
 						<li>
-							<div class="user-name">Al</div>
-							<div class="user-email">Al@PartyTime.com</div>
-							<div class="disable-account">Disabled: <input type="checkbox" checked></div>
+							<div class="user-name">{{user.fullName}}</div>
+							<div class="user-email">{{user.email}}</div>
+							<div class="disable-account">Disabled: 
+								<input type="checkbox" ></div>
 							<div class="account-type">AccountType: 
 								<select>
 									<option value="user">User</option>

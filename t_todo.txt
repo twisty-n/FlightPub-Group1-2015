@@ -1,0 +1,8 @@
+Purchasing Flights  -- DONE!
+Saving Flights      -- DONE!
+User profile stuff  -- DONE!
+Admin stuff         -- IN MOTION
+    -- Fix the database script
+        with acc types and roles
+Write a site wide login action that doesn't redirect
+Promotions

@@ -1,13 +1,12 @@
 class User < ActiveRecord::Base
 
   has_many :api_keys
-  has_many :saved_flights
-  has_many :flights, :through => :saved_flights
-
+  has_many :saved_journeys
+  has_many :journeys, :through => :saved_journeys
 
 	validates :first_name, 	length: {maximum: 40}
 	validates :last_name,   length: {maximum: 40}
-	validates :info_string, length: {maximum: 200}
+	validates :address, length: {maximum: 200}
 	validates :email, confirmation: true, presence: true, uniqueness: true
 
 	# This will automagically ensure that the user has a password and that the
@@ -21,6 +20,24 @@ class User < ActiveRecord::Base
 	# Define our CanCan roles. We dont do it in the DB as we only have two roles
 	Roles = [ :admin, :default ]
 
+=begin
+	def as_json(options={})
+		{
+			:id => self.id,
+			:first_name => self.firstName,
+			:last_name => self.lastName,
+			:email => self.email,
+			:address => self.address,
+			:account_status => self.account_status,
+			:role => self.role,
+			:include => {
+				:journeys => {
+					:only => :price, :flight_time
+				}
+			}
+		}
+	end
+=end
     def session_api_key
       api_keys.active.session.first_or_create
     end

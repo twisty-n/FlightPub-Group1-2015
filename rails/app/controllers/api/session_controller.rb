@@ -7,6 +7,7 @@ class Api::SessionController < ApplicationController
     def create
         user = User.find_by email: params[:email]
         if user && user.authenticate(params[:password])
+            reactivate(user)
             render json: user.session_api_key, status: 201
         else
             render json: {
@@ -19,6 +20,13 @@ class Api::SessionController < ApplicationController
 
     def login_params
          params.permit(:email, :password)
+    end
+
+            # Reactivates a user account
+    def reactivate(user)
+        if !user.account_active?
+            user.reactivate!
+        end
     end
 
 

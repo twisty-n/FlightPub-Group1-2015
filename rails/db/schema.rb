@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150520080654) do
+ActiveRecord::Schema.define(version: 20150524014156) do
 
   create_table "airlines", force: :cascade do |t|
     t.string   "airline_code", limit: 255
@@ -80,20 +80,60 @@ ActiveRecord::Schema.define(version: 20150520080654) do
   add_index "flights", ["leg_2_id"], name: "fk_rails_739ad5a492", using: :btree
   add_index "flights", ["origin_id"], name: "fk_rails_34f4351407", using: :btree
 
+  create_table "journey_maps", force: :cascade do |t|
+    t.integer  "journey_id",       limit: 4
+    t.integer  "flight_id",        limit: 4
+    t.integer  "order_in_journey", limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "journey_maps", ["flight_id"], name: "index_journey_maps_on_flight_id", using: :btree
+  add_index "journey_maps", ["journey_id"], name: "index_journey_maps_on_journey_id", using: :btree
+
+  create_table "journeys", force: :cascade do |t|
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "price",           limit: 4
+    t.integer  "flight_time",     limit: 4
+    t.integer  "origin_id",       limit: 4
+    t.integer  "destination_id",  limit: 4
+    t.datetime "departure_time"
+    t.datetime "arrival_time"
+    t.integer  "ticket_class_id", limit: 4
+  end
+
+  add_index "journeys", ["destination_id"], name: "fk_rails_df6c4aabe5", using: :btree
+  add_index "journeys", ["origin_id"], name: "fk_rails_6b5c29487e", using: :btree
+  add_index "journeys", ["ticket_class_id"], name: "index_journeys_on_ticket_class_id", using: :btree
+
+  create_table "purchased_tickets", force: :cascade do |t|
+    t.integer  "ticket_availability_id", limit: 4
+    t.integer  "user_id",                limit: 4
+    t.integer  "number_purchased",       limit: 4
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "purchased_tickets", ["ticket_availability_id"], name: "index_purchased_tickets_on_ticket_availability_id", using: :btree
+  add_index "purchased_tickets", ["user_id"], name: "index_purchased_tickets_on_user_id", using: :btree
+
   create_table "save_identifiers", force: :cascade do |t|
     t.string "s_type",       limit: 255
     t.string "account_type", limit: 255
   end
 
-  create_table "saved_flights", force: :cascade do |t|
-    t.integer "flight_id",          limit: 4
-    t.integer "user_id",            limit: 4
-    t.integer "save_identifier_id", limit: 4
+  create_table "saved_journeys", force: :cascade do |t|
+    t.integer  "user_id",            limit: 4
+    t.integer  "journey_id",         limit: 4
+    t.integer  "save_identifier_id", limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
-  add_index "saved_flights", ["flight_id"], name: "index_saved_flights_on_flight_id", using: :btree
-  add_index "saved_flights", ["save_identifier_id"], name: "index_saved_flights_on_save_identifier_id", using: :btree
-  add_index "saved_flights", ["user_id"], name: "index_saved_flights_on_user_id", using: :btree
+  add_index "saved_journeys", ["journey_id"], name: "index_saved_journeys_on_journey_id", using: :btree
+  add_index "saved_journeys", ["save_identifier_id"], name: "index_saved_journeys_on_save_identifier_id", using: :btree
+  add_index "saved_journeys", ["user_id"], name: "index_saved_journeys_on_user_id", using: :btree
 
   create_table "ticket_availabilities", force: :cascade do |t|
     t.integer  "flight_id",       limit: 4
@@ -130,7 +170,7 @@ ActiveRecord::Schema.define(version: 20150520080654) do
   create_table "users", force: :cascade do |t|
     t.string   "first_name",       limit: 255, default: ""
     t.string   "last_name",        limit: 255, default: ""
-    t.string   "info_string",      limit: 200
+    t.string   "address",          limit: 200
     t.string   "password_digest",  limit: 255
     t.string   "role",             limit: 255
     t.string   "email",            limit: 255
@@ -150,4 +190,14 @@ ActiveRecord::Schema.define(version: 20150520080654) do
   add_foreign_key "flights", "destinations", column: "origin_id"
   add_foreign_key "flights", "flights", column: "leg_1_id"
   add_foreign_key "flights", "flights", column: "leg_2_id"
+  add_foreign_key "journey_maps", "flights"
+  add_foreign_key "journey_maps", "journeys"
+  add_foreign_key "journeys", "destinations"
+  add_foreign_key "journeys", "destinations", column: "origin_id"
+  add_foreign_key "journeys", "ticket_classes"
+  add_foreign_key "purchased_tickets", "ticket_availabilities"
+  add_foreign_key "purchased_tickets", "users"
+  add_foreign_key "saved_journeys", "journeys"
+  add_foreign_key "saved_journeys", "save_identifiers"
+  add_foreign_key "saved_journeys", "users"
 end

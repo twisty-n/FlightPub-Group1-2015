@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  journey_id: 
+  flight_id: 
+  order_in_journey: 1
+
+two:
+  journey_id: 
+  flight_id: 
+  order_in_journey: 1

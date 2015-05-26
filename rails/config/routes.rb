@@ -18,13 +18,22 @@ Rails.application.routes.draw do
     # Route that allows the client to create a session
     # a session is used to access secure details like a user
     # profile
-    get 'session'       => 'session#create'
+    get 'session'         => 'session#create'
 
     # Route the allows client to get complete list of destinations
-    get 'destinations'  => 'destinations#index'
+    get 'destinations'    => 'destinations#index'
 
     # Route that allows client to get list of ticket classes
-    get 'ticket_classes'       => 'ticket_classes#index'
+    get 'ticket_classes'  => 'ticket_classes#index'
+
+    # Route that allows a flight to be saved
+    get 'save'            => 'journey#save'
+
+    # Route that allows a flight to be purchased
+    post 'purchase'       => 'journey#purchase'
+
+    # Route that will authenticate a user based on id
+    post 'auth'           => 'users#admin_auth'
 
   end
 

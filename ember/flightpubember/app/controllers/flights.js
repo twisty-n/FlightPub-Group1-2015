@@ -3,12 +3,13 @@ import Ember from 'ember';
 export default Ember.ArrayController.extend({
   needs: ['application'],
 
-  DepartureFlight: null,
-  ReturnFlight: null,
+  DepartureFlight: null,          // The journey that represents origin to dest
+  ReturnFlight: null,             // Journey that represents dest to org(y)
   oneWay: false,
-  currentSelection: 'departure',
+  currentSelection: 'departure',  
+  numberOfTickets: 1,             // The number of tickets that the want to purchase
 
-  pageTitlte: 'SYD to MLB', //change this to get the to and from data from the form
+  pageTitlte: 'SYD to MLB',       // Change this to get the to and from data from the form
 
   itemController: 'flight',
   sortProperties: Ember.A([]),
@@ -206,33 +207,101 @@ export default Ember.ArrayController.extend({
     saveFlight: function(flight){
       if(this.get('controllers.application.isAuthenticated'))
       {
-        var data = {flightID: flight.id, userID: this.get('controllers.application.currentUser.id')};
 
-        Ember.$.get('apli/save', data).then(function(response){
+        console.log(this.get('controllers.application.currentUser'));  
+
+        var data = {
+          'journey_id': flight.id, 
+          'user_id': this.get('controllers.application.currentUser'),
+          'save_type': 'saved_flight',
+          'account_type': 'regular'  //TODO: Adjust this later to look up the account type       
+         };
+
+        Ember.$.get('api/save', data).then(function(response){
+
             alert("Flight Saved!"); 
+
             //TODO: change this response to a cute little thing in the corner
             //      and update the save button to say saved
+
         }, function(error){
-            if(error.status === 404)
-            {
+
+            if(error.status === 404) {
               alert('Unable to save, there was an issue connecting with the server');
+            } else if (error.status === 422) {
+              alert(error.responseJSON.status_message);
+            } else if (error.status === 500) {
+              alert('Unknown server error. Flight unable to be saved');
             }
+
         });
+      } else {
+
+        //The user isn't signed in. Tell them as such!
+        alert('You need to be signed in to save flights!');
+
       }
     },
 
     purchase: function(){
+
       //we need user id, so we need to have the user sign up if they're not logged in
       console.log(this.get('controllers.application.isAuthenticated'));
       console.log(this.get('controllers.application.currentUser'));
 
-      var data =  this.getProperties('ReturnFlight.id', 'DepartureFlight.id', 'controllers.application.currentUser.id');
+      if (! this.get('controllers.application.isAuthenticated')) {
 
-      console.log(data);
+        // Currently the user needs to be signed in in order to purchase a flight
+        // we will allow this inline, but for now, alert and about
+        
+        alert('You must be signed in in order to purchase a flight!');
+        this.transitionToRoute('results');
+        return;
+
+      }
+
+      // Iterate over each flight in the journey to get the list of tickets
+      var flights = this.get('DepartureFlight').get('legs');
+      var flight;
+      var departureTickets = new Array();
+      var returnTickets = null;
+      for (flight of flights) {
+        departureTickets.push( flight['ticket'] );
+      }
+
+      // Don't include return tickets if its a one way trip
+      if (! this.get('oneWay') ) {
+        returnTickets = new Array();
+        flights = this.get('ReturnFlight').get('legs');
+        for (flight of flights) {
+          returnTicketsTickets.push( flight['ticket'] );
+        }
+      }
+
+
+      // Set up our data to get to the server
+      var data =  this.getProperties(
+        'ReturnFlight.id', 
+        'DepartureFlight.id');
+
+      var serverData = {
+        'tickets_to_purchase': this.get('numberOfTickets'),
+        'return_journey_id': data['ReturnFlight.id'],
+        'departure_journey_id': data['DepartureFlight.id'],
+        'user_id': this.get('controllers.application.currentUser'),
+        'departure_tickets': departureTickets,
+        'returnTickets': returnTickets,
+        'save_type': 'purchased_flight',
+        'account_type': 'regular'       
+        // TODO: Change this ^^  if we implement business accounts
+      }
 
       var _this = this;
 
-      Ember.$.get('api/purchse', data).then(function(response) {
+      Ember.$.post('api/purchase', serverData).then(function(response) {
+        
+        alert('Flight purchased. Details will be emailed');
+
         _this.transitionToRoute('complete'); 
 
         _this.setProperties({
@@ -241,11 +310,23 @@ export default Ember.ArrayController.extend({
         });
 
       }, function(error) {
+
         if (error.status === 404) {
           alert("Something went wrong! The server may be down.");
+        } else if (error.status === 422) {
+          console.log(error);
+          alert('Unable to purchase flight. '+ error.responseJSON.errorCode)
+          //Handle
+        } else if (error.status === 500) {
+          alert("An internal server error has occured. :(");
+        } else {
+          //Handle
         }
+
         alert("we will continue to the completed page because I want to show user flow");
+        
         _this.transitionToRoute('complete');
+
       });
 
     },
