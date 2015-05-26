@@ -2,6 +2,13 @@
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :email, :first_name, :last_name, :account_status, :address, :role
   has_many :journeys
+
+  def journeys
+
+    object.saved_journeys.each do |saved_journey|
+        SavedJourneySerializer.new( saved_journey )
+    end
+  end
 end
 
 
