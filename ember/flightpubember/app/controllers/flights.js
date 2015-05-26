@@ -61,7 +61,6 @@ export default Ember.ArrayController.extend({
           useFlight = (flight.get('isReturnFlight') === true); 
       }
 
-      console.log(filterProperties); 
       if(useFlight && filterProperties.indexOf('noStops') >= 0)
       {
           useFlight = (flight.get('legs').length <= 1);
@@ -76,22 +75,6 @@ export default Ember.ArrayController.extend({
     });
 
     return flights;
-
-    //TODO: make sure this is working, I don't think we
-    //      currently have stops data
-    // if(this.get('noStops')){
-    //   flights = flights.filter(function(flight){
-    //     return (flight.get('stops') === 0);
-    //   });
-    // }
-
-    // //TODO: make sure this also works
-    // if(this.get('maxStops') > 0)
-    // {
-    //   flights = flights.filter(function(flight){
-    //     return (flight.get('stops') > this.get('maxStops'));
-    //   });
-    // }
 
     // if(this.get('mustStopAt') !== ''){
     //   //not certain how to implement this. Have to look in the

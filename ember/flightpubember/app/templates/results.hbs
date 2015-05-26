@@ -50,122 +50,181 @@
 				</div>
 
 				{{view "select"
-					value=maxStops
-					content=controller.maxStopsOptions
-					optionValuePath="content.stops"
-					optionLabelPath="content.max"
-					defaultvalue=-1
-					id="max-stops-filter"
-				}}
-				<select id="stop-location-filter">
-					<option value="">Specify Stop</option>
-					<option value="syd">SYD</option>
-					<option value="syd">SYD</option>
-					<option value="syd">SYD</option>
-					<option value="syd">SYD</option>
-				</select>
+				value=maxStops
+				content=controller.maxStopsOptions
+				optionValuePath="content.stops"
+				optionLabelPath="content.max"
+				defaultvalue=-1
+				id="max-stops-filter"
+			}}
+			<select id="stop-location-filter">
+				<option value="">Specify Stop</option>
+				<option value="syd">SYD</option>
+				<option value="syd">SYD</option>
+				<option value="syd">SYD</option>
+				<option value="syd">SYD</option>
+			</select>
 
-			</div>
+		</div>
 
-			<div id="result-graph">
-				{{#each flight in controller.sortedFlights itemController="flight"}}
+		<div id="result-graph">
+			{{#each flight in controller.sortedFlights itemController="flight"}}
+			<div {{bind-attr id="flight.id"}}>
+				<div class="result-item rounded " {{action  "selected" flight}}>
+					<div class="result-left">
+						<div class="airline">
+							<div class="airline-image">
+								<img src="assets/glyphicons-39-airplane.png">
+							</div>
+						</div>
+						<div class="price">
+							<div class="price-inner">${{flight.price}}</div>
+						</div>
+					</div>
+					<div class="time-wrapper">
 
-				{{#each leg in flight.legs itemController="flight"}}
-				{{leg.price}}
-				{{leg.destination}}
-				{{/each}}
+						<div class="time-bar" {{bind-attr style='flight.timeBarStyle'}}>
+							{{#each layover in flight.layovers itemController="flight"}}
+							<div class="layover" {{bind-attr style="layover.layoverStyle"}}>
+								{{layover.time}}<br>{{layover.destination}}
+								<div class="time layover-time" style="right:100%;">{{layover.arrivalHour}}<br/>{{layover.arrivalPeriod}}</div>
+								<div class="time layover-time" style="left:100%;">{{layover.departureHour}}<br>{{layover.arrivalPeriod}}</div>
+							</div>
+							{{/each}}
+							<div class="time" style="right:100%;">{{flight.departureTimeHourDay}}</div>
+							<div class="time" style="left:100%;">{{flight.arrivalTimeHourDay}}</div>
+						</div>
 
-				<div {{bind-attr id="flight.id"}}>
-					<div class="result-item rounded " {{action  "selected" flight}}>
-						<div class="result-left">
+						<div class="time-bar" {{bind-attr style='flight.timeBarStyle'}}>
+
+
+						</div>
+						<div class="col" style="left:16.6666666%;"></div>
+						<div class="col" style="left:33.3333333%;"></div>
+						<div class="col" style="left:50%;"></div>
+						<div class="col" style="left:66.6666666%;"></div>
+						<div class="col" style="left:83.3333333%;"></div>
+					</div>
+				</div>
+				<div class="flight-details">
+					<div class="flight-details-inner">
+						<!-- 
+						"legs":[
+							{
+								"id":1034109993,
+								"flightNumber": "QF3275",
+								"price": 261,
+								"departure_time": "2015-04-20 15:50:00 UTC",
+								"arrival_time": "2015-04-21 08:30:00  UTC",
+								"seats_available": 7,
+								"flight_time": 585,
+								"destination": "YYZ",
+								"origin": "HNL",
+								"airline": "Qantas Airways",
+								"ticket": 980199724
+							},
+
+							{
+								"id": 1034109971, 
+								"flightNumber": "QF441",
+								"price": 199,
+								"departure_time": "2015-10-11 14:30:00 UTC",
+								"arrival_time": "2015-10-11 15:55:00 UTC",
+								"seats_available": 0,
+								"flight_time": 85,
+								"destination": "SYD",
+								"origin": "MEL",
+								"airline": "Qantas Airways",
+								"ticket": 980199529
+							}
+							] -->
+
+
+							{{#if flight.layovers}}
+							{{#each leg in flight.legs itemController="flight"}}
+							<div class="leg-details" {{bind-attr style="leg.legStyle"}}>
+								
+								<div class="details-top">
+									<div class="leg-departure">
+										<div class="leg-from-name">From</div><div class="leg-from">{{leg.origin}}</div>	
+									</div>
+
+									<div class="leg-arrival">
+										<div class="leg-to-name">To</div><div class="leg-to">{{leg.destination}}</div>
+									</div>
+								</div>
+
+
+								
+								<!-- <div class="flight-time">
+									{{leg.flight_time}}
+								</div>
+							-->
+							<!-- {{leg.arrival_time}}
+							{{leg.departure_time}} -->
 							<div class="airline">
-								<div class="airline-image">
-									<img src="assets/glyphicons-39-airplane.png">
-								</div>
+								<div class="airline-title">Airline</div> {{leg.airline}}
 							</div>
+
+							<div class="flight-number">
+								<div class="flight-num-title">Flight No.</div> {{leg.flightNumber}}
+							</div>
+
 							<div class="price">
-								<div class="price-inner">${{flight.price}}</div>
+								${{leg.price}}
+							</div>
+
+						</div>
+						{{/each}}
+						{{else}}
+						<!--<div class="stops">{{flight.numberOfStops}}</div>-->
+						<div class="details-l1">
+							<div class="flight-number">
+								{{flight.flightNumber}}
+							</div>
+							<div class="direct">Direct Flight</div>
+						</div>
+						<div class="details-l2">
+							<div class="total-time">
+								<div class="time-img"><img src="/assets/glyphicons-58-history.png"></div> 
+								<div class="time">{{flight.flightLengthMinutesHours}}</div>
 							</div>
 						</div>
-						<div class="time-wrapper">
 
-							<div class="time-bar" {{bind-attr style='flight.timeBarStyle'}}>
-								{{#each layover in flight.layovers itemController="flight"}}
-									<div class="layover" {{bind-attr style="layover.layoverStyle"}}>
-										{{layover.time}}<br>{{layover.destination}}
-										<div class="time layover-time" style="right:100%;">{{layover.arrivalHour}}<br/>{{layover.arrivalPeriod}}</div>
-										<div class="time layover-time" style="left:100%;">{{layover.departureHour}}<br>{{layover.arrivalPeriod}}</div>
-									</div>
-								{{/each}}
-								<div class="time" style="right:100%;">{{flight.departureTimeHourDay}}</div>
-								<div class="time" style="left:100%;">{{flight.arrivalTimeHourDay}}</div>
+						<div class="details-center">
+							<div class="trip">
+
+								<div class="trip-left">
+									<div class="from">from</div>
+									<div class="trip-from">{{flight.origin}}</div>
+								</div>
+								<div class="trip-right">
+									<div class="to">to</div>
+									<div class="trip-to">{{flight.destination}}</div>
+								</div>
 							</div>
 
-							<div class="time-bar" {{bind-attr style='flight.timeBarStyle'}}>
-								
-
+							<div class="trip-times">
+								<div class="arrive"><span class="grey detail-time-label">Depart:</span> {{flight.departureTime}}</div>
+								<div class="depart"><span class="grey detail-time-label">Arrive:</span> {{flight.arrivalTime}}</div>
 							</div>
-							<div class="col" style="left:16.6666666%;"></div>
-							<div class="col" style="left:33.3333333%;"></div>
-							<div class="col" style="left:50%;"></div>
-							<div class="col" style="left:66.6666666%;"></div>
-							<div class="col" style="left:83.3333333%;"></div>
 						</div>
-					</div>
-					<div class="flight-details">
-						<div class="flight-details-inner">
-							<!-- {#if flight.hasStops}
-								
-								<div class="stops">{{flight.numberOfStops}}</div>
 
-								{#else} -->
-								<div class="details-l1">
-									<div class="flight-number">
-										{{flight.flightNumber}}
-									</div>
-									<div class="direct">Direct Flight</div>
-								</div>
-								<div class="details-l2">
-									<div class="total-time">
-										<div class="time-img"><img src="/assets/glyphicons-58-history.png"></div> 
-										<div class="time">{{flight.flightLengthMinutesHours}}</div>
-									</div>
-								</div>
+						{{/if}}
 
-								<div class="details-center">
-									<div class="trip">
-
-										<div class="trip-left">
-											<div class="from">from</div>
-											<div class="trip-from">{{flight.origin}}</div>
-										</div>
-										<div class="trip-right">
-											<div class="to">to</div>
-											<div class="trip-to">{{flight.destination}}</div>
-										</div>
-									</div>
-
-									<div class="trip-times">
-										<div class="arrive"><span class="grey detail-time-label">Depart:</span> {{flight.departureTime}}</div>
-										<div class="depart"><span class="grey detail-time-label">Arrive:</span> {{flight.arrivalTime}}</div>
-									</div>
-								</div>
-
-								<div class="details-right">
-									<div class="flight-select">
-										<button class="btn" {{action "chooseFlight" flight}}><img src="/assets/glyphicons-207-ok-2.png"></button>
-									</div>
-									<div class="extra-buttons-wrapper">
-										<div class="flight-save"><button class="btn" {{action "saveFlight" flight}} >Save</button></div>
-										<div class="flight-compare"><button class="btn">Compare</button></div>
-									</div>
-								</div>
-
-								<!-- {/if} -->
+						<div class="details-right">
+							<div class="flight-select">
+								<button class="btn" {{action "chooseFlight" flight}}><img src="/assets/glyphicons-207-ok-2.png"></button>
+							</div>
+							<div class="extra-buttons-wrapper">
+								<div class="flight-save"><button class="btn" {{action "saveFlight" flight}} >Save</button></div>
+								<div class="flight-compare"><button class="btn">Compare</button></div>
 							</div>
 						</div>
 					</div>
-					{{/each}}
 				</div>
 			</div>
+			{{/each}}
 		</div>
+	</div>
+</div>
