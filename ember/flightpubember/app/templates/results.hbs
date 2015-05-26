@@ -70,7 +70,7 @@
 				{{#each flight in controller.sortedFlights itemController="flight"}}
 
 				{{#each leg in flight.legs itemController="flight"}}
-					
+				{{leg.price}}
 				{{/each}}
 
 				<div {{bind-attr id="flight.id"}}>

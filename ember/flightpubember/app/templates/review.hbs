@@ -98,6 +98,28 @@
 		</div>
 		<!-- {/if}} -->
 
+		<div id="pruchase-form">
+			{{isAuthenticated}}
+			{{#unless isAuthenticated}}
+			<form id="purchase-signup">
+				User Details
+				<input type="text" placeholder="username"><br/>
+				<input type="text" placeholder="password"><br/>
+				<input type="text" placeholder="confirm-password"><br/>
+			</form>
+			{{/unless}}
+
+			<form id="pay_form">
+				Payment Details
+				
+				<input type="text" placeholder="Email" size="30">
+				<input type="text" placeholder="Card number" >
+				<input type="text" placeholder="MM / YY">
+				<input type="text" placeholder="CVC">			
+				
+			</form>
+		</div>
+
 		<div id="purchase-flights">
 			<button class="rounded" {{action "purchase"}}>Purchase</button>
 		</div>
