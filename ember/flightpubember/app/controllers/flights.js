@@ -5,7 +5,7 @@ export default Ember.ArrayController.extend({
 
   DepartureFlight: null,
   ReturnFlight: null,
-  oneWay: true,
+  oneWay: false,
   currentSelection: 'departure',
 
   pageTitlte: 'SYD to MLB', //change this to get the to and from data from the form
