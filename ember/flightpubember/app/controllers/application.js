@@ -15,17 +15,9 @@ export default Ember.ObjectController.extend({
         return !Ember.isEmpty(this.get('controllers.sessions.currentUser'));
     }).property('controllers.sessions.currentUser'),
 
-    isAdmin: function() {
-        
-        var user_id = this.get('currentUser');
-
-        Ember.$.post('api/auth', user_id).then(function(response) {
-            return  true;
-        }, function(error) {
-            console.log(error);
-            return  false;
-        });
-
-    }.property('currentUser')
+    checkAdmin: function() {
+        console.log(this.get('controllers.sessions.userAuth'));
+        return this.get('controllers.sessions.userAuth') === 'admin';
+    }.property('controllers.sessions.userAuth')
 
 });
