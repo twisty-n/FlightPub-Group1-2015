@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Your flight itinerary <%= @user.email %></h1>
+    <h2>
+      Your departing flights
+    </h2>
+    <table>
+      <tr>
+        <th>Leg</th>
+        <th>Flight Number</th>
+        <th>Departure Airport</th>
+        <th>Departure Time</th>
+        <th>Arrival Airport</th>
+        <th>Arrival Time</th>
+        <th>Airline</th>
+      </tr>
+      <%= render partial: 'list_flights', 
+      collection: @dep_flights.sort_by{ |listing| listing[:order] }, as: :flight %>  
+    </table>
+    
+    <h2>
+      Your returning flights
+    </h2>
+    <table>
+      <tr>
+        <th>Leg</th>
+        <th>Flight Number</th>
+        <th>Departure Airport</th>
+        <th>Departure Time</th>
+        <th>Arrival Airport</th>
+        <th>Arrival Time</th>
+        <th>Airline</th>
+      </tr>
+    <%= render partial: 'list_flights', 
+    collection: @ret_flights.sort_by{ |listing| listing[:order] }, as: :flight %>
+    </table>
+    <p>To cancel or change your booking, visit your user profile. Have a great trip!</p>
+  </body>
+</html>

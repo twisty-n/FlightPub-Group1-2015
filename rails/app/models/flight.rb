@@ -56,14 +56,17 @@ Client.joins(:orders).where('orders.created_at' => time_range)
     
     # TODO: edit this later to return information based on the search
     def as_json(options={})
+
+        f_price = if @ticket_id != nil then self.ticket_availabilities.find_by(id: @ticket_id).price else nil end 
+        f_seats = if @ticket_id != nil then self.ticket_availabilities.find_by(id: @ticket_id).seats_available else nil end
         
         {   
             :id => self.id,
             :flightNumber => self.flight_number,
-            :price => self.ticket_availabilities.find_by(id: @ticket_id).price,
+            :price => f_price,
             :departure_time => self.departure_time,
             :arrival_time => self.arrival_time,
-            :seats_available => self.ticket_availabilities.find_by(id: @ticket_id).seats_available,
+            :seats_available => f_seats,
             :flight_time => self.flight_time,
             :destination => self.destination.destination_code,
             :origin => self.origin.destination_code,

@@ -12,7 +12,6 @@ Rails.application.routes.draw do
     # Provides endpoints for CRUD, but not the normal editing pages
     # We also have a reactivate route that does our soft-delete reactivating
     resources :users , except: [:new, :edit] do 
-      post 'reactivate'
     end
 
     # Route that allows the client to create a session
@@ -34,6 +33,9 @@ Rails.application.routes.draw do
 
     # Route that will authenticate a user based on id
     post 'auth'           => 'users#admin_auth'
+
+    # Route to get a terms and conditions URL for an airline
+    get 'terms'           => 'airlines#terms'
 
   end
 

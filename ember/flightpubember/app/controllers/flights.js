@@ -290,7 +290,7 @@ export default Ember.ArrayController.extend({
         returnTickets = new Array();
         flights = this.get('ReturnFlight').get('legs');
         for (flight of flights) {
-          returnTicketsTickets.push( flight['ticket'] );
+          returnTickets.push( flight['ticket'] );
         }
       }
 
@@ -306,7 +306,7 @@ export default Ember.ArrayController.extend({
         'departure_journey_id': data['DepartureFlight.id'],
         'user_id': this.get('controllers.application.currentUser'),
         'departure_tickets': departureTickets,
-        'returnTickets': returnTickets,
+        'return_tickets': returnTickets,
         'save_type': 'purchased_flight',
         'account_type': 'regular'       
         // TODO: Change this ^^  if we implement business accounts
