@@ -1,6 +1,6 @@
 class PurchaseMailer < ApplicationMailer
     
-    default from: 'noreply@flightpub.com'
+    default from: 'flightpub@gmail.com'
 
     # Defines an email to be sent to a users email address when they register for a flightpub account
     def purchase_flight_email(dep_journey_id, ret_journey_id, user_id)

@@ -1,6 +1,6 @@
 class UserMailer < ApplicationMailer
 	
-	default from: 'noreply@flightpub.com'
+	default from: 'flightpub@gmail.com'
 
 	# Defines an email to be sent to a users email address when they register for a flightpub account
 	def welcome_email(user)

@@ -1,9 +1,16 @@
 Admin stuff         -- IN MOTION
                     -- Write the email with the invoice
 
+                    -- Implement time related dummy data
+                    -- Implement promotions
 
+                	-- Create API endpoints for adding airlines
+                    -- Create API endpoints for adding destinations
+                    -- CREATE PROMOTIONS
                     -- Create API endpoints for adding flights
                         -- Define the needed data
                         -- Code
+
+                    -- 
 
 Promotions
