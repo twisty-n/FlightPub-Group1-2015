@@ -64,7 +64,17 @@ class Api::FlightsController < ApplicationController
     num_flights.each do |val|
 
       # Elms is the subarray of flights
-      elems = Flight.take(200).sample( [1,2,3].sample )
+      elems = Array.new
+      elems.push(Flight.take(200).sample(1).first)
+
+      print elems
+
+      1..([1..4].sample(1)).each do 
+
+        aff_date = DateTime.parse(elems.last.arrival_time).advance(:hours => 18).strftime('%Y-%m-%d %H:%M:%S UTC')
+        elems.push( Flight.departs_on_day( elems.last.arrival_time, aff_date ).first )
+      
+      end
 
       # For now, the top level information will just be taken from the composite information
       # The flight number will be the flight number of the first flight
@@ -90,11 +100,13 @@ class Api::FlightsController < ApplicationController
       seats_available = elems.first.ticket_availabilities.t_class(ticket_class).smallest_price.seats_available
       total_duration = 0
 
-
+      print elems
 
       elems.each do |flight|
         
         # Set up the flight information
+        
+        print("The flight is #{flight.inspect}")
         ticket = flight.ticket_availabilities.t_class(ticket_class).smallest_price
         price += ticket.price
         total_duration += flight.flight_time
