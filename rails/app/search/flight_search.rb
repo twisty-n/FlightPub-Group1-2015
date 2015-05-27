@@ -54,7 +54,7 @@ class FlightSearch
 		toProcess.add(first_dc)
 		
 		# Start the loop that crawls the graph
-		while !(toProcess.empty?)
+		while !(toProcess.empty?)  and graph_level < 7
 			
 			# Get the next node in the queue
 			current_dc = toProcess.get_next()
@@ -79,12 +79,13 @@ class FlightSearch
 					# Add to list to process
 					toProcess.add(dc)
 					
-#					puts "Current queue size: " + toProcess.size.to_s
 				end # eof if loop to check
 			end # eof each subloop that checks the returned DC objects
 			
-			print '.'
+			# Print out what percentage we are up to (assuming max 6 stops)
 			graph_level += 1
+			print (graph_level.fdiv(6) * 100).to_s + '% '
+
 		end # eof while graph crawling loop
 		
 		
