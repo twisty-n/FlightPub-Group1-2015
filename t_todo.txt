@@ -2,9 +2,6 @@ Purchasing Flights  -- DONE!
 Saving Flights      -- DONE!
 User profile stuff  -- DONE!
 Admin stuff         -- IN MOTION
-                    -- Change DB tables to include t&c's
-                    -- FInd all the URLS
-                    -- Create API points for getting URL
                     -- Write the email with the invoice
                     -- Write the email with the itinerary
 
