@@ -142,7 +142,7 @@
 
 							{{#if flight.layovers}}
 							{{#each leg in flight.legs itemController="flight"}}
-							<div class="leg-details" {{bind-attr style="leg.legStyle"}}>
+							<div class="leg-details" {{bind-attr style="flight.legStyle"}}>
 								
 								<div class="details-top">
 									<div class="leg-departure">

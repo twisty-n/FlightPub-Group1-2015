@@ -133,19 +133,14 @@ export default Ember.ObjectController.extend({
 
 	legStyle: function(){
 		var legs = this.get('legs');
-
-		alert("called legStyle");
-
-		return "width: "+72/this.get('legs').length+"%;";
+		return "width: "+(72/legs.length-1)+"%;";
 	}.property('legs'),
 
 	layovers: Ember.computed('controllers.flights', function(){
 		var layovers = Ember.A([]);
 
-		alert("called layovers");
 		var legs = this.get('legs');
 
-		this.set('legStyle', "width: "+72/legs.length+"%;");
 
 		if(legs.length > 1)
 		{
