@@ -1,7 +1,5 @@
 Admin stuff         -- IN MOTION
-                    -- Write the email with the invoice
 
-                    -- Implement time related dummy data
                     -- Implement promotions
 
                 	-- Create API endpoints for adding airlines

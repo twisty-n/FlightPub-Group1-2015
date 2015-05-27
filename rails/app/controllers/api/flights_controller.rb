@@ -71,6 +71,7 @@ class Api::FlightsController < ApplicationController
 
       1..([1..4].sample(1)).each do 
 
+        # If you need to adjust the time speratation, change the 18 to something else :)
         aff_date = DateTime.parse(elems.last.arrival_time).advance(:hours => 18).strftime('%Y-%m-%d %H:%M:%S UTC')
         elems.push( Flight.departs_on_day( elems.last.arrival_time, aff_date ).first )
       
