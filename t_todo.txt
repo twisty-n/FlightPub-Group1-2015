@@ -1,9 +1,6 @@
-Purchasing Flights  -- DONE!
-Saving Flights      -- DONE!
-User profile stuff  -- DONE!
 Admin stuff         -- IN MOTION
                     -- Write the email with the invoice
-                    -- Write the email with the itinerary
+
 
                     -- Create API endpoints for adding flights
                         -- Define the needed data

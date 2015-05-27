@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>
+      <%= @user.email %>, here are your purchase details
+    </h1>
+    <p>Number of tickets purchased: <%= @num_to_get %> </p>
+    <h2>Departure Trip</h2>
+    <table>
+      <tr>
+        <th>Flight Number</th>
+        <th>Ticket Type</th>
+        <th>Ticket Class</th>
+        <th>Price</th>
+      </tr>
+      <%= render partial: 'list_invoice', collection: @dep_tickets, as: :ticket %>
+    </table>
+      
+    <h2>Return Trip</h2>
+    <table>
+      <tr>
+        <th>Flight Number</th>
+        <th>Ticket Type</th>
+        <th>Ticket Class</th>
+        <th>Price</th>
+      </tr>
+      <%= render partial: 'list_invoice', collection: @ret_tickets, as: :ticket %>
+      </table>
+      <h3>Total price for departure trip: $<%=@sum_dep%></h3>
+      <h3>Total price for departure trip: $<%=@sum_ret%></h3>
+      <h3> Purchase toal: $<%= @sum_dep + @sum_ret %> </h3>
+   </body>
+</html>
