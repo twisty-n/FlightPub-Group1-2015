@@ -38,64 +38,62 @@ class FlightSearch
 	# target: The destination we wish to get to
 	# start_time: the time from which point the algorithm begins.
 	def self.bfs(origin, target, start_time)
+	
+		puts "Starting BFS algorithm"
 		
-		# Set up the data structures:
-		dest_queue = DestinationQueue.new		# This holds the destinations to check
-		found_paths = Array.new					# This holds the ID'd flight paths
-		discovered_nodes = DestinationQueue.new	# This holds the discovered nodes
-		reach = Reachable.new					# Gets the appropriate reachable flight and nodes
+		# Setup the data structures
+		discovered = DestinationQueue.new
+		toProcess = DestinationQueue.new
+		jack_reacher = Reachable.new
 		
-		# Add the first destination to the queue to check. No connecting flight, so it's nil.
-		
+		# Prepare the first DC. The flight is nil
 		first_dc = DestinationConnection.new(nil, origin)
-		dest_queue.add(first_dc)
+		# Add the first DC to process and discovered
+		discovered.add(first_dc)
+		toProcess.add(first_dc)
 		
-		# Register the first node as discovered
-		discovered_nodes.add(first_dc)
-		
-		# The while loop that runs while there are nodes to check:
-		
-		# debugging output
-		current_level = 0
-		
-		while !dest_queue.empty? do
-		
-			current_level += 1
-		
-			current_destination_dc = dest_queue.get_next	# Get the first flight/destination pair
-		
-			results = reach.get_reachables(current_destination_dc.destination)
+		# Start the loop that crawls the graph
+		while !(toProcess.empty?)
 			
-			# add these destination connections to the queue
-			# testing: Stop if the destination is found
+			# Get the next node in the queue
+			current_dc = toProcess.get_next()
 			
-			results.each do |dc|
-				if
-					dc.destination.airport.eql? target.airport
-					puts "This flight arrives at the target: " + dc.destination.airport
+			# Get the adjacent DCs
+			adjacent_dc_list = jack_reacher.get_reachables(current_dc.destination)
+			
+			# Process the adjacent DCs
+			adjacent_dc_list.each do |dc|
 				
-				##
-				##	The elsif statement isn't working because it's comparing
-				##  Objects, and not their values!!
-				##
-				elsif !discovered_nodes.include? dc
-					discovered_nodes.add(dc)
-					dest_queue.add(dc)
+				# Check if we found our destination
+				if dc.destination.airport == target.airport
+				
+					puts 'Found it!! The dc is:'
+					puts dc.to_s
+					
+					# For now, break from the loop
+					break
+					
 				else
-					puts 'This DC has been checked already.'
-				end
-			end
+				
+					# Not our destination. Add to discovered (the DQ will not add it if it's already in there)
+					discovered.add(dc)
+					# Add to list to process
+					toProcess.add(dc)
+					
+					puts "Current queue size: " + toProcess.size.to_s
+				end # eof if loop to check
+			end # eof each subloop that checks the returned DC objects
+			
+			
+		end # eof while graph crawling loop
 		
-			
-			puts 'The size of the destination queue is now ' + dest_queue.get_size.to_s
-			puts 'Currently at level: ' + current_level.to_s
-			
-		end #eof while loop that runs while there are nodes to check
+		
 		
 		puts 'End of the search method'
 		return nil #Clears useless info being returned
 	end # eof bfs_search method
 	
+	# This method uses a depth first search
 	def self.dfs(origin, target, start_time)
 		
 		# setup data structures

@@ -140,14 +140,15 @@ class Test
 	
 	def self.search_test
 	
-		origin = Destination.first
-		puts "the origin is: " + origin.airport
+		puts "================== Search Test =================="
 		
-		destination = Destination.last
-		puts "the destination is: " + destination.airport
+		origin = Destination.find_by(airport: 'Sydney')
 		
-		puts "Now running the search algorithm"
-		FlightSearch.dfs(origin, destination, '0')
+		destination = Destination.find_by(airport: 'Melbourne')
+		
+		puts "The origin is: " + origin.airport + " and the destination is: " + destination.airport
+		
+		FlightSearch.bfs(origin, destination, 0)
 		
 	end #eof search test
 	
@@ -190,7 +191,10 @@ class Test
 		puts 'Printing the queue:'
 		puts dq.to_s
 		
+		puts "This should print true:"
+		dc9 = DestinationConnection.new(Flight.last, Destination.last)
 		
+		puts dq.include?(dc9)
 		return nil # Clears useless data
 	end # eof dest queue test
 end

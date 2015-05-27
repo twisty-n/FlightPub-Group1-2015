@@ -69,18 +69,21 @@ class DestinationQueue
 	
 	# this function checks if the array contains a particular dc
 	def include?(input_dc)
-	
+		puts 'This is the include? function in the DestinationQueue class'
+		
+		puts "The input is: " + input_dc.to_s
 		answer = false
 		
 		
 		@internal_queue.each do |queue_dc|
-		if queue_dc.flight == nil
-			break	# This was the first nil flight, ignore it.
-		elsif queue_dc.flight.id == input_dc.flight.id and queue_dc.destination.id == input_dc.destination.id
-			answer = true
-		end
+		puts "Comparing with " + queue_dc.to_s
+			if queue_dc.flight == nil
+				# This was the first nil flight, ignore it.
+			elsif queue_dc.flight.id == input_dc.flight.id and queue_dc.destination.id == input_dc.destination.id
+				answer = true
+			end
 		
-		return answer
 		end
+	return answer
 	end # eof include? method
 end
