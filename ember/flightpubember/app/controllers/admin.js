@@ -7,6 +7,30 @@ export default Ember.Controller.extend({
     discountAmount: 0,
     actions: {
 
+        toggleAccountStatus: function(user) {
+
+            alert(user.get('accountStatus'));
+
+            if ( user.get('accountStatus') === 'active' ) {
+                user.set('accountStatus', 'inactive');
+                user.save();
+            } else {
+                user.set('accountStatus', 'active');
+                user.save();
+            }
+
+        },
+
+
+        toggleAccountRole: function(user) {
+            if ( user.get('role') === 'admin' ) {
+                user.set('role', 'default');
+            } else {
+                user.set('role', 'admin');
+            }
+            user.save();
+        },        
+
         loadPromoFlights: function() {
 
             Ember.$("#promo-search").hide();
@@ -62,7 +86,37 @@ export default Ember.Controller.extend({
 
             this.set('discountAmount', amount);
 
-        }
+        },
 
+        showUserAdmin: function() {
+            Ember.$("#flight-admin").hide();
+            Ember.$("#airline-admin").hide();
+            Ember.$("#promotions-admin").hide();
+            Ember.$("#users-admin").show();
+        },
+
+
+        showAirlineAdmin: function() {
+            Ember.$("#flight-admin").hide();
+            Ember.$("#airline-admin").show();
+            Ember.$("#promotions-admin").hide();
+            Ember.$("#users-admin").hide();
+        },
+
+
+        showFlightAdmin: function() {
+            Ember.$("#flight-admin").show();
+            Ember.$("#airline-admin").hide();
+            Ember.$("#promotions-admin").hide();
+            Ember.$("#users-admin").hide();
+        },
+
+
+        showPromotionAdmin: function() {
+            Ember.$("#flight-admin").hide();
+            Ember.$("#airline-admin").hide();
+            Ember.$("#promotions-admin").show();
+            Ember.$("#users-admin").hide();
+        },
     }
 });
