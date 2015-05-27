@@ -142,9 +142,9 @@ class Test
 	
 		puts "================== Search Test =================="
 		
-		origin = Destination.find_by(airport: 'Sydney')
+		origin = Destination.find_by(airport: 'Hong Kong')
 		
-		destination = Destination.find_by(airport: 'Melbourne')
+		destination = Destination.find_by(airport: 'Munich')
 		
 		puts "The origin is: " + origin.airport + " and the destination is: " + destination.airport
 		

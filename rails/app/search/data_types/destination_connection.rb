@@ -6,14 +6,15 @@ class DestinationConnection
 
 	# ------------------------------- Initialiser --------------------------------- #
 	
-	def initialize(input_flight, input_destination)
+	def initialize(input_flight, input_destination, previous_dc)
 		@destination = input_destination
 		@flight = input_flight
+		@previous_dc = previous_dc
 	end
 	
 	# ------------------------------- getters and setters --------------------------------- #
 	
-	attr_accessor :destination, :flight
+	attr_accessor :destination, :flight, :previous_dc
 	
 	# ------------------------------- class methods --------------------------------- #
 	
@@ -39,6 +40,11 @@ class DestinationConnection
 		
 		if @destination != nil
 			output += "Destination airport: " + @destination.airport + "\n\n"
+		end
+		
+		if !(@previous_dc == nil)
+			output += "\n *** LINKED FROM *** \n"
+			output += @previous_dc.to_s
 		end
 		
 		return output

@@ -20,7 +20,7 @@ class Reachable
 	# ------------------------------- Class Functions --------------------------------- #
 	
 	# This function returns the reachable flights, given preset parameters
-	def get_reachables(current_node)
+	def get_reachables(current_node, requesting_dc)
 		
 		# Step 1: Set up data structures
 		raw_results = Array.new
@@ -33,7 +33,8 @@ class Reachable
 			# get the destination
 			found_destination = Destination.find(flight.destination_id)
 			# Add the flight + destination as a DC object
-			raw_results.push(DestinationConnection.new(flight, found_destination ) )
+			input_dc = DestinationConnection.new(flight, found_destination, requesting_dc )
+			raw_results.push(input_dc)
 			
 		end # eof the loop that finds matching flights
 		

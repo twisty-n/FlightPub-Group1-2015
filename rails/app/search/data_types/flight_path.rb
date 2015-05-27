@@ -54,7 +54,7 @@ class FlightPath
 	
 	# This function returns a string containing the contents.
 	# mostly for debugging purposes.
-	def print
+	def to_s
 		output = ''
 		
 		# Check if there is no origin, and give it the default string if so

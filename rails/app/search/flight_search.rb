@@ -45,9 +45,10 @@ class FlightSearch
 		discovered = DestinationQueue.new
 		toProcess = DestinationQueue.new
 		jack_reacher = Reachable.new
+		graph_level = 0
 		
 		# Prepare the first DC. The flight is nil
-		first_dc = DestinationConnection.new(nil, origin)
+		first_dc = DestinationConnection.new(nil, origin, nil)
 		# Add the first DC to process and discovered
 		discovered.add(first_dc)
 		toProcess.add(first_dc)
@@ -59,7 +60,7 @@ class FlightSearch
 			current_dc = toProcess.get_next()
 			
 			# Get the adjacent DCs
-			adjacent_dc_list = jack_reacher.get_reachables(current_dc.destination)
+			adjacent_dc_list = jack_reacher.get_reachables(current_dc.destination, current_dc)
 			
 			# Process the adjacent DCs
 			adjacent_dc_list.each do |dc|
@@ -67,11 +68,9 @@ class FlightSearch
 				# Check if we found our destination
 				if dc.destination.airport == target.airport
 				
-					puts 'Found it!! The dc is:'
+					# Destination located! Now we must create a flight path object
+					puts "\n NEW PATH DETECTED \n"
 					puts dc.to_s
-					
-					# For now, break from the loop
-					break
 					
 				else
 				
@@ -80,11 +79,12 @@ class FlightSearch
 					# Add to list to process
 					toProcess.add(dc)
 					
-					puts "Current queue size: " + toProcess.size.to_s
+#					puts "Current queue size: " + toProcess.size.to_s
 				end # eof if loop to check
 			end # eof each subloop that checks the returned DC objects
 			
-			
+			print '.'
+			graph_level += 1
 		end # eof while graph crawling loop
 		
 		
