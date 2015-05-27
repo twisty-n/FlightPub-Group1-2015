@@ -10,11 +10,12 @@ export default Ember.ArrayController.extend({
   numberOfTickets: 1,             // The number of tickets that the want to purchase
 
   pageTitle: Ember.computed('sortedFlights', function(){
-    var from = this.get('sortedFlights').get('firstObject').get('origin');
-    var to = this.get('sortedFlights').get('firstObject').get('destination');
+    var flights = this.get('sortedFlights');
+    var from = flights.get('firstObject').get('origin');
+    var to = flights.get('firstObject').get('destination');
     return from+' to '+to;
   }),
-  
+
   itemController: 'flight',
   sortProperties: Ember.A([]),
   filterProperties: Ember.A(['departure']),
@@ -25,7 +26,8 @@ export default Ember.ArrayController.extend({
   maxStops: -1,
   maxStopsOptions: Ember.A([{max: "Max Stops", stops: -1}, {max: "1 Stop", stops: 1},{max: "2 Stops", stops: 2},{max: "3 Stops", stops: 3},{max: "4 Stops", stops: 4},{max: "5+ Stops", stops: 5}]),
 
-  mustStopAt: '',
+  mustStopAt: 'Specify Stop',
+  
 
   averageFlightTime: Ember.computed('sortedFlights', function(){
 
@@ -58,16 +60,16 @@ export default Ember.ArrayController.extend({
 
       if(self.get('currentSelection') === 'departure')
       {
-          useFlight = (flight.get('isReturnFlight') === false);
+        useFlight = (flight.get('isReturnFlight') === false);
       }
       else
       {
-          useFlight = (flight.get('isReturnFlight') === true); 
+        useFlight = (flight.get('isReturnFlight') === true); 
       }
 
       if(useFlight && filterProperties.indexOf('noStops') >= 0)
       {
-          useFlight = (flight.get('legs').length <= 1);
+        useFlight = (flight.get('legs').length <= 1);
       }
 
       if(useFlight && self.get('maxStops') > 0)

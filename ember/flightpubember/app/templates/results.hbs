@@ -57,17 +57,20 @@
 				defaultvalue=-1
 				id="max-stops-filter"
 			}}
-			<select id="stop-location-filter">
-				<option value="">Specify Stop</option>
-				<option value="syd">SYD</option>
-				<option value="syd">SYD</option>
-				<option value="syd">SYD</option>
-				<option value="syd">SYD</option>
-			</select>
+
+			<!-- {{view "select"
+				value=mustStopAt
+				content=controller.allStops
+				optionValuePath="content"
+				optionLabelPath="content"
+				defaultValue=0
+				id="stop-location-filter"
+			}} -->
 
 		</div>
 
 		<div id="result-graph">
+			{{#if controller.sortedFlights}}
 			{{#each flight in controller.sortedFlights itemController="flight"}}
 			<div {{bind-attr id="flight.id"}}>
 				<div class="result-item rounded " {{action  "selected" flight}}>
@@ -108,60 +111,27 @@
 				</div>
 				<div class="flight-details">
 					<div class="flight-details-inner">
-						<!-- 
-						"legs":[
-							{
-								"id":1034109993,
-								"flightNumber": "QF3275",
-								"price": 261,
-								"departure_time": "2015-04-20 15:50:00 UTC",
-								"arrival_time": "2015-04-21 08:30:00  UTC",
-								"seats_available": 7,
-								"flight_time": 585,
-								"destination": "YYZ",
-								"origin": "HNL",
-								"airline": "Qantas Airways",
-								"ticket": 980199724
-							},
 
-							{
-								"id": 1034109971, 
-								"flightNumber": "QF441",
-								"price": 199,
-								"departure_time": "2015-10-11 14:30:00 UTC",
-								"arrival_time": "2015-10-11 15:55:00 UTC",
-								"seats_available": 0,
-								"flight_time": 85,
-								"destination": "SYD",
-								"origin": "MEL",
-								"airline": "Qantas Airways",
-								"ticket": 980199529
-							}
-							] -->
+						{{#if flight.layovers}}
+						<div class="details-l2">
+							<div class="total-time">
+								<div class="time-img"><img src="/assets/glyphicons-58-history.png"></div> 
+								<div class="time">{{flight.flightLengthMinutesHours}}</div>
+							</div>
+						</div>
+						{{#each leg in flight.legs itemController="flight"}}
+						<div class="leg-details" {{bind-attr style="flight.legStyle"}}>
 
-
-							{{#if flight.layovers}}
-							{{#each leg in flight.legs itemController="flight"}}
-							<div class="leg-details" {{bind-attr style="flight.legStyle"}}>
-								
-								<div class="details-top">
-									<div class="leg-departure">
-										<div class="leg-from-name">From</div><div class="leg-from">{{leg.origin}}</div>	
-									</div>
-
-									<div class="leg-arrival">
-										<div class="leg-to-name">To</div><div class="leg-to">{{leg.destination}}</div>
-									</div>
+							<div class="details-top">
+								<div class="leg-departure">
+									<div class="leg-from-name">From</div><div class="leg-from">{{leg.origin}}</div>	
 								</div>
 
-
-								
-								<!-- <div class="flight-time">
-									{{leg.flight_time}}
+								<div class="leg-arrival">
+									<div class="leg-to-name">To</div><div class="leg-to">{{leg.destination}}</div>
 								</div>
-							-->
-							<!-- {{leg.arrival_time}}
-							{{leg.departure_time}} -->
+							</div>
+
 							<div class="airline">
 								<div class="airline-title">Airline</div> {{leg.airline}}
 							</div>
@@ -225,6 +195,9 @@
 				</div>
 			</div>
 			{{/each}}
+			{{else}}
+				AWW
+			{{/if}}
 		</div>
 	</div>
 </div>
