@@ -13,6 +13,7 @@ class Flight < ActiveRecord::Base
     has_many :journeys
     has_many :journey_maps
     has_many :journeys, :through => :journey_maps
+    has_many :promotions
 
     # We create some custom scopes that represnt common queries
     
