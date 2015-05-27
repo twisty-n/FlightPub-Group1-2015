@@ -38,6 +38,8 @@ class DestinationQueue
 		#otherwise, do nothing.
 		return nil
 		
+		puts 'DestinationQueue: a duplicate dc was not added.'
+		
 	end
 	
 	# Returns the first flight/destination pair
@@ -61,4 +63,26 @@ class DestinationQueue
 	def empty?
 		return @internal_queue.empty?
 	end
+	
+	# This function returns the size of the queue
+	def get_size
+		return @internal_queue.size
+	end
+	
+	# this function checks if the array contains a particular dc
+	def include?(input_dc)
+	
+		answer = false
+		
+		
+		@internal_queue.each do |queue_dc|
+		if queue_dc.flight == nil
+			break	# This was the first nil flight, ignore it.
+		elsif queue_dc.flight.id == input_dc.flight.id and queue_dc.destination.id == input_dc.destination.id
+			answer = true
+		end
+		
+		return answer
+		end
+	end # eof include? method
 end

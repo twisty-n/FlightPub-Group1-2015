@@ -137,4 +137,17 @@ class Test
 		
 		return nil # Clears useless data
 	end # eof active record test
+	
+	def self.search_test
+	
+		origin = Destination.first
+		puts "the origin is: " + origin.airport
+		
+		destination = Destination.last
+		puts "the destination is: " + destination.airport
+		
+		puts "Now running the search algorithm"
+		FlightSearch.dfs(origin, destination, '0')
+		
+	end
 end

@@ -14,4 +14,17 @@ class DestinationConnection
 	# ------------------------------- getters and setters --------------------------------- #
 	
 	attr_accessor :destination, :flight
+	
+	# ------------------------------- class methods --------------------------------- #
+	
+	# This method compares this dc to another for equality
+	def equal?(dc)
+		equivalent = false
+		
+		if @flight.id == dc.flight.id && @destination.id == dc.destination.id
+			equivalent = true
+		end
+		
+		return equivalent
+	end
 end
