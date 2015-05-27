@@ -117,13 +117,13 @@ class Test
 	def self.active_record_test
 		puts '================== Active record test ================'
 		
-		test_flight = Destination.first
+		test_destination = Destination.first
 		
 		puts 'Lets try to print out the results of sydney: '
 		
 		jack_reacher = Reachable.new
 		
-		raw_dc = jack_reacher.get_reachables(test_flight)
+		raw_dc = jack_reacher.get_reachables(test_destination)
 		
 		raw_dc.each do | dc |
 		
