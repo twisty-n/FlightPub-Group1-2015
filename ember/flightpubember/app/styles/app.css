@@ -41,6 +41,8 @@ body{
 #login a{
 	text-decoration: none;
 	color:#797979;
+	margin-left: 5px;
+	margin-right: 5px;
 }
 
 #login a:hover{
