@@ -149,5 +149,48 @@ class Test
 		puts "Now running the search algorithm"
 		FlightSearch.dfs(origin, destination, '0')
 		
-	end
+	end #eof search test
+	
+	# This test is for the destination queue
+	def self.dest_queue_test
+	
+		puts '============= DestinationQueue test ==============='
+		
+		puts "lets make a new DestinationQueue"
+		dq = DestinationQueue.new
+		
+		puts "Done. Now lets make some random DC object"
+		dc = DestinationConnection.new(Flight.first, Destination.first)
+		
+		puts 'The DC we just made is: ' + dc.to_s
+		
+		puts 'Making a couple of dc objects'
+		
+		dc2 = DestinationConnection.new(Flight.first, Destination.first)
+		dc3 = DestinationConnection.new(Flight.first, Destination.first)
+		dc4 = DestinationConnection.new(Flight.first, Destination.first)
+		dc5 = DestinationConnection.new(Flight.first, Destination.first)
+		dc6 = DestinationConnection.new(Flight.last, Destination.last)
+		dc7 = DestinationConnection.new(Flight.last, Destination.last)
+		dc8 = DestinationConnection.new(Flight.last, Destination.last)
+		
+		puts 'The dest queue should report a size of two:'
+		
+		dq.add(dc)
+		dq.add(dc2)
+		dq.add(dc3)
+		dq.add(dc4)
+		dq.add(dc5)
+		dq.add(dc6)
+		dq.add(dc7)
+		dq.add(dc8)
+		
+		puts dq.size
+		
+		puts 'Printing the queue:'
+		puts dq.to_s
+		
+		
+		return nil # Clears useless data
+	end # eof dest queue test
 end

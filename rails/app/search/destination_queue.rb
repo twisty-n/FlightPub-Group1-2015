@@ -38,8 +38,6 @@ class DestinationQueue
 		#otherwise, do nothing.
 		return nil
 		
-		puts 'DestinationQueue: a duplicate dc was not added.'
-		
 	end
 	
 	# Returns the first flight/destination pair
@@ -48,12 +46,12 @@ class DestinationQueue
 	end
 	
 	# Returns a string containing this objects contents
-	def print
+	def to_s
 		output = ''
 		
 		# get details from each input
 		@internal_queue.each do |x|
-			output += 'Flight: ' + x.flight + " Destination: " + x.destination + "\n"
+			output += x.to_s
 		end
 		
 		return output
@@ -65,7 +63,7 @@ class DestinationQueue
 	end
 	
 	# This function returns the size of the queue
-	def get_size
+	def size
 		return @internal_queue.size
 	end
 	

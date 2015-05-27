@@ -27,4 +27,21 @@ class DestinationConnection
 		
 		return equivalent
 	end
+	
+	# This method prints out the contents of the DC
+	def to_s
+	
+		output = "DC object: \n" 
+		
+		if @flight != nil
+			output += "Flight: " + @flight.flight_number + " " + @flight.id.to_s + "\n"
+		end
+		
+		if @destination != nil
+			output += "Destination airport: " + @destination.airport + "\n\n"
+		end
+		
+		return output
+		
+	end # eof to string method
 end
