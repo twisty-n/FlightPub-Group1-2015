@@ -35,11 +35,11 @@ export default Ember.Controller.extend({
         applyPromotion: function(flight) {
 
             var promo_flight = flight;
-            data = {
+            var data = {
                 flight_id: promo_flight.id,
                 discount: this.get('discountAmount')
             }
-            Ember.$.post('api/apply_promotion', data).then(function(response) {
+            Ember.$.get('api/apply_promotion', data).then(function(response) {
 
                 // Remove the record from the store
                 promo_flight.unloadRecord();
