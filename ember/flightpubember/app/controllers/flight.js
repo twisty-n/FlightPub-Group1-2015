@@ -301,40 +301,10 @@ export default Ember.ObjectController.extend({
 
 		return layovers;		
 	}),
-	/*{
-		"flights":[
 
-			{"id":651,
-			 "flightNumber":"QF824",
-			 "price":311,
-			 "departureTime":"2015-11-22 09:15:00 UTC",
-			 "arrivalTime":"2015-11-22 12:55:00 UTC",
-			 "seatsAvailable":19,
-			 "flightTime":250,
-			 "origin":"BNE",
-			 "destination":"DRW",
-			 "isReturnFlight":false,
-			 "ticketClass":"ECO",
-			 "legs":
-			 [
-			 	{"id":1034109999,
-			 	 "flightNumber":"QF824",
-			 	 "price":311,
-			 	 "departure_time":"2015-11-22 09:15:00 UTC",
-			 	 "arrival_time":"2015-11-22 12:55:00 UTC",
-			 	 "seats_available":19,
-			 	 "flight_time":250,
-			 	 "destination":"DRW",
-			 	 "origin":"BNE",
-			 	 "airline":"Qantas Airways",
-			 	 "ticket":980199758
-			 	}
-			 ]
-			}
-			*/
-			selected: false,
+selected: false,
 
-			actions: {
+actions: {
 
-			}
-		});
+}
+});

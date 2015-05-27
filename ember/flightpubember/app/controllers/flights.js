@@ -9,8 +9,12 @@ export default Ember.ArrayController.extend({
   currentSelection: 'departure',  
   numberOfTickets: 1,             // The number of tickets that the want to purchase
 
-  pageTitlte: 'SYD to MLB',       // Change this to get the to and from data from the form
-
+  pageTitle: Ember.computed('sortedFlights', function(){
+    var from = this.get('sortedFlights').get('firstObject').get('origin');
+    var to = this.get('sortedFlights').get('firstObject').get('destination');
+    return from+' to '+to;
+  }),
+  
   itemController: 'flight',
   sortProperties: Ember.A([]),
   filterProperties: Ember.A(['departure']),
