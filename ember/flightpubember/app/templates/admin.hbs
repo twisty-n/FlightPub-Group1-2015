@@ -133,9 +133,57 @@
 
 		<div id="promotions-admin">
 			<h2>Promotions</h2>
-			<div class="admin-inside">
+			<div class="admin-inside" id="promo-search">
+			<!-- At the moment, we will only allow % off a certain airline, or flight  -->
+			<form {{action "loadPromoFlights" on="submit"}}>
+				<div id="flight-number-promo">
+					Flight Number: 
+					{{input value=flightNumberPromo type="text" class="text-input" id="promo-flightNumber" placeholder="XXYYYY"}}
+				</div>
+				<div id="departure-date-promo">
+					Minimum Departure Date: 
+					{{input value=departDatePromo type="text" class="date-input" id="departure-datepicker" placeholder="dd-mm-yyyy"}}
+				</div>
+				<div id="max-departure-date-promo">
+					Maximum Departure Date: 
+					{{input value=maxDepartDatePromo type="text" id="return-datepicker"  class="date-input" placeholder="dd-mm-yyyy"}}
+				</div>
+				<button id="search-button" class="rounded" type="submit">Search</button>
+			</form>
 
-
+			</div>
+			<div class="admin-inside" id="promo-select" style="display:none">
+			<!-- Display all of the selected flights and stuff --> 
+			<!-- Get the promotion details first! -->
+			<form {{action "setupDiscount" on="submit"}}>
+				{{input value=discount type="text"  placeholder="Enter amount"}}
+				<button id="search-button" class="rounded" type="submit">Set Discount</button>
+			</form>
+			<table>
+				<tr>
+					<th>Flight Number</th>
+					<th>Departure Date</th>
+					<th>Arrival Date</th>
+					<th>Origin</th>
+					<th>Destination</th>
+					<th>Apply Promotion</th>
+				</tr>	
+			</table>
+			{{#each flight in controller.promoFlightList }}
+			  <tr>
+			  	<td>{{flight.flightNumber}}</td>
+			  	<td>{{flight.departureTime}}</td>
+			  	<td>{{flight.arrivalTime}}</td>
+			  	<td>{{flight.origin}}</td>
+			  	<td>{{flight.destination}}</td>
+			  	<td><form {{action "applyPromotion" flight on="submit"}} >
+			  		<button id="search-button" class="rounded" type="submit">Apply</button>
+			  	</form></td>
+			  </tr>
+			{{/each}}
+			<form {{action "cancelPromoSelect" on="submit"}}>
+				<button id="search-button" class="rounded" type="submit">Cancel</button>
+			</form>
 			</div>
 		</div>
 
