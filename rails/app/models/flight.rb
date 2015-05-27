@@ -13,6 +13,7 @@ class Flight < ActiveRecord::Base
     has_many :journeys
     has_many :journey_maps
     has_many :journeys, :through => :journey_maps
+    has_many :promotions
 
     # We create some custom scopes that represnt common queries
     
@@ -59,6 +60,10 @@ Client.joins(:orders).where('orders.created_at' => time_range)
 
         f_price = if @ticket_id != nil then self.ticket_availabilities.find_by(id: @ticket_id).price else nil end 
         f_seats = if @ticket_id != nil then self.ticket_availabilities.find_by(id: @ticket_id).seats_available else nil end
+        promos = Array.new
+        self.promotions.each do |p|
+            promos.push( PromotionSerializer.new( p ) )
+        end    
         
         {   
             :id => self.id,
@@ -71,7 +76,8 @@ Client.joins(:orders).where('orders.created_at' => time_range)
             :destination => self.destination.destination_code,
             :origin => self.origin.destination_code,
             :airline => self.airline.airline_name,
-            :ticket => @ticket_id
+            :ticket => @ticket_id,
+            :promotions => promos
             
         }
 

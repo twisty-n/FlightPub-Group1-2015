@@ -281,7 +281,18 @@ body{
 
 }
 
+/* My shitty admin table stuff! */
+table, td, th {
+    border: 1px solid green;
+    border-collapse: collapse;
+    padding: 5px;
+    table-layout: fixed;
+}
 
+th {
+    background-color: #17AEE5;
+    color: white;
+}
 
 
 /* Style */

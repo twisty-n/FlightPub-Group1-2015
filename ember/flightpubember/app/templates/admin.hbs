@@ -1,5 +1,12 @@
 <h1 id="page-title-small">Administration</h1>
+
 <div id="user-info" class="full-page-white-wrapper">
+<div id='nav'>
+	<a href="" {{action "showUserAdmin"}}>User Admin</a>
+	<a href="" {{action "showFlightAdmin"}}>Flight Admin</a>
+	<a href="" {{action "showAirlineAdmin"}}>Airline Admin</a>
+	<a href="" {{action "showPromotionAdmin"}}>Promotion Admin</a>
+</div>
 	<div class="full-page-white-center-50">
 		<!-- TODO: fix this up once we have users list going -->
 		<div id="users-admin">
@@ -10,22 +17,36 @@
 					{{input value=userFilter type="text" class="" id="user-filter" placeholder="Search"}}
 				</div>
 				<div id="user-list">
-					<ul>
-						{{#each user in controller.users itemController="user"}}
-						<li>
-							<div class="user-name">{{user.fullName}}</div>
-							<div class="user-email">{{user.email}}</div>
-							<div class="disable-account">Disabled: 
-								<input type="checkbox" ></div>
-							<div class="account-type">AccountType: 
-								<select>
-									<option value="user">User</option>
-									<option value="admin">Admin</option>
-								</select>
-							</div>
-						</li>
+					<table>
+					<tr>
+						<th>Email</th>
+						<th>Name</th>
+						<th>Address</th>
+						<th>Toggle Account Status</th>
+						<th>Toggle Role</th>
+					</tr>
+						{{#each user in controller.users}}
+							<tr>
+								<td>{{user.email}}</td>
+								<td>{{user.firstName}} {{user.lastName}}</td>
+								<td>{{user.address}}</td>
+								<td>
+									<form {{action "toggleAccountStatus" user on="submit"}}>
+										<button id="search-button" class="rounded" 
+										type="submit">{{user.accountStatus}}</button>
+									</form>
+								</td>
+								<td>
+									<form {{action "toggleAccountRole" user on="submit"}}>
+										<button id="search-button" class="rounded" 
+										type="submit">{{user.role}}</button>
+									</form>
+								</td>
+							</tr>
 						{{/each}}
-					</ul>
+					</table>
+						
+					
 				</div>
 				<a href="" {{action "expandList"}}>expand</a>
 				{{else}}
@@ -34,7 +55,7 @@
 			</div>
 		</div>
 
-		<div id="flight-admin">
+		<div id="flight-admin" style="display:none">
 			<h2>Flight Admin</h2>
 			<div class="admin-inside">
 				<div id="new-flight">
@@ -85,7 +106,7 @@
 
 		</div>
 
-		<div id="airline-admin">
+		<div id="airline-admin" style="display:none">
 			<h2>Airline Admin</h2>
 			<div class="admin-inside">
 				<div id="purchase-policy">
@@ -131,23 +152,62 @@
 			</div>
 		</div>
 
-		<div id="promotions-admin">
+		<div id="promotions-admin" style="display:none">
 			<h2>Promotions</h2>
-			<div class="admin-inside">
+			<div class="admin-inside" id="promo-search">
+			<!-- At the moment, we will only allow % off a certain airline, or flight  -->
+			<form {{action "loadPromoFlights" on="submit"}}>
+				<div id="flight-number-promo">
+					Flight Number: 
+					{{input value=flightNumberPromo type="text" class="text-input" id="promo-flightNumber" placeholder="XXYYYY"}}
+				</div>
+				<div id="departure-date-promo">
+					Minimum Departure Date: 
+					{{input value=departDatePromo type="text" class="date-input" id="departure-datepicker" placeholder="dd-mm-yyyy"}}
+				</div>
+				<div id="max-departure-date-promo">
+					Maximum Departure Date: 
+					{{input value=maxDepartDatePromo type="text" id="return-datepicker"  class="date-input" placeholder="dd-mm-yyyy"}}
+				</div>
+				<button id="search-button" class="rounded" type="submit">Search</button>
+			</form>
 
-
+			</div>
+			<div class="admin-inside" id="promo-select" style="display:none">
+			<!-- Display all of the selected flights and stuff --> 
+			<!-- Get the promotion details first! -->
+			<form {{action "setupDiscount" on="submit"}}>
+				{{input value=discount type="text"  placeholder="Enter amount"}}
+				<button id="search-button" class="rounded" type="submit">Set Discount</button>
+			</form>
+			<form {{action "cancelPromoSelect" on="submit"}}>
+				<button id="search-button" class="rounded" type="submit">Cancel</button>
+			</form>
+			<table>
+				<tr>
+					<th>Flight Number</th>
+					<th>Departure Date</th>
+					<th>Arrival Date</th>
+					<th>Origin</th>
+					<th>Destination</th>
+					<th>Apply Promotion</th>
+				</tr>	
+			{{#each flight in controller.promoFlightList }}
+			  <tr>
+			  	<td>{{flight.flightNumber}}</td>
+			  	<td>{{flight.departureTime}}</td>
+			  	<td>{{flight.arrivalTime}}</td>
+			  	<td>{{flight.origin}}</td>
+			  	<td>{{flight.destination}}</td>
+			  	<td><form {{action "applyPromotion" flight on="submit"}} >
+			  		<button id="search-button" class="rounded" type="submit">Apply</button>
+			  	</form></td>
+			  </tr>
+			{{/each}}
+			</table>
+			
 			</div>
 		</div>
 
-		<div id="admin-settings">
-			<h2>Settings</h2>
-			<div class="admin-inside">
-			<input type="text" placeholder="email" {{bind-attr value="email"}}>
-				<input type="text" placeholder="new password">
-				<input type="text" placeholder="confirm password">
-
-				<button>save changes</button>
-			</div>
-		</div>
 	</div>
 </div>

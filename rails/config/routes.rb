@@ -37,6 +37,8 @@ Rails.application.routes.draw do
     # Route to get a terms and conditions URL for an airline
     get 'terms'           => 'airlines#terms'
 
+    get 'apply_promotion'=> 'promotion#apply_promotion'
+
   end
 
   # END API ENDPOINTS ===========================================================================

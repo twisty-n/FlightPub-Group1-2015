@@ -56,6 +56,12 @@ class Api::FlightsController < ApplicationController
 
   def index
 
+    # Determine what to do based on the search query
+    # Doing this until we can find a cleaner way via ember
+    if params['q_type'] == 'promo'
+      promo_flights_load and return
+    end
+
     # We will now load up a selection of flights variable
     num_flights = [1..10].sample
 
@@ -172,6 +178,19 @@ class Api::FlightsController < ApplicationController
     render json: flights
 
     end
+
+    def promo_flights_load
+
+      flight_number = params['flightNumberPromo']
+      date = DateTime.parse(params['departDatePromo']).strftime('%Y-%m-%d %H:%M:%S UTC')
+      max_date = DateTime.parse(params['maxDepartDatePromo']).strftime('%Y-%m-%d %H:%M:%S UTC')
+
+      render json: Flight.where('flight_number = ? and departure_time >= ? and departure_time <= ?', 
+        flight_number, date, max_date), status: 201
+
+
+    end
+
 
   def show
     render json: Flight.find(params[:id])
