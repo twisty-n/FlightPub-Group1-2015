@@ -35,7 +35,7 @@ class DestinationConnection
 		output = "DC object: \n" 
 		
 		if @flight != nil
-			output += "Flight: " + @flight.flight_number + " " + @flight.id.to_s + "\n"
+			output += "Flight: " + @flight.flight_number + " " + @flight.id.to_s + " Departs: " + @flight.departure_time.to_s + "arrives: " + @flight.arrival_time.to_s + "\n"
 		end
 		
 		if @destination != nil

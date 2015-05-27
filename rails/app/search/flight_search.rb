@@ -83,9 +83,9 @@ class FlightSearch
 			end # eof each subloop that checks the returned DC objects
 			
 			# Print out what percentage we are up to (assuming max 6 stops)
-			graph_level += 1
+			
 			print (graph_level.fdiv(6) * 100).to_s + '% '
-
+			graph_level += 1
 		end # eof while graph crawling loop
 		
 		

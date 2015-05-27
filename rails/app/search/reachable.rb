@@ -25,9 +25,11 @@ class Reachable
 		# Step 1: Set up data structures
 		raw_results = Array.new
 		
-		# Step 2: Get the raw matching flights
-		Flight.where(origin_id: current_node.id).find_each do | flight |
+		# Step 2: Get the raw matching flights, making sure they come after the previous
+#		Flight.where(origin_id: current_node.id).find_each do | flight |		# The old SQL query
 		
+		# Check if the requesting_dc is the very first node, because it has no flight!
+		Flight.where(origin_id: current_node.id).where("departure_time > ?", requesting_dc.flight.arrival_time).find_each do | flight |
 			# Step 2a: Add matching flights to the results
 			
 			# get the destination

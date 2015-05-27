@@ -142,9 +142,9 @@ class Test
 	
 		puts "================== Search Test =================="
 		
-		origin = Destination.find_by(airport: 'Hong Kong')
+		origin = Destination.find_by(airport: 'Sydney')
 		
-		destination = Destination.find_by(airport: 'Munich')
+		destination = Destination.find_by(airport: 'Miami')
 		
 		puts "The origin is: " + origin.airport + " and the destination is: " + destination.airport
 		
@@ -197,4 +197,25 @@ class Test
 		puts dq.include?(dc9)
 		return nil # Clears useless data
 	end # eof dest queue test
+	
+	# This function tests the date time comparisons from the MySQL database
+	def self.time_test
+		
+		puts 'Running a basic comparison. Getting two timewithzone objects'
+		
+		tz1 = Flight.first.departure_time
+		tz2 = Flight.first.arrival_time
+		
+		puts "The times retrieved were " + tz1.to_s + " and " +tz2.to_s
+		
+		puts "This should return true:"
+		
+		if tz2 < Time.now
+			puts 'true'
+		else
+			puts 'false'
+		end
+		
+		return nil
+	end # eof the time test
 end
