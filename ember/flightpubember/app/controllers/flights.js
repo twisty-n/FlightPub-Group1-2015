@@ -363,6 +363,21 @@ export default Ember.ArrayController.extend({
 
     },
 
+    showLogin: function(){
+      Ember.$("#purchase-register").hide();
+      Ember.$("#purchase-login").show();
+      this.set('reviewLoginShowing', true);
+    },
+
+    showRegister: function(){
+      Ember.$("#purchase-register").show();
+      Ember.$("#purchase-login").hide();
+      this.set('reviewLoginShowing', false);
+    }
+
   },
+
+  reviewLoginShowing: false,
+
 
 });
