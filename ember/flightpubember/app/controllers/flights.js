@@ -9,6 +9,21 @@ export default Ember.ArrayController.extend({
   currentSelection: 'departure',  
   numberOfTickets: 1,             // The number of tickets that the want to purchase
 
+  showReviewRegistration: Ember.computed('controllers.application.isAuthenticated', function(){
+    return !this.get('controllers.application.isAuthenticated');
+  }),
+
+  wrapperWidth: Ember.computed('showReviewRegistration', function(){
+    var largeWidth = this.get('showReviewRegistration');
+
+    if(largeWidth)
+    {
+      return 'large';
+    }
+
+    return 'small';
+  }),
+
   pageTitle: Ember.computed('sortedFlights', function(){
     var flights = this.get('sortedFlights');
     var from = flights.get('firstObject').get('origin');
@@ -28,6 +43,7 @@ export default Ember.ArrayController.extend({
 
   mustStopAt: 'Specify Stop',
   
+
 
   averageFlightTime: Ember.computed('sortedFlights', function(){
 

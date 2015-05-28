@@ -17,7 +17,7 @@ export default Ember.ObjectController.extend({
 		{
 			result += minutes+"m";
 		}
-
+		
 		return result;
 	}.property('flightTime'),
 

@@ -2,126 +2,124 @@
 <div class="full-page-white-wrapper">
 	<div class="full-page-white-center">
 
-		<!-- {#if DepartureFlight}} -->
+		{{#if DepartureFlight}}
+		
 		<div class="flight-review">
-			<h2>Depature from MLB</h2>
-
-			<div class="flight-review-details">
+			{{#with DepartureFlight as flight controller="flight"}}
+				<h2>Departure from {{flight.origin}} 
+					<span class="heading-price">${{flight.price}}</span>
+					<span class="heading-duration">{{flight.flightLengthMinutesHours}}</span>
+				</h2>
 				
-				<div class="review-top">
-					<div class="review-flight-price">${{DepartureFlight.price}}</div>
+				<div class="saved-flight">
+					<div class="admin-inside">
+						{{#each leg in flight.legs}}
+						<div class="leg-details">
 
-					<div class="review-flightNumber">{{DepartureFlight.flightNumber}}</div>
+							<div class="leg-departure">
+								<div class="leg-from-name">From</div><div class="leg-from">{{leg.origin}}</div>	
+							</div>
 
-					<div class="review-direct">Direct Flight</div>
-				</div>
+							<div class="leg-arrival">
+								<div class="leg-to-name">To</div><div class="leg-to">{{leg.destination}}</div>
+							</div>
 
-				
-				<div class="review-middle">
-					
-					<div class="review-flight-time">{{DepartureFlight.flightTimeHoursMinutes}}</div>
+							<div class="airline">
+								<div class="airline-title">Airline</div> {{leg.airline}}
+							</div>
 
-				</div>
-				
+							<div class="flight-number">
+								<div class="flight-num-title">Flight No.</div> {{leg.flightNumber}}
+							</div>
+							<br/>
+							<div class="departure">
+								<div class="departure-title">Departure:</div>{{leg.departure_time}}
+							</div>
 
-				<div class="review-from">
-					<div class="from">from</div>
-					<div class="trip-from">{{DepartureFlight.origin}}</div>
-				</div>
+							<div class="arrival">
+								<div class="arrival-title">Arrival:</div>{{leg.departure_time}}
+							</div>
+						</div>
 
-				<div class="depart">
-					<div class="grey detail-time-label">Depart:</div>
-					<div class="review-departure-time">
-						{{DepartureFlight.departureTime}}
+						{{/each}}
 					</div>
+
 				</div>
-				
-				<div class="review-to">
-					<div class="to">to</div>
-					<div class="trip-to">{{DepartureFlight.destination}}</div>
-				</div>
-				<div class="arrive">
-					<class class="grey detail-time-label">Arrive:</class>
-					<div class="review-arrival-time">
-						{{DepartureFlight.departureTime}}
-					</div>
-				</div>
-			</div>
+			{{/with}}
+
 		</div>
-		<!-- {/if}} -->
-
-		<!-- {#if ReturnFlight}} -->
+		{{#if ReturnFlight}}
 		<div class="flight-review">
-			<h2>Return from MLB</h2>
+			{{#with ReturnFlight as flight controller="flight"}}
+			<h2>Return from {{flight.origin}} 
+					<span class="heading-price">${{flight.price}}</span>
+					<span class="heading-duration">{{flight.flightLengthMinutesHours}}</span>
+				</h2>
+			<div class="saved-flight">
+				<div class="admin-inside">
+					{{#each leg in flight.legs}}
+					<div class="leg-details">
 
-			<div class="flight-review-details">
-				
-				<div class="review-top">
-					<div class="review-flight-price">${{ReturnFlight.price}}</div>
+						<div class="leg-departure">
+							<div class="leg-from-name">From</div><div class="leg-from">{{leg.origin}}</div>	
+						</div>
 
-					<div class="review-flightNumber">{{ReturnFlight.flightNumber}}</div>
+						<div class="leg-arrival">
+							<div class="leg-to-name">To</div><div class="leg-to">{{leg.destination}}</div>
+						</div>
 
-					<div class="review-direct">Direct Flight</div>
-				</div>
+						<div class="airline">
+							<div class="airline-title">Airline</div> {{leg.airline}}
+						</div>
 
-				
-				<div class="review-middle">
-					
-					<div class="review-flight-time">{{ReturnFlight.flightTimeHoursMinutes}}</div>
+						<div class="flight-number">
+							<div class="flight-num-title">Flight No.</div> {{leg.flightNumber}}
+						</div>
+						<br/>
+						<div class="departure">
+							<div class="departure-title">Departure:</div>{{leg.departure_time}}
+						</div>
 
-				</div>
-				
-
-				<div class="review-from">
-					<div class="from">from</div>
-					<div class="trip-from">{{ReturnFlight.origin}}</div>
-				</div>
-
-				<div class="depart">
-					<div class="grey detail-time-label">Depart:</div>
-					<div class="review-departure-time">
-						{{ReturnFlight.departureTime}}
+						<div class="arrival">
+							<div class="arrival-title">Arrival:</div>{{leg.departure_time}}
+						</div>
 					</div>
+
+					{{/each}}
 				</div>
-				
-				<div class="review-to">
-					<div class="to">to</div>
-					<div class="trip-to">{{ReturnFlight.destination}}</div>
-				</div>
-				<div class="arrive">
-					<class class="grey detail-time-label">Arrive:</class>
-					<div class="review-arrival-time">
-						{{ReturnFlight.departureTime}}
-					</div>
-				</div>
+
 			</div>
+			{{/with}}
 		</div>
+		{{/if}}
 		<!-- {/if}} -->
 
 		<div id="pruchase-form">
-			{{isAuthenticated}}
-			{{#unless isAuthenticated}}
-			<form id="purchase-signup">
-				User Details
-				<input type="text" placeholder="username"><br/>
-				<input type="text" placeholder="password"><br/>
-				<input type="text" placeholder="confirm-password"><br/>
-			</form>
-			{{/unless}}
+			<div id="purchase-wrapper" {{bind-attr class="wrapperWidth"}}>
+				{{#if showReviewRegistration}}
+				<form id="purchase-signup">
+					<h3>Register</h3>
+					<!-- <p>This quick registration allows you to login and manage your flights</p> -->
+					<input type="text" class="small-rounded"  placeholder="Email"><br/>
+					<input type="text" class="small-rounded" placeholder="Create Password"><br/>
+					<input type="text" class="small-rounded" placeholder="Confirm password"><br/>
+				</form>
+				{{/if}}
+				<form id="pay-form">
+					<h3>Payment Details</h3>
 
-			<form id="pay_form">
-				Payment Details
-				
-				<input type="text" placeholder="Email" size="30">
-				<input type="text" placeholder="Card number" >
-				<input type="text" placeholder="MM / YY">
-				<input type="text" placeholder="CVC">			
-				
-			</form>
+					<input type="text" class="small-rounded" placeholder="Card number" ><br/>
+					<input type="text" class="small-rounded" placeholder="MM / YY"><br/>
+					<input type="text" class="small-rounded" placeholder="CVC"><br/>	
+
+				</form>
+			</div>
 		</div>
 
 		<div id="purchase-flights">
 			<button class="rounded" {{action "purchase"}}>Purchase</button>
 		</div>
+
+		{{/if}} 
 	</div>
 </div>
