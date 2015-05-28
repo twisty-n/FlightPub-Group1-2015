@@ -23,7 +23,6 @@
 
 
 	<h1 id="page-title">{{pageTitle}}</h1>
-
 	<div id="results">
 		<div id="result-graph-wrapper">
 			<div id="loader" style="display:none;">
@@ -72,13 +71,21 @@
 							</div>
 						</div>
 						<div class="price">
+							{{#if flight.hasPromotion}}
+								<div class="price-inner promotion-price">${{flight.priceWithPromotion}}</div>
+								<div class="old-price">${{flight.price}}</div>
+				
+							{{else}}
 							<div class="price-inner">${{flight.price}}</div>
+							{{/if}}
 						</div>
 					</div>
 					<div class="time-wrapper">
 
 						<div class="time-bar" {{bind-attr style='flight.timeBarStyle'}}>
 							{{#each layover in flight.layovers itemController="flight"}}
+							{{#each promotion in layover.promotions}}
+							{{/each}}
 							<div class="layover" {{bind-attr style="layover.layoverStyle"}}>
 								{{layover.time}}<br>{{layover.destination}}
 								<div class="time layover-time" style="right:100%;">{{layover.arrivalHour}}<br/>{{layover.arrivalPeriod}}</div>

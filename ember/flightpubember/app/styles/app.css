@@ -554,11 +554,15 @@ input.small-rounded{
 	margin-bottom: 3px;
 }
 
+#purchase-signup a{
+	color: #22B0E6;
+}
+
 #purchase-flights{
 	height: 100px;
 	width: 155px;
 	margin: 0 auto;
-	margin-top: 10px;
+	margin-top: 15px;
 }
 
 #purchase-flights button{

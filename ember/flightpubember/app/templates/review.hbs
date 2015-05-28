@@ -3,48 +3,48 @@
 	<div class="full-page-white-center">
 
 		{{#if DepartureFlight}}
-		
+		{{/if}} 
 		<div class="flight-review">
 			{{#with DepartureFlight as flight controller="flight"}}
-				<h2>Departure from {{flight.origin}} 
-					<span class="heading-price">${{flight.price}}</span>
-					<span class="heading-duration">{{flight.flightLengthMinutesHours}}</span>
-				</h2>
-				
-				<div class="saved-flight">
-					<div class="admin-inside">
-						{{#each leg in flight.legs}}
-						<div class="leg-details">
+			<h2>Departure from {{flight.origin}} 
+				<span class="heading-price">${{flight.price}}</span>
+				<span class="heading-duration">{{flight.flightLengthMinutesHours}}</span>
+			</h2>
 
-							<div class="leg-departure">
-								<div class="leg-from-name">From</div><div class="leg-from">{{leg.origin}}</div>	
-							</div>
+			<div class="saved-flight">
+				<div class="admin-inside">
+					{{#each leg in flight.legs}}
+					<div class="leg-details">
 
-							<div class="leg-arrival">
-								<div class="leg-to-name">To</div><div class="leg-to">{{leg.destination}}</div>
-							</div>
-
-							<div class="airline">
-								<div class="airline-title">Airline</div> {{leg.airline}}
-							</div>
-
-							<div class="flight-number">
-								<div class="flight-num-title">Flight No.</div> {{leg.flightNumber}}
-							</div>
-							<br/>
-							<div class="departure">
-								<div class="departure-title">Departure:</div>{{leg.departure_time}}
-							</div>
-
-							<div class="arrival">
-								<div class="arrival-title">Arrival:</div>{{leg.departure_time}}
-							</div>
+						<div class="leg-departure">
+							<div class="leg-from-name">From</div><div class="leg-from">{{leg.origin}}</div>	
 						</div>
 
-						{{/each}}
+						<div class="leg-arrival">
+							<div class="leg-to-name">To</div><div class="leg-to">{{leg.destination}}</div>
+						</div>
+
+						<div class="airline">
+							<div class="airline-title">Airline</div> {{leg.airline}}
+						</div>
+
+						<div class="flight-number">
+							<div class="flight-num-title">Flight No.</div> {{leg.flightNumber}}
+						</div>
+						<br/>
+						<div class="departure">
+							<div class="departure-title">Departure:</div>{{leg.departure_time}}
+						</div>
+
+						<div class="arrival">
+							<div class="arrival-title">Arrival:</div>{{leg.departure_time}}
+						</div>
 					</div>
 
+					{{/each}}
 				</div>
+
+			</div>
 			{{/with}}
 
 		</div>
@@ -52,9 +52,9 @@
 		<div class="flight-review">
 			{{#with ReturnFlight as flight controller="flight"}}
 			<h2>Return from {{flight.origin}} 
-					<span class="heading-price">${{flight.price}}</span>
-					<span class="heading-duration">{{flight.flightLengthMinutesHours}}</span>
-				</h2>
+				<span class="heading-price">${{flight.price}}</span>
+				<span class="heading-duration">{{flight.flightLengthMinutesHours}}</span>
+			</h2>
 			<div class="saved-flight">
 				<div class="admin-inside">
 					{{#each leg in flight.legs}}
@@ -98,12 +98,25 @@
 			<div id="purchase-wrapper" {{bind-attr class="wrapperWidth"}}>
 				{{#if showReviewRegistration}}
 				<form id="purchase-signup">
-					<h3>Register</h3>
-					<!-- <p>This quick registration allows you to login and manage your flights</p> -->
-					{{input value=email type="text" class="small-rounded"  placeholder="Email"}}<br/>
-					{{input value=email_confirmation type="text" class="small-rounded"  placeholder="Confirm Email"}}<br/>
-					{{input value=password type="text" class="small-rounded" placeholder="Create Password"}}<br/>
-					{{input value=password_confirmation type="text" class="small-rounded" placeholder="Confirm password"}}<br/>
+
+					<div id="purchase-register">
+						<h3>Register</h3>
+						<!-- <p>This quick registration allows you to login and manage your flights</p> -->
+						{{input value=email type="text" class="small-rounded"  placeholder="Email"}}<br/>
+						{{input value=email_confirmation type="text" class="small-rounded"  placeholder="Confirm Email"}}<br/>
+						{{input value=password type="text" class="small-rounded" placeholder="Create Password"}}<br/>
+						{{input value=password_confirmation type="text" class="small-rounded" placeholder="Confirm password"}}<br/>
+						<p>have an account? <a href="" {{action "showLogin"}}>Login</a></p>
+					</div>
+
+					<div id="purchase-login" style="display:none;">
+						<h3>Login</h3>
+						<!-- <p>This quick registration allows you to login and manage your flights</p> -->
+						<input type="text" class="small-rounded"  placeholder="Email"><br/>
+						<input type="text" class="small-rounded" placeholder="Password"><br/>
+						<p>no account? <a href="" {{action "showRegister"}}>Register</a></p>
+					</div>
+
 				</form>
 				{{/if}}
 				<form id="pay-form">
@@ -122,6 +135,6 @@
 			<button class="rounded" {{action "purchase"}}>Purchase</button>
 		</div>
 
-		{{/if}} 
+		
 	</div>
 </div>
