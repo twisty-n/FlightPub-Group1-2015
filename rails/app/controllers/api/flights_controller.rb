@@ -63,56 +63,51 @@ class Api::FlightsController < ApplicationController
     end
 
     # We will now load up a selection of flights variable
-    num_flights = [10..30].sample
+    # 
+    # These are our params
+    #     # Started GET "/api/flights?
+    #     originCode=HBA&
+    #     destinationCode=VIE&
+    #     departureDate=25-05-2015&
+    #     returnDate=27-05-2015&
+    #     ticketClass=&
+    #     numberOfPeople=4" 
+    #     
+    
+    # First run the search for departing flights
+    depart_date = ActiveSupport::TimeZone["UTC"].parse( params['departureDate'] + ' 00:01am' )
+    puts depart_date
 
-    flights = Array.new
+    return_date = ActiveSupport::TimeZone["UTC"].parse( params['returnDate'] + ' 00:01am' )
+    puts return_date
 
-    num_flights.each do |val|
+    depart_destination = Destination.find_by(destination_code: params['destinationCode'])
+    depart_origin = Destination.find_by(destination_code: params['originCode'])
 
-      # Elms is the subarray of flights
-      elems = Array.new
-      elems.push(Flight.take(200).sample(1).first)
+    depart_flight_paths = FlightSearch.bfs(depart_origin, depart_destination, depart_date)
+    return_flight_paths = FlightSearch.bfs(depart_destination, depart_origin, return_date)
 
-      print elems
+    # puts flight_paths.inspect
+    journeys = Array.new
+    # change this to operate on our departing flight paths and returning flight paths
+    depart_flight_paths.each do |val|
 
-      1..([1..4].sample(1)).each do 
-
-        # If you need to adjust the time speratation, change the 18 to something else :)
-        aff_date = DateTime.parse(elems.last.arrival_time).advance(:hours => 18).strftime('%Y-%m-%d %H:%M:%S UTC')
-        elems.push( Flight.departs_on_day( elems.last.arrival_time, aff_date ).first )
-      
-      end
-
-      # For now, the top level information will just be taken from the composite information
-      # The flight number will be the flight number of the first flight
-      # origin and destination will simply be the initial origin and the final destination
-      # price will be the composite price
-      # seats available will be the floor of the seats available
-      # The assumed ticket class will be economy
-      # We are also going to resave the ticket class into the trip, so that
-      # we have the information when we need to purchase or save things
-      # 
-      
-      # NOW WE WILL TALK ABOUT TICKETS
-      # We are going to be selected the LOWEST PRICE ticket that matches our ticket class
-      # We are going to record this information to be used in the purchase and stuff later
-      # Crying!
-      # We will ignore the amount of seats, and just try to find a ticket that matches the class
-
-      # Set ticket class to sent class or ECO if its nil in params
       ticket_class = params['ticketClass']
       ticket_class ||= 'ECO'
 
       price = 0
-      seats_available = elems.first.ticket_availabilities.t_class(ticket_class).smallest_price.seats_available
+
+      puts val.class.to_s
+      puts val.get_herpes
+
+      seats_available = val.get_herpes.first.ticket_availabilities.t_class(ticket_class).smallest_price.seats_available
       total_duration = 0
 
-      print elems
 
-      elems.each do |flight|
+      # Operates on the individual flights in our flight paths
+      val.get_herpes.each do |flight|
         
         # Set up the flight information
-        
         print("The flight is #{flight.inspect}")
         ticket = flight.ticket_availabilities.t_class(ticket_class).smallest_price
         price += ticket.price
@@ -135,10 +130,10 @@ class Api::FlightsController < ApplicationController
       journey = Journey.new
       journey.price           = price
       journey.flight_time     = total_duration
-      journey.origin_id       = elems.first.origin.id
-      journey.destination_id  = elems.last.destination.id
-      journey.departure_time  = elems.first.departure_time
-      journey.arrival_time    = elems.last.arrival_time
+      journey.origin_id       = val.get_herpes.first.origin.id
+      journey.destination_id  = val.get_herpes.last.destination.id
+      journey.departure_time  = val.get_herpes.first.departure_time
+      journey.arrival_time    = val.get_herpes.last.arrival_time
       journey.ticket_class_id = TicketClass.find_by(class_code: ticket_class).id
 
       journey.save!
@@ -146,7 +141,7 @@ class Api::FlightsController < ApplicationController
       # After creating the journey model, map the flights onto our journey, 
       # setting up a dependancy between them for the journey
        
-      elems.each_with_index do |flight, index|
+      val.get_herpes.each_with_index do |flight, index|
 
         mapping = JourneyMap.new
         mapping.journey_id = journey.id
@@ -158,24 +153,101 @@ class Api::FlightsController < ApplicationController
 
       trip = {
         id: journey.id,
-        flightNumber: elems.first.flight_number,
+        flightNumber: val.get_herpes.first.flight_number,
         price: price,
-        departureTime: elems.first.departure_time,
-        arrivalTime: elems.last.arrival_time,
+        departureTime: val.get_herpes.first.departure_time,
+        arrivalTime: val.get_herpes.last.arrival_time,
         seatsAvailable: seats_available,
         flightTime: total_duration,
-        origin: elems.first.origin.destination_code,
-        destination: elems.last.destination.destination_code,
-        isReturnFlight: [true, false].sample,
+        origin: val.get_herpes.first.origin.destination_code,
+        destination: val.get_herpes.last.destination.destination_code,
+        isReturnFlight: false,
         ticketClass: ticket_class,
-        legs: elems
+        legs: val.get_herpes
       }
 
-      flights.push(trip)
+      journeys.push(trip)
 
     end
 
-    render json: flights
+    # Set upt he return stuff
+    return_flight_paths.each do |val|
+
+      ticket_class = params['ticketClass']
+      ticket_class ||= 'ECO'
+
+      price = 0
+      seats_available = val.get_herpes.first.ticket_availabilities.t_class(ticket_class).smallest_price.seats_available
+      total_duration = 0
+
+
+      # Operates on the individual flights in our flight paths
+      val.get_herpes.each do |flight|
+        
+        # Set up the flight information
+        print("The flight is #{flight.inspect}")
+        ticket = flight.ticket_availabilities.t_class(ticket_class).smallest_price
+        price += ticket.price
+        total_duration += flight.flight_time
+        if ticket.seats_available <= seats_available
+          seats_available = ticket.seats_available
+        end
+
+        # Set up the ticket information
+        flight.set_ticket_id(ticket.id)
+
+      end
+
+      # In creating this JSON, we are going to 
+      # be building up the information that we need through flitering out some information
+      # about the ticket_class and type that we are working with
+      # 
+      # Additionally, a trip is now represented by our journey model, which we are saving
+      
+      journey = Journey.new
+      journey.price           = price
+      journey.flight_time     = total_duration
+      journey.origin_id       = val.get_herpes.first.origin.id
+      journey.destination_id  = val.get_herpes.last.destination.id
+      journey.departure_time  = val.get_herpes.first.departure_time
+      journey.arrival_time    = val.get_herpes.last.arrival_time
+      journey.ticket_class_id = TicketClass.find_by(class_code: ticket_class).id
+
+      journey.save!
+
+      # After creating the journey model, map the flights onto our journey, 
+      # setting up a dependancy between them for the journey
+       
+      val.get_herpes.each_with_index do |flight, index|
+
+        mapping = JourneyMap.new
+        mapping.journey_id = journey.id
+        mapping.flight_id = flight.id
+        mapping.order_in_journey = index + 1
+        mapping.save!
+
+      end
+
+      trip = {
+        id: journey.id,
+        flightNumber: val.get_herpes.first.flight_number,
+        price: price,
+        departureTime: val.get_herpes.first.departure_time,
+        arrivalTime: val.get_herpes.last.arrival_time,
+        seatsAvailable: seats_available,
+        flightTime: total_duration,
+        origin: val.get_herpes.first.origin.destination_code,
+        destination: val.get_herpes.last.destination.destination_code,
+        isReturnFlight: true,
+        ticketClass: ticket_class,
+        legs: val.get_herpes
+      }
+
+      journeys.push(trip)
+
+    end
+
+    render json: journeys
 
     end
 

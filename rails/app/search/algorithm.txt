@@ -1,0 +1,22 @@
+Algorithm:
+
+1: Setup data structures
+	discovered = Queue for undiscovered DCs
+	toProcess = processing queue
+	origin
+	target
+	
+	toProcess.add (origin)
+	discovered.add (origin)
+	
+	while toProcess is not empty
+	
+		checking = toProcess.getNext
+		process (checking)
+		for all DC from process(checking):
+			if the DC is the destination
+				stop and do stuff
+			else if the DC is not discovered
+				toProcess(DC)
+				discovered.add(DC)
+	
