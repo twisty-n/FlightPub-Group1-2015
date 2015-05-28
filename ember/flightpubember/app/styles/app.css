@@ -1722,7 +1722,9 @@ a{
 	padding-top: 0px;
 }
 
-
+.leg-airline{
+	float:left;
+}
 
 
 /* Admin Page */
