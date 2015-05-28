@@ -21,6 +21,26 @@ class FlightPath
 	
 	# ------------------------------- Class Methods --------------------------------- #
 	
+	def get_array
+
+		# Flights go here
+		results = Array.new
+
+		# Start at the first DC.
+		current_dc = @dc
+
+		while !(current_dc.previous_dc == nil)
+
+			results.push(current_dc.flight)
+
+			current_dc = current_dc.previous_dc
+		end
+
+		# Reverse the array
+		results.reverse!
+
+	end
+
 	# This function returns the origin
 	def get_origin
 		@origin
@@ -47,14 +67,7 @@ class FlightPath
 			@origin = '<NO ORIGIN>'
 		end
 		
-#		output += @origin.airport
-#		
-#		current_dc = @dc
-#		while !(current_dc.previous_dc == nil)
-#			output += "\n Going to \n"
-#			output += current_dc.to_s
-#			current_dc = current_dc.previous_dc
-#		end # eof while loop that gets the previous chained DCs
+
 
 		current_dc = @dc
 		while !(current_dc.previous_dc == nil)
@@ -78,4 +91,5 @@ class FlightPath
 			return false
 		end
 	end # eof empty? method
+
 end

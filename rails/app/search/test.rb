@@ -161,6 +161,11 @@ class Test
 		found.each do |flight_path|
 			puts flight_path.to_s
 		end
+
+		found.each do |path|
+			puts "This is a new path!"
+			puts path.get_array.to_s
+		end
 		
 		return nil
 	end #eof search test
