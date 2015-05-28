@@ -444,10 +444,10 @@ input.small-rounded{
 
 
 .flight-review{
-  width: 500px;
-  min-height: 225px;
-  margin: 0 auto;
-  margin-bottom: 0px;
+	width: 500px;
+	min-height: 225px;
+	margin: 0 auto;
+	margin-bottom: 0px;
 }
 /*
 @media screen and (min-width: 1200px){
@@ -530,9 +530,9 @@ input.small-rounded{
 }
 
 #purchase-wrapper{
-  height: 140px;
-  margin: 0 auto;
-  margin-top: 20px;
+	height: 140px;
+	margin: 0 auto;
+	margin-top: 20px;
 }
 
 #purchase-wrapper.large{
@@ -566,13 +566,13 @@ input.small-rounded{
 }
 
 #purchase-flights button{
-  width: 155px;
-  height: 50px;
-  float: left;
-  background-color: #7FF016;
-  border: solid 3px #3EE013;
-  font-size: 22px;
-  color: #FFFFFF;
+	width: 155px;
+	height: 50px;
+	float: left;
+	background-color: #7FF016;
+	border: solid 3px #3EE013;
+	font-size: 22px;
+	color: #FFFFFF;
 }
 
 #purchase-flights button:hover{
@@ -1176,7 +1176,7 @@ a{
 }
 
 .leg-details .airline{
-  width: 50%;
+	width: 50%;
 
 }
 
@@ -1221,6 +1221,7 @@ a{
 }
 
 .result-item .price{
+	height: 50px;
 	width: 130px;
 	float: left;
 }
@@ -1322,6 +1323,21 @@ a{
 	font-size: 25px;
 	margin-top: 7px;
 	margin-left: 16px;
+}
+
+.price-inner.promotion-price{
+  font-size: 22px;
+  position: relative;
+  bottom: 5px;
+}
+
+.price .old-price{
+  position: relative;
+  bottom: 16px;
+  left: 76px;
+  font-size: 14px;
+  text-decoration: line-through;
+  color:#FFF;
 }
 
 .airline .airline-image{

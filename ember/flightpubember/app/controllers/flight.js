@@ -27,10 +27,13 @@ export default Ember.ObjectController.extend({
 
 		legs.forEach(function(leg){
 			if(leg.promotions.length > 0)
-			{
+			{	
+				var d = 0;
 				leg.promotions.forEach(function(promoObj){
-					discount += promoObj.promotion.discount;
+					d += promoObj.promotion.discount;
 				})
+				leg.discountPrice = d;
+				discount += d;
 			}
 		});
 
@@ -43,89 +46,88 @@ export default Ember.ObjectController.extend({
 		return (price-discount);
 	}),
 
-	hasPromotion: Ember.computed('promoDiscountAmount', function(){
-		var discount = this.get('promoDiscountAmount');
-		console.log(discount);
-		return (discount > 0);
+	hasPromotion: Ember.computed('promoDiscountAmount', 'priceWithPromotion', function(){
+		//return true;
+		//TODO: REINSTATE THIS RETURN WE JUST NEED TO DISABLE FOR DISPLAY SUTFF
+		return this.get('priceWithPromotion') > 0 && this.get('promoDiscountAmount') > 0;
 	}),
 
+	departureTimeHourDay: Ember.computed('depatureTime', function(){
+		var flightTime = this.get('departureTime');
 
-departureTimeHourDay: Ember.computed('depatureTime', function(){
-	var flightTime = this.get('departureTime');
+		var hour = flightTime.getHours();
+		var period = "am";
+		var day = flightTime.getDay();
 
-	var hour = flightTime.getHours();
-	var period = "am";
-	var day = flightTime.getDay();
+		if(hour == 0){
+			hour = 12;
+		}
+		else if(hour >= 12)
+		{
+			period = "pm";
+			if(hour > 12)
+			{
+				hour -= 12;
+			}
+		}
 
-	if(hour == 0){
-		hour = 12;
-	}
-	else if(hour >= 12)
-	{
-		period = "pm";
-		if(hour > 12)
+		switch(day)
+		{
+			case 0: day = "Sun"; break;
+			case 1: day = "Mon"; break;
+			case 2: day = "Tue"; break;
+			case 3: day = "Wed"; break;
+			case 4: day = "Thu"; break;
+			case 5: day = "Fri"; break;
+			case 6: day = "Sat"; break;
+		}
+
+		return hour+" "+period+" "+day;
+	}),
+
+	arrivalTimeHour: Ember.computed('arrivalTime', function(){
+		var flightTime = this.get('arrivalTime');
+
+		var hour = flightTime.getHours();
+
+		if(hour == 0){
+			hour = 12;
+		}
+		else if(hour > 12)
 		{
 			hour -= 12;
 		}
-	}
 
-	switch(day)
-	{
-		case 0: day = "Sun"; break;
-		case 1: day = "Mon"; break;
-		case 2: day = "Tue"; break;
-		case 3: day = "Wed"; break;
-		case 4: day = "Thu"; break;
-		case 5: day = "Fri"; break;
-		case 6: day = "Sat"; break;
-	}
+		return hour;
+	}),
 
-	return hour+" "+period+" "+day;
-}),
+	arrivalTimePeriod: Ember.computed('arrivalTimeHour', function(){
 
-arrivalTimeHour: Ember.computed('arrivalTime', function(){
-	var flightTime = this.get('arrivalTime');
+		if(this.get('arrivalTimeHour') >= 12)
+		{
+			return "pm";
+		}
 
-	var hour = flightTime.getHours();
+		return "am";
+	}),
 
-	if(hour == 0){
-		hour = 12;
-	}
-	else if(hour > 12)
-	{
-		hour -= 12;
-	}
+	arrivalTimeDay: Ember.computed('arrivalTime', function(){
+		var flightTime = this.get('arrivalTime');
+		var day = flightTime.getDay();
 
-	return hour;
-}),
+		switch(day)
+		{
+			case 0: day = "Sun"; break;
+			case 1: day = "Mon"; break;
+			case 2: day = "Tue"; break;
+			case 3: day = "Wed"; break;
+			case 4: day = "Thu"; break;
+			case 5: day = "Fri"; break;
+			case 6: day = "Sat"; break;
+		}
 
-arrivalTimePeriod: Ember.computed('arrivalTimeHour', function(){
-
-	if(this.get('arrivalTimeHour') >= 12)
-	{
-		return "pm";
-	}
-
-	return "am";
-}),
-
-arrivalTimeDay: Ember.computed('arrivalTime', function(){
-	var flightTime = this.get('arrivalTime');
-	var day = flightTime.getDay();
-
-	switch(day)
-	{
-		case 0: day = "Sun"; break;
-		case 1: day = "Mon"; break;
-		case 2: day = "Tue"; break;
-		case 3: day = "Wed"; break;
-		case 4: day = "Thu"; break;
-		case 5: day = "Fri"; break;
-		case 6: day = "Sat"; break;
-	}
-
-	return day;
-}),
+		return day;
+	}),
 
 	//remove this and just call the sections from the handlebars
 	arrivalTimeHourDay: Ember.computed('arrivalTimeHour', 'arrivalTimePeriod', 'arrivalTimeDay', function(){
@@ -282,10 +284,13 @@ arrivalTimeDay: Ember.computed('arrivalTime', function(){
 					var layoverTimeMins = this.get('layoverDuration');
 					var tripTimeMins = this.get('flightLength');
 					
+					console.log(layoverTimeMins);
+					console.log(tripTimeMins);
 
+					var width = (layoverTimeMins/tripTimeMins)*100; 
 
+					console.log("width: "+width);
 
-					var width = (layoverTimeMins/tripTimeMins); 
 
 					var left = 8;
 
@@ -294,7 +299,12 @@ arrivalTimeDay: Ember.computed('arrivalTime', function(){
 					var flightDepartureDate = this.get('flightDepartTime');
 					var flightArrivalDate = this.get('flightArrivalTime');
 					
+					console.log(flightArrivalDate);
+					console.log(flightDepartureDate);
+
 					left = Math.round(((flightArrivalDate - flightDepartureDate) * 100 ) / layoverStartDate);
+
+					console.log(left);
 
 					return "width: "+width+"%; left: "+left+"%; min-width:40px; max-width:100%;";
 				}.property('layoverDuration', 'flightLength')

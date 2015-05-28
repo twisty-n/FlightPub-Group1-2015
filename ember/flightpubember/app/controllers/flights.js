@@ -70,8 +70,7 @@ export default Ember.ArrayController.extend({
     var filterProperties = this.get('filterProperties');
 
     flights = flights.filter(function(flight){
-      console.log(flight);
-
+      
       var useFlight = false;
 
       if(self.get('currentSelection') === 'departure')
