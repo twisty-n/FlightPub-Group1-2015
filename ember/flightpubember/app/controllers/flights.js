@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
-  needs: ['application'],
+  needs: ['application', 'sessions'],
 
   DepartureFlight: null,          // The journey that represents origin to dest
   ReturnFlight: null,             // Journey that represents dest to org(y)
@@ -114,6 +114,7 @@ export default Ember.ArrayController.extend({
   selectedFlight: null,
   
   actions: {
+
     sortBy: function(property) {
 
       this.send('updatePropertyStyle', property);
@@ -274,23 +275,43 @@ export default Ember.ArrayController.extend({
       }
     },
 
+    setupUser: function() {
+      var data = null;
+      if (! this.get('controllers.application.isAuthenticated')) {
+
+        if( this.get('reviewLoginShowing') ) {
+          // Quickly grab their details and log the bastards in
+          data = this.getProperties('email', 'password');
+          this.get('controllers.sessions').send('loginUser', true, data);
+        } else {
+          // Gather the entered user details to submit to the server for purchasing
+          data = this.getProperties('email', 'email_confirmation', 'password', 'password_confirmation');
+          this.get('controllers.sessions').send('registerUser', true, data);
+        }
+
+      }
+    },
+
     purchase: function(){
 
       //we need user id, so we need to have the user sign up if they're not logged in
       console.log(this.get('controllers.application.isAuthenticated'));
       console.log(this.get('controllers.application.currentUser'));
 
-      if (! this.get('controllers.application.isAuthenticated')) {
-
-        // Currently the user needs to be signed in in order to purchase a flight
-        // we will allow this inline, but for now, alert and about
-        
-        alert('You must be signed in in order to purchase a flight!');
-        this.transitionToRoute('results');
+      if (this.get('cardNumber') == undefined 
+        ||this.get('expiryDate') == undefined 
+        ||this.get('securityCode') == undefined 
+        ||this.get('nameOnCard') == undefined) {
+        alert('Fill out payment details');
         return;
-
       }
 
+      var user_id = this.get('controllers.application.currentUser');
+      if (user_id == null) {
+        alert('Please Log In or Register');
+        return;
+      }
+ 
       // Iterate over each flight in the journey to get the list of tickets
       var flights = this.get('DepartureFlight').get('legs');
       var flight;
@@ -319,7 +340,7 @@ export default Ember.ArrayController.extend({
         'tickets_to_purchase': this.get('numberOfTickets'),
         'return_journey_id': data['ReturnFlight.id'],
         'departure_journey_id': data['DepartureFlight.id'],
-        'user_id': this.get('controllers.application.currentUser'),
+        'user_id': user_id,
         'departure_tickets': departureTickets,
         'return_tickets': returnTickets,
         'save_type': 'purchased_flight',

@@ -6,7 +6,7 @@ export default Ember.ObjectController.extend({
     actions: {
 
 
-        createUser: function(formData) {
+        createUser: function(noRedirect, formData) {
 
             var data = formData
             var user, _this;
@@ -34,7 +34,7 @@ export default Ember.ObjectController.extend({
                 user.deleteRecord();
 
                 // Shunt the method over to sessions controller to handle the login
-                sessionsController.send('loginUser');
+                sessionsController.send('loginUser', noRedirect, formData);
 
             }, function(error) {
                 if(error.status === 422) {

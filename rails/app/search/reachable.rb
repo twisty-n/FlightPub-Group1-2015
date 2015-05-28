@@ -38,25 +38,11 @@ class Reachable
 		# 2 days => 172800
 		# 3 days => 259200
 		
-=begin
-
-  	tryDate = DateTime.parse(params['departureDate']).utc
-    befDate = tryDate.advance(:minutes => -1)
-
-    affDate = tryDate.advance(:days => 1)
-    affDate = affDate.advance(:minutes => -1)
-
-    #puts "Aff date #{affDate}"
-    #puts "bff date #{befDate}"
-
-    befDate = befDate.strftime('%Y-%m-%d %H:%M:%S UTC')
-
-=end
 
 		# Calculate the time range
 		# First parse the dates like an asshole
 		max_stopover_time = DateTime.parse(requesting_dc.flight.arrival_time) 
-		max_stopover_time = max_stopover_time.advance(:days => +2)
+		max_stopover_time = max_stopover_time.advance(:days => +3)
 		max_stopover_time = max_stopover_time.strftime('%Y-%m-%d %H:%M:%S UTC')
 
 		puts max_stopover_time

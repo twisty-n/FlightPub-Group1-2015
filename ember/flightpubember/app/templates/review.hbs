@@ -98,31 +98,35 @@
 			<div id="purchase-wrapper" {{bind-attr class="wrapperWidth"}}>
 				{{#if showReviewRegistration}}
 				<form id="purchase-signup">
+
 					<div id="purchase-register">
 						<h3>Register</h3>
 						<!-- <p>This quick registration allows you to login and manage your flights</p> -->
-						<input type="text" class="small-rounded"  placeholder="Email"><br/>
-						<input type="text" class="small-rounded" placeholder="Create Password"><br/>
-						<input type="text" class="small-rounded" placeholder="Confirm password"><br/>
+						{{input value=email type="text" class="small-rounded"  placeholder="Email"}}<br/>
+						{{input value=email_confirmation type="text" class="small-rounded"  placeholder="Confirm Email"}}<br/>
+						{{input value=password type="password" class="small-rounded" placeholder="Create Password"}}<br/>
+						{{input value=password_confirmation type="password" class="small-rounded" placeholder="Confirm password"}}<br/>
 						<p>have an account? <a href="" {{action "showLogin"}}>Login</a></p>
+						<button class="rounded" {{action "setupUser"}}>Register</button>
 					</div>
 
 					<div id="purchase-login" style="display:none;">
 						<h3>Login</h3>
 						<!-- <p>This quick registration allows you to login and manage your flights</p> -->
-						<input type="text" class="small-rounded"  placeholder="Email"><br/>
-						<input type="text" class="small-rounded" placeholder="Password"><br/>
+						{{input value=email type="text" class="small-rounded"  placeholder="Email"}}<br/>
+						{{input value=password type="password" class="small-rounded" placeholder="Password"}}<br/>
 						<p>no account? <a href="" {{action "showRegister"}}>Register</a></p>
+						<button class="rounded" {{action "setupUser"}}>Log In</button>
 					</div>
-
 				</form>
 				{{/if}}
 				<form id="pay-form">
 					<h3>Payment Details</h3>
 
-					<input type="text" class="small-rounded" placeholder="Card number" ><br/>
-					<input type="text" class="small-rounded" placeholder="MM / YY"><br/>
-					<input type="text" class="small-rounded" placeholder="CVC"><br/>	
+					{{input value=cardNumber type="text" class="small-rounded" placeholder="Card number" }}<br/>
+					{{input value=expiryDate type="text" class="small-rounded" placeholder="MM / YY"}}<br/>
+					{{input value=securityCode type="password" class="small-rounded" placeholder="CVC"}}<br/>
+					{{input value=nameOnCard type="text" class="small-rounded" placeholder="Name on Card"}}<br/>	
 
 				</form>
 			</div>
