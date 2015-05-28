@@ -49,7 +49,8 @@ export default Ember.ArrayController.extend({
     var timeCount = 0;
 
     flights.forEach(function(flight){
-      timeCount += flight.get('flightTime');
+      timeCount += flight.get('flightLengthMinutes');
+      console.log(flight.get('flightLengthMinutes'));
     });
 
     return timeCount/flights.length;
@@ -165,7 +166,7 @@ export default Ember.ArrayController.extend({
       switch(property)
       {
         case 'price:asc': id = "#cheapest-first-filter"; break;
-        case 'flightTime:asc': id = "#shortest-first-filter"; break;
+        case 'flightLengthMinutes:asc': id = "#shortest-first-filter"; break;
         case 'noStops': id = "#no-stops-filter"; break; 
       }
 

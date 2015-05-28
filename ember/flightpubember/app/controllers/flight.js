@@ -4,8 +4,8 @@ export default Ember.ObjectController.extend({
 	needs: ['flights'],
 
 	flightLengthMinutesHours: function(){
-		var flightTime = this.get('flightTime');
-
+		var flightTime = this.get('flightLengthMinutes');
+		console.log(this.get('flightLengthMinutes'));
 		var hours = Math.floor(flightTime/60);
 		var minutes = flightTime - (hours*60);
 
@@ -17,9 +17,9 @@ export default Ember.ObjectController.extend({
 		{
 			result += minutes+"m";
 		}
-		
+
 		return result;
-	}.property('flightTime'),
+	}.property('flightLengthMinutes'),
 
 	promoDiscountAmount: Ember.computed('legs', function(){
 		var legs = this.get('legs');
@@ -59,6 +59,9 @@ export default Ember.ObjectController.extend({
 		var period = "am";
 		var day = flightTime.getDay();
 
+		console.log(flightTime);
+		console.log(" : "+hour+" : "+day);
+
 		if(hour == 0){
 			hour = 12;
 		}
@@ -85,10 +88,15 @@ export default Ember.ObjectController.extend({
 		return hour+" "+period+" "+day;
 	}),
 
-	arrivalTimeHour: Ember.computed('arrivalTime', function(){
+	arrivalTimeHourPeriod: Ember.computed('arrivalTime', function(){
 		var flightTime = this.get('arrivalTime');
-
+		var period = "am";
 		var hour = flightTime.getHours();
+
+		if(hour >= 12)
+		{
+			period = "pm";
+		}
 
 		if(hour == 0){
 			hour = 12;
@@ -98,17 +106,9 @@ export default Ember.ObjectController.extend({
 			hour -= 12;
 		}
 
-		return hour;
-	}),
+		console.log("arrival time hour: "+hour);
 
-	arrivalTimePeriod: Ember.computed('arrivalTimeHour', function(){
-
-		if(this.get('arrivalTimeHour') >= 12)
-		{
-			return "pm";
-		}
-
-		return "am";
+		return hour+" "+period;
 	}),
 
 	arrivalTimeDay: Ember.computed('arrivalTime', function(){
@@ -130,15 +130,15 @@ export default Ember.ObjectController.extend({
 	}),
 
 	//remove this and just call the sections from the handlebars
-	arrivalTimeHourDay: Ember.computed('arrivalTimeHour', 'arrivalTimePeriod', 'arrivalTimeDay', function(){
-		return this.get('arrivalTimeHour')+" "+this.get('arrivalTimePeriod')+" "+this.get('arrivalTimeDay');
+	arrivalTimeHourDay: Ember.computed('arrivalTimeHourPeriod', 'arrivalTimePeriod', 'arrivalTimeDay', function(){
+		return this.get('arrivalTimeHourPeriod')+" "+this.get('arrivalTimeDay');
 	}),
 
 
 	timeBarStyle: function(){
 		var avgLength = this.get('controllers.flights.averageFlightTime');
 
-		var flightTime = this.get('flightTime');
+		var flightTime = this.get('flightLengthMinutes');
 
 		var lengthRatio = flightTime/avgLength;
 
@@ -147,12 +147,6 @@ export default Ember.ObjectController.extend({
 
 		widthPercent *= Math.log10(lengthRatio+1);
 		widthPercent += Math.pow(10, Math.log10(lengthRatio)); 
-		//widthPercent += 10; 
-		
-
-
-		//widthPercent *= widthChange;
-
 
 		var leftPercent = 8; // we have a base of 8 for style
 
@@ -167,6 +161,7 @@ export default Ember.ObjectController.extend({
 	}.property('legs'),
 
 	layovers: Ember.computed('controllers.flights', function(){
+		
 		var layovers = Ember.A([]);
 
 		var legs = this.get('legs');
@@ -184,7 +179,7 @@ export default Ember.ObjectController.extend({
 			var layover = Ember.Object.extend({
 				arrivalFlight: null,
 				departureFlight: null,
-				flightLength: null,
+				flightLengthMinutes: null,
 				flightDepartTime: null,
 				flightArrivalTime: null,
 
@@ -202,16 +197,18 @@ export default Ember.ObjectController.extend({
 					var arrival = parseDate(this.get('arrivalFlight.arrival_time'));
 					var departure = parseDate(this.get('departureFlight.departure_time'));
 
-					var diff = Math.abs(departure-arrival)/(1000*60);
+					var milliseconds = departure - arrival;
 
-					return diff;
+					var minutes = Math.round(milliseconds / 1000 / 60);
+
+					return minutes;
 				}),
 
 				time: Ember.computed('arrivalFlight', 'departureFlight', function(){
 					return Math.floor(this.get('layoverDuration')/60)+"h";
 				}),
 
-				arrivalHour: Ember.computed('arrivalFlight', function(){
+				arrivalHourPeriod: Ember.computed('arrivalFlight', function(){
 					function parseDate(input) {
 						var parts = input.match(/(\d+)/g);
 						// new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
@@ -221,6 +218,12 @@ export default Ember.ObjectController.extend({
 					var layoverTime = parseDate(this.get('arrivalFlight.arrival_time'));
 
 					var hour = layoverTime.getHours();
+					var period = "am";
+
+					if(hour >= 12)
+					{
+						period = "pm";
+					}
 
 					if(hour == 0){
 						hour = 12;
@@ -230,10 +233,10 @@ export default Ember.ObjectController.extend({
 						hour -= 12;
 					}
 
-					return hour;
+					return hour+" "+period;
 				}),
 
-				departureHour: Ember.computed('departureFlight', function(){
+				departureHourPeriod: Ember.computed('departureFlight', function(){
 					function parseDate(input) {
 						var parts = input.match(/(\d+)/g);
 						// new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
@@ -243,6 +246,12 @@ export default Ember.ObjectController.extend({
 					var layoverTime = parseDate(this.get('departureFlight.arrival_time'));
 
 					var hour = layoverTime.getHours();
+					var period = "am";
+
+					if(hour >= 12)
+					{
+						period =  "pm";
+					}
 
 					if(hour == 0){
 						hour = 12;
@@ -252,25 +261,7 @@ export default Ember.ObjectController.extend({
 						hour -= 12;
 					}
 
-					return hour;
-				}),
-
-				arrivalPeriod: Ember.computed('arrivalFlight', function(){
-					if(this.get('arrivalHour') >= 12)
-					{
-						return "pm";
-					}
-
-					return "am";
-				}),
-
-				departurePeriod: Ember.computed('departurePeriod', function(){
-					if(this.get('departureHour') >= 12)
-					{
-						return "pm";
-					}
-
-					return "am";
+					return hour+" "+period;
 				}),
 
 				layoverStyle: function(){
@@ -282,32 +273,27 @@ export default Ember.ObjectController.extend({
 
 					
 					var layoverTimeMins = this.get('layoverDuration');
-					var tripTimeMins = this.get('flightLength');
-					
-					console.log(layoverTimeMins);
-					console.log(tripTimeMins);
+					var tripTimeMins = this.get('flightLengthMinutes');
 
 					var width = (layoverTimeMins/tripTimeMins)*100; 
 
-					console.log("width: "+width);
-
-
-					var left = 8;
+					var left = 0;
 
 					var layoverStartDate = parseDate(this.get('arrivalFlight.arrival_time'));
+					var tripStartDate = this.get('flightDepartTime');
 
-					var flightDepartureDate = this.get('flightDepartTime');
-					var flightArrivalDate = this.get('flightArrivalTime');
-					
-					console.log(flightArrivalDate);
-					console.log(flightDepartureDate);
+					console.log(layoverStartDate);
+					console.log(tripStartDate);
 
-					left = Math.round(((flightArrivalDate - flightDepartureDate) * 100 ) / layoverStartDate);
+					var diffMilliseconds = (layoverStartDate - tripStartDate);
 
-					console.log(left);
+					var timeDiffMins = Math.floor(diffMilliseconds / 1000 / 60);
+
+					left = timeDiffMins/(tripTimeMins)*100;
+
 
 					return "width: "+width+"%; left: "+left+"%; min-width:40px; max-width:100%;";
-				}.property('layoverDuration', 'flightLength')
+				}.property('layoverDuration', 'flightLengthMinutes')
 
 			});
 
@@ -317,14 +303,28 @@ export default Ember.ObjectController.extend({
 			var prevLeg = null;
 
 			var self = this;
-			legs.forEach(function(leg){
+
+			function parseDate(input) {
+				var parts = input.match(/(\d+)/g);
+				// new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+				return new Date(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5]); // months are 0-based
+			}
+
+			console.log("Flight Length Mins:    "+this.get('flightLengthMinutes'));
+			console.log("Flight Departure Time: "+this.get('departureTime'));
+			console.log("Flight Arrival Time:   "+this.get('arrivalTime'));
+
+			legs.forEach(function(leg, index){
 				
+				console.log("Leg["+index+"] (real):   "+leg.arrival_time);
+				console.log("Leg["+index+"] (parsed): "+parseDate(leg.arrival_time));
+
 				if(prevLeg)
 				{
 					var l = layover.create({
 						arrivalFlight: prevLeg,
 						departureFlight: leg,
-						flightLength: self.get('flightTime'),
+						flightLengthMinutes: self.get('flightLengthMinutes'),
 						flightDepartTime: self.get('departureTime'),
 						flightArrivalTime: self.get('arrivalTime'),
 

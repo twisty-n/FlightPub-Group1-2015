@@ -17,15 +17,26 @@ export default DS.Model.extend({
     //Floor of the seats available for the trip
     seatsAvailable:     DS.attr('number'),
     //Total time in the air for the trip
-  	flightTime: 		DS.attr('number'),
-  	origin: 			DS.attr('string'),
-  	destination: 		DS.attr('string'),
-  	isReturnFlight:		DS.attr('boolean'),
+    flightTime: 		DS.attr('number'),
+    origin: 			DS.attr('string'),
+    destination: 		DS.attr('string'),
+    isReturnFlight:		DS.attr('boolean'),
     //The searched for ticket class for the trip
     ticketClass:        DS.attr('string'),
 
     // Each leg of the flight is represented as a hash
     // that we can pull values from
-    legs:               DS.attr()
+    legs:               DS.attr(),
 
-});
+    flightLengthMinutes: Ember.computed('departureTime', 'arrivalTime', function(){
+      var departureTime = this.get('departureTime');
+      var arrivalTime = this.get('arrivalTime');
+
+      var milliseconds = arrivalTime - departureTime;
+
+      var minutes = Math.floor(milliseconds / 1000 / 60);
+
+      return Math.floor(minutes); 
+    }),
+
+  });
