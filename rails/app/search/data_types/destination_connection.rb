@@ -42,10 +42,10 @@ class DestinationConnection
 			output += "Destination airport: " + @destination.airport + "\n\n"
 		end
 		
-		if !(@previous_dc == nil)
-			output += "\n *** LINKED FROM *** \n"
-			output += @previous_dc.to_s
-		end
+#		if !(@previous_dc == nil)
+#			output += "\n *** LINKED FROM *** \n"
+#			output += @previous_dc.to_s
+#		end
 		
 		return output
 		

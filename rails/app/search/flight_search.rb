@@ -56,6 +56,7 @@ class FlightSearch
 		jack_reacher = Reachable.new
 		graph_level = 0
 		set_start_time(start_time)
+		detected_paths = Array.new
 		
 		# Prepare the first DC. The flight is nil
 		first_dc = DestinationConnection.new(nil, origin, nil)
@@ -79,8 +80,13 @@ class FlightSearch
 				if dc.destination.airport == target.airport
 				
 					# Destination located! Now we must create a flight path object
-					puts "\n NEW PATH DETECTED \n"
-					puts dc.to_s
+					puts "\n Path detected."
+					
+					# Create the flight path object:
+					# Add the origin in (it's a separte data piece)
+					found_path = FlightPath.new(origin, dc)
+					
+					detected_paths.push(found_path)
 					
 				else
 				
@@ -101,30 +107,13 @@ class FlightSearch
 		
 		
 		puts 'End of the search method'
-		return nil #Clears useless info being returned
+		return detected_paths
 	end # eof bfs_search method
 	
 	# This method uses a depth first search
 	def self.dfs(origin, target, start_time)
 		
-		# setup data structures
-		discovered_queue = DestinationQueue.new
-		jack_reacher = Reachable.new
-		
-		# label the first node as discovered
-		discovered_queue.add(origin)
-		
-		# get the next reachable DCs
-		reachables = jack_reacher.get_reachables(discovered_queue.get_next)
-		
-		reachables.each do |dc|
-			if target.id == dc.destination.id
-				puts 'Target reached.'
-			elsif !(discovered_queue.include?(dc))
-				dfs(dc.destination, target, start_time)
-			end
-		end
-		
+		# Might do later
 		
 		puts 'end of the dfs method'
 		return nil

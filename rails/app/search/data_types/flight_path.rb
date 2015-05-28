@@ -9,14 +9,14 @@ class FlightPath
 	
 	# ------------------------------- Class Initialiser --------------------------------- #
 	
-	def initialize
-		@origin
-		@internal_data = Array.new			# The array of DestinationConnections delineates the path, minus the origin
+	def initialize(input_origin, input_dc)
+		@origin = input_origin
+		@dc = input_dc				# The last DC (the dc links the other DCs)
 	end
 	
 	# ------------------------------- Getters and setters --------------------------------- #
 	
-	attr_accessor :origin, :internal_data
+	attr_accessor :origin, :dc
 	
 	
 	# ------------------------------- Class Methods --------------------------------- #
@@ -27,47 +27,44 @@ class FlightPath
 	end
 	
 	# This function returns the final destination in this path
-	def get_final_destination
-		return @internal_data.last.destination
+	def get_dc
+		return @dc
 	end
 	
-	# This two functions add a new destinationConnection to the array
-	def add_dc(input)
-		@internal_data.push(input)
-	end
-	
-	# This functino also adds a new DestinationConnection, but creates it first
-	def add_manual(input_flight, input_destination)
-		input_destination_connect = DestinationConnection.new(input_flight, input_destination)
-		@internal_data.push(input_destination_connect)
-	end
 	
 	# This function returns the number of connecting flights
 	def get_no_connecting_flights
-		return @internal_data.length
-	end
-	
-	# This function returns the number of stops
-	def get_no_of_stops
-		return ((self.get_no_connectingflights) - 1)
+		# TODO
 	end
 	
 	# This function returns a string containing the contents.
 	# mostly for debugging purposes.
 	def to_s
-		output = ''
+		output = "\n --------------Flight Path object----------------- \n"
 		
 		# Check if there is no origin, and give it the default string if so
 		if @origin == nil
 			@origin = '<NO ORIGIN>'
 		end
 		
-		output += @origin
-		
-		@internal_data.each do |x|
-			output += "\n Then \n"
-			output += x.flight + " to " + x.destination
+#		output += @origin.airport
+#		
+#		current_dc = @dc
+#		while !(current_dc.previous_dc == nil)
+#			output += "\n Going to \n"
+#			output += current_dc.to_s
+#			current_dc = current_dc.previous_dc
+#		end # eof while loop that gets the previous chained DCs
+
+		current_dc = @dc
+		while !(current_dc.previous_dc == nil)
+			output += "\nNext Connection:\n"
+			output += current_dc.to_s
+			current_dc = current_dc.previous_dc
 		end
+		
+		#lastly, add the origin
+		output += "\n Origin: " + @origin.airport
 		
 		return output
 		

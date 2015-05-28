@@ -142,9 +142,9 @@ class Test
 	
 		puts "================== Search Test =================="
 		
-		origin = Destination.find_by(airport: 'Los Angeles')
+		origin = Destination.find_by(airport: 'Sydney')
 		
-		destination = Destination.find_by(airport: 'Paris - Orly')
+		destination = Destination.find_by(airport: 'Melbourne')
 		
 		puts "The origin is: " + origin.airport + " and the destination is: " + destination.airport
 		
@@ -154,8 +154,15 @@ class Test
 		
 		puts start_time.to_s
 		
-		FlightSearch.bfs(origin, destination, start_time)
+		found = FlightSearch.bfs(origin, destination, start_time)
 		
+		puts "PRINTING OUT THE DETECTED PATHS:"
+		
+		found.each do |flight_path|
+			puts flight_path.to_s
+		end
+		
+		return nil
 	end #eof search test
 	
 	# This test is for the destination queue
