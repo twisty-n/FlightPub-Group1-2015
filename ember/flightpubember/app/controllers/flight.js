@@ -190,8 +190,8 @@ export default Ember.ObjectController.extend({
 				layoverDuration: Ember.computed('arrivalFlight', 'departureFlight', function(){
 					function parseDate(input) {
 						var parts = input.match(/(\d+)/g);
-						// new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
-						return new Date(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5]); // months are 0-based
+						// new Date(Date.UTC(year, month [, date [, hours[, minutes[, seconds[, ms]]]]]))
+						return new Date(Date.UTC(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5])); // months are 0-based
 					}
 
 					var arrival = parseDate(this.get('arrivalFlight.arrival_time'));
@@ -211,8 +211,8 @@ export default Ember.ObjectController.extend({
 				arrivalHourPeriod: Ember.computed('arrivalFlight', function(){
 					function parseDate(input) {
 						var parts = input.match(/(\d+)/g);
-						// new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
-						return new Date(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5]); // months are 0-based
+						// new Date(Date.UTC(year, month [, date [, hours[, minutes[, seconds[, ms]]]]]))
+						return new Date(Date.UTC(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5])); // months are 0-based
 					}
 
 					var layoverTime = parseDate(this.get('arrivalFlight.arrival_time'));
@@ -239,8 +239,8 @@ export default Ember.ObjectController.extend({
 				departureHourPeriod: Ember.computed('departureFlight', function(){
 					function parseDate(input) {
 						var parts = input.match(/(\d+)/g);
-						// new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
-						return new Date(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5]); // months are 0-based
+						// new Date(Date.UTC(year, month [, date [, hours[, minutes[, seconds[, ms]]]]]))
+						return new Date(Date.UTC(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5])); // months are 0-based
 					}
 
 					var layoverTime = parseDate(this.get('departureFlight.arrival_time'));
@@ -267,8 +267,8 @@ export default Ember.ObjectController.extend({
 				layoverStyle: function(){
 					function parseDate(input) {
 						var parts = input.match(/(\d+)/g);
-						// new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
-						return new Date(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5]); // months are 0-based
+						// new Date(Date.UTC(year, month [, date [, hours[, minutes[, seconds[, ms]]]]]))
+						return new Date(Date.UTC(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5])); // months are 0-based
 					}
 
 					
@@ -306,8 +306,8 @@ export default Ember.ObjectController.extend({
 
 			function parseDate(input) {
 				var parts = input.match(/(\d+)/g);
-				// new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
-				return new Date(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5]); // months are 0-based
+				// new Date(Date.UTC(year, month [, date [, hours[, minutes[, seconds[, ms]]]]]))
+				return new Date(Date.UTC(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5])); // months are 0-based
 			}
 
 			console.log("Flight Length Mins:    "+this.get('flightLengthMinutes'));

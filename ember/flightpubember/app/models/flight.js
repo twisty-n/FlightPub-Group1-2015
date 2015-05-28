@@ -28,15 +28,25 @@ export default DS.Model.extend({
     // that we can pull values from
     legs:               DS.attr(),
 
-    flightLengthMinutes: Ember.computed('departureTime', 'arrivalTime', function(){
-      var departureTime = this.get('departureTime');
-      var arrivalTime = this.get('arrivalTime');
+    flightLengthMinutes: Ember.computed('legs', function(){
+      // var departureTime = this.get('departureTime');
+      // var arrivalTime = this.get('arrivalTime');
+      function parseDate(input) {
+        var parts = input.match(/(\d+)/g);
+        // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+        return new Date(Date.UTC(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5])); // months are 0-based
+      }
 
-      var milliseconds = arrivalTime - departureTime;
+          var departureTime = parseDate(this.get('legs').get('firstObject').departure_time);
+          var arrivalTime = parseDate(this.get('legs').get('lastObject').arrival_time);
 
-      var minutes = Math.floor(milliseconds / 1000 / 60);
+          console.log(departureTime);
 
-      return Math.floor(minutes); 
+          var milliseconds = arrivalTime - departureTime;
+
+          var minutes = Math.floor(milliseconds / 1000 / 60);
+
+          return Math.floor(minutes); 
     }),
 
   });
