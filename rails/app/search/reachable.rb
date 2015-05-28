@@ -33,8 +33,13 @@ class Reachable
 			requesting_dc.flight = Flight.new
 			requesting_dc.flight.arrival_time = FlightSearch.get_start_time
 		end
+		# Time ranges:
+		# 1 day => 86400
+		# 2 days => 172800
 		
-		Flight.where(origin_id: current_node.id).where("departure_time > ?", requesting_dc.flight.arrival_time).find_each do | flight |
+		# Calculate the time range
+		max_stopover_time = requesting_dc.flight.arrival_time + 172800
+		Flight.where(origin_id: current_node.id).where("departure_time > ?", requesting_dc.flight.arrival_time).where("departure_time <= ?", max_stopover_time ).find_each do | flight |
 			# Step 2a: Add matching flights to the results
 			
 			# get the destination

@@ -142,13 +142,19 @@ class Test
 	
 		puts "================== Search Test =================="
 		
-		origin = Destination.find_by(airport: 'Sydney')
+		origin = Destination.find_by(airport: 'Los Angeles')
 		
-		destination = Destination.find_by(airport: 'Miami')
+		destination = Destination.find_by(airport: 'Paris - Orly')
 		
 		puts "The origin is: " + origin.airport + " and the destination is: " + destination.airport
 		
-		FlightSearch.bfs(origin, destination, Time.new(2002))
+		puts "the time leaving is:"
+		
+		start_time = ActiveSupport::TimeZone["UTC"].parse("2015-02-20 10:25pm")
+		
+		puts start_time.to_s
+		
+		FlightSearch.bfs(origin, destination, start_time)
 		
 	end #eof search test
 	
@@ -221,7 +227,11 @@ class Test
 		minus = tz1 - tz2
 		puts minus
 		
-		# Thus it returns seconds. Divide by 360 to get the hours!
+		puts 'Here is tz1 now: ' + tz1.to_s
+		tz1 += 86400
+		puts 'and a day later? :' + tz1.to_s
+		
+		# Thus it returns seconds. Divide by 3600 to get the hours!
 		
 		return nil
 	end # eof the time test
