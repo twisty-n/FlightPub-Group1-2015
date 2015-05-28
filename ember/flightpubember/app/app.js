@@ -22,22 +22,22 @@ Ember.View.reopen({
   },
   afterRenderEvent : function(){
 
-    $("#departure-suggestions").niceScroll({
+    Ember.$("#departure-suggestions").niceScroll({
         mousescrollstep: 10,
         cursorcolor: "#fff",
         cursorborder: "0px solid #fff",
         railpadding: { top: 2, right: 2, left: 2, bottom: 2 },
      });
 
-  	$("#return-suggestions").niceScroll({
+  	Ember.$("#return-suggestions").niceScroll({
   		mousescrollstep: 10,
   		cursorcolor: "#fff",
   		cursorborder: "0px solid #fff",
   		railpadding: { top: 2, right: 2, left: 2, bottom: 2 },
   	});
 
-  	$("#departure-datepicker").datepicker({dateFormat: 'dd-mm-yy'});
-  	$("#return-datepicker").datepicker({dateFormat: 'dd-mm-yy'});
+  	Ember.$("#departure-datepicker").datepicker({dateFormat: 'dd-mm-yy'});
+  	Ember.$("#return-datepicker").datepicker({dateFormat: 'dd-mm-yy'});
   }
   
 });

@@ -84,8 +84,7 @@
 
 						<div class="time-bar" {{bind-attr style='flight.timeBarStyle'}}>
 							{{#each layover in flight.layovers itemController="flight"}}
-							{{#each promotion in layover.promotions}}
-							{{/each}}
+							
 							<div class="layover" {{bind-attr style="layover.layoverStyle"}}>
 								{{layover.time}}<br>{{layover.destination}}
 								<div class="time layover-time" style="right:100%;">{{layover.arrivalHour}}<br/>{{layover.arrivalPeriod}}</div>
@@ -117,7 +116,9 @@
 								<div class="time">{{flight.flightLengthMinutesHours}}</div>
 							</div>
 						</div>
-						{{#each leg in flight.legs itemController="flight"}}
+
+						<!-- Alistair reccomends that he creates a new "leg" controller -->
+						{{#each leg in flight.legs itemController="leg"}}
 						<div class="leg-details" {{bind-attr style="flight.legStyle"}}>
 
 							<div class="details-top">
@@ -139,6 +140,9 @@
 							</div>
 
 							<div class="price">
+								{{#if leg.isPromotionFlight}}
+								
+								{{/if}}
 								${{leg.price}}
 							</div>
 
