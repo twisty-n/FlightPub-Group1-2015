@@ -44,7 +44,7 @@
 			<div id="result-filters">
 				<div id="main-filters">
 					<button {{action "sortBy" "price:asc"}} id="cheapest-first-filter">cheapest first</button> 
-					<button {{action "sortBy" "flightTime:asc"}}id="shortest-first-filter">quickest first</button> 
+					<button {{action "sortBy" "flightLengthMinutes:asc"}}id="shortest-first-filter">quickest first</button> 
 					<button id="no-stops-filter" {{action "filterBy" "noStops"}}>no stops</button> <!-- this button acts like a checkbox? -->	
 				</div>
 
@@ -87,8 +87,8 @@
 							
 							<div class="layover" {{bind-attr style="layover.layoverStyle"}}>
 								{{layover.time}}<br>{{layover.destination}}
-								<div class="time layover-time" style="right:100%;">{{layover.arrivalHour}}<br/>{{layover.arrivalPeriod}}</div>
-								<div class="time layover-time" style="left:100%;">{{layover.departureHour}}<br>{{layover.arrivalPeriod}}</div>
+								<div class="time layover-time" style="right:100%;">{{layover.arrivalHourPeriod}}</div>
+								<div class="time layover-time" style="left:100%;">{{layover.departureHourPeriod}}</div>
 							</div>
 							{{/each}}
 							<div class="time" style="right:100%;">{{flight.departureTimeHourDay}}</div>
@@ -108,7 +108,6 @@
 				</div>
 				<div class="flight-details">
 					<div class="flight-details-inner">
-
 						{{#if flight.layovers}}
 						<div class="details-l2">
 							<div class="total-time">
@@ -118,7 +117,7 @@
 						</div>
 
 						<!-- Alistair reccomends that he creates a new "leg" controller -->
-						{{#each leg in flight.legs itemController="leg"}}
+						{{#each leg in flight.legs itemController="flight"}}
 						<div class="leg-details" {{bind-attr style="flight.legStyle"}}>
 
 							<div class="details-top">
@@ -138,11 +137,8 @@
 							<div class="flight-number">
 								<div class="flight-num-title">Flight No.</div> {{leg.flightNumber}}
 							</div>
-
+							
 							<div class="price">
-								{{#if leg.isPromotionFlight}}
-								
-								{{/if}}
 								${{leg.price}}
 							</div>
 
