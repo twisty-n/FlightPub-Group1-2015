@@ -36,6 +36,7 @@ class Reachable
 		# Time ranges:
 		# 1 day => 86400
 		# 2 days => 172800
+		# 3 days => 259200
 		
 		# Calculate the time range
 		max_stopover_time = requesting_dc.flight.arrival_time + 172800

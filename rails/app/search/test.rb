@@ -150,7 +150,7 @@ class Test
 		
 		puts "the time leaving is:"
 		
-		start_time = ActiveSupport::TimeZone["UTC"].parse("2015-02-20 10:25pm")
+		start_time = ActiveSupport::TimeZone["UTC"].parse("2014-11-20 10:25pm")
 		
 		puts start_time.to_s
 		
