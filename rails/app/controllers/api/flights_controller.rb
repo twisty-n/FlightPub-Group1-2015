@@ -72,43 +72,26 @@ class Api::FlightsController < ApplicationController
     #     returnDate=27-05-2015&
     #     ticketClass=&
     #     numberOfPeople=4" 
-    num_flights = [10..30].sample
+    #     
+    
+    # First run the search for departing flights
+    depart_date = ActiveSupport::TimeZone["UTC"].parse( params['departureDate'] + ' 00:01am' )
+    puts depart_date
 
-    flights = Array.new
+    return_date = ActiveSupport::TimeZone["UTC"].parse( params['returnDate'] + ' 00:01am' )
+    puts return_date
 
+    depart_destination = Destination.find_by(destination_code: params['destinationCode'])
+    depart_origin = Destination.find_by(destination_code: params['originCode'])
+
+    depart_flight_paths = FlightSearch.bfs(depart_origin, depart_destination, depart_date)
+    return_flight_paths = FlightSearch.bfs(depart_destination, depart_origin, return_date)
+
+    # puts flight_paths.inspect
+
+    # change this to operate on our departing flight paths and returning flight paths
     num_flights.each do |val|
 
-      # Elms is the subarray of flights
-      elems = Array.new
-      elems.push(Flight.take(200).sample(1).first)
-
-      print elems
-
-      1..([1..4].sample(1)).each do 
-
-        # If you need to adjust the time speratation, change the 18 to something else :)
-        aff_date = DateTime.parse(elems.last.arrival_time).advance(:hours => 18).strftime('%Y-%m-%d %H:%M:%S UTC')
-        elems.push( Flight.departs_on_day( elems.last.arrival_time, aff_date ).first )
-      
-      end
-
-      # For now, the top level information will just be taken from the composite information
-      # The flight number will be the flight number of the first flight
-      # origin and destination will simply be the initial origin and the final destination
-      # price will be the composite price
-      # seats available will be the floor of the seats available
-      # The assumed ticket class will be economy
-      # We are also going to resave the ticket class into the trip, so that
-      # we have the information when we need to purchase or save things
-      # 
-      
-      # NOW WE WILL TALK ABOUT TICKETS
-      # We are going to be selected the LOWEST PRICE ticket that matches our ticket class
-      # We are going to record this information to be used in the purchase and stuff later
-      # Crying!
-      # We will ignore the amount of seats, and just try to find a ticket that matches the class
-
-      # Set ticket class to sent class or ECO if its nil in params
       ticket_class = params['ticketClass']
       ticket_class ||= 'ECO'
 
@@ -116,8 +99,8 @@ class Api::FlightsController < ApplicationController
       seats_available = elems.first.ticket_availabilities.t_class(ticket_class).smallest_price.seats_available
       total_duration = 0
 
-      print elems
 
+      # Operates on the individual flights in our flight paths
       elems.each do |flight|
         
         # Set up the flight information
