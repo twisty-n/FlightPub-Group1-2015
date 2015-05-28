@@ -1455,9 +1455,14 @@ a{
 		padding-bottom: 10px;
 	}
 
+	.loginSignup-inner-wrapper{
+		width: 185px;
+		margin: 0 auto;
+	}
+
 	.loginSignup-top{
 		margin: 0 auto;
-		width: 344px;
+		width: inherit;
 	}
 
 	.loginSignup-top button{
@@ -1486,7 +1491,7 @@ a{
 
 	.loginSignup form{
 		margin: 0 auto;
-		width: 50%;
+		width: 176px;
 	}
 	
 	.loginSignup form button{
