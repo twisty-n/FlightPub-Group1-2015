@@ -281,20 +281,6 @@ body{
 
 }
 
-/* My shitty admin table stuff! */
-table, td, th {
-	border: 1px solid green;
-	border-collapse: collapse;
-	padding: 5px;
-	table-layout: fixed;
-}
-
-th {
-	background-color: #17AEE5;
-	color: white;
-}
-
-
 /* Style */
 
 .rounded{
@@ -348,7 +334,10 @@ input.rounded:focus {
 /* Footer */
 
 #footer{
+	
+  margin-top: 80px;
 	width:100%;
+
 }
 
 #footer hr{
@@ -1534,6 +1523,10 @@ a{
 		/*margin-top:30px;*/
 	}
 
+	.full-page-white-wrapper a{
+		color:#797979;
+	}
+
 	.full-page-white-center-50{
 		width: 50%;
 		margin: 0 auto;
@@ -1541,6 +1534,7 @@ a{
 		padding-top: 15px;
 		padding-bottom: 10px;
 	}
+
 
 	.full-page-white-center{
 		width: 70%;
@@ -1559,3 +1553,51 @@ a{
 	.admin-inside-2{
 		margin-left: 20px;
 	}
+
+	#user-info h2{
+		color: #1479C9;
+	}
+
+	table, td, th {
+		border: 1px solid rgb(20, 121, 201);		border-collapse: collapse;
+		padding: 5px;
+		table-layout: fixed;
+	}
+
+	th {
+		background-color: #17AEE5;
+		color: white;
+	}
+
+
+	#user-filter-wrapper{
+		margin-bottom: 	10px;
+	}
+
+	#user-filter{		
+		border-color: #17AEE5;
+	}
+
+	.admin-nav{
+		margin: 0 auto;
+		padding-top:12px;
+		width: 400px;
+	}
+
+	.admin-nav .btn{
+		min-width: 90px;
+		height: 24px;
+		background-color: #FFFFFF;
+		color: #1479C9;
+		border-style: solid;
+		border-width: 1px;
+		border-color: #1479C9;
+		bottom: 40px;
+		font-size: 12px;
+	}
+
+	.btn.admin-nav-active{
+		color: #FFF;
+		background-color: #1CAEE5;
+	}
+

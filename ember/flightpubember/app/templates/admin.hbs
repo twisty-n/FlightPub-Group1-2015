@@ -1,11 +1,11 @@
 <h1 id="page-title-small">Administration</h1>
 
 <div id="user-info" class="full-page-white-wrapper">
-<div id='nav'>
-	<a href="" {{action "showUserAdmin"}}>User Admin</a>
-	<a href="" {{action "showFlightAdmin"}}>Flight Admin</a>
-	<a href="" {{action "showAirlineAdmin"}}>Airline Admin</a>
-	<a href="" {{action "showPromotionAdmin"}}>Promotion Admin</a>
+<div class='admin-nav'>
+	<button id="user-admin-switch" class="btn admin-nav-active"{{action "showUserAdmin"}}>User Admin</button>
+	<button id="flight-admin-switch" class="btn"{{action "showFlightAdmin"}}>Flight Admin</button>
+	<button id="airline-admin-switch" class="btn"{{action "showAirlineAdmin"}}>Airline Admin</button>
+	<button id="promotion-admin-switch" class="btn"{{action "showPromotionAdmin"}}>Promotion Admin</button>
 </div>
 	<div class="full-page-white-center-50">
 		<!-- TODO: fix this up once we have users list going -->
@@ -14,7 +14,7 @@
 			<div class="admin-inside">
 				{{#if users}}
 				<div id="user-filter-wrapper">
-					{{input value=userFilter type="text" class="" id="user-filter" placeholder="Search"}}
+					{{input value=userFilter type="text" class="rounded" id="user-filter" placeholder="Search"}}
 				</div>
 				<div id="user-list">
 					<table>

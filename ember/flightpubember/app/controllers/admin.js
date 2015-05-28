@@ -93,6 +93,7 @@ export default Ember.Controller.extend({
             Ember.$("#airline-admin").hide();
             Ember.$("#promotions-admin").hide();
             Ember.$("#users-admin").show();
+            this.send('setActive', '#user-admin-switch');
         },
 
 
@@ -101,6 +102,7 @@ export default Ember.Controller.extend({
             Ember.$("#airline-admin").show();
             Ember.$("#promotions-admin").hide();
             Ember.$("#users-admin").hide();
+            this.send('setActive', '#airline-admin-switch');
         },
 
 
@@ -109,6 +111,7 @@ export default Ember.Controller.extend({
             Ember.$("#airline-admin").hide();
             Ember.$("#promotions-admin").hide();
             Ember.$("#users-admin").hide();
+            this.send('setActive', '#flight-admin-switch');
         },
 
 
@@ -117,6 +120,16 @@ export default Ember.Controller.extend({
             Ember.$("#airline-admin").hide();
             Ember.$("#promotions-admin").show();
             Ember.$("#users-admin").hide();
+            this.send('setActive', '#promotion-admin-switch');
         },
+
+        setActive: function(activeID){
+            Ember.$("#user-admin-switch").removeClass("admin-nav-active");
+            Ember.$("#airline-admin-switch").removeClass("admin-nav-active");
+            Ember.$("#promotion-admin-switch").removeClass("admin-nav-active");
+            Ember.$("#flight-admin-switch").removeClass("admin-nav-active");
+
+            Ember.$(activeID).addClass("admin-nav-active");
+        }
     }
 });
