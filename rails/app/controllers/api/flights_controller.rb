@@ -63,7 +63,7 @@ class Api::FlightsController < ApplicationController
     end
 
     # We will now load up a selection of flights variable
-    num_flights = [1..10].sample
+    num_flights = [10..30].sample
 
     flights = Array.new
 

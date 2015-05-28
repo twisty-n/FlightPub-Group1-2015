@@ -28,9 +28,8 @@ export default Ember.Route.extend({
 
     actions: {
       loading: function(transition, originRoute) {
-
-       alert('We entered the loading substate');
-
+       
+        return true;
       }
     }
    //  setupController: function(controller, model) {
