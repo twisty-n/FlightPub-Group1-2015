@@ -276,14 +276,8 @@ export default Ember.ArrayController.extend({
       }
     },
 
-    purchase: function(){
-
-      //we need user id, so we need to have the user sign up if they're not logged in
-      console.log(this.get('controllers.application.isAuthenticated'));
-      console.log(this.get('controllers.application.currentUser'));
-
-      var user_id = null;
-
+    setupUser: function() {
+      var data = null;
       if (! this.get('controllers.application.isAuthenticated')) {
 
         if( this.get('reviewLoginShowing') ) {
@@ -296,11 +290,29 @@ export default Ember.ArrayController.extend({
           this.get('controllers.sessions').send('registerUser', true, data);
         }
 
-      } else {
-        user_id = this.get('controllers.application.currentUser');
+      }
+    },
+
+    purchase: function(){
+
+      //we need user id, so we need to have the user sign up if they're not logged in
+      console.log(this.get('controllers.application.isAuthenticated'));
+      console.log(this.get('controllers.application.currentUser'));
+
+      if (this.get('cardNumber') == undefined 
+        ||this.get('expiryDate') == undefined 
+        ||this.get('securityCode') == undefined 
+        ||this.get('nameOnCard') == undefined) {
+        alert('Fill out payment details');
+        return;
       }
 
-
+      var user_id = this.get('controllers.application.currentUser');
+      if (user_id == null) {
+        alert('Please Log In or Register');
+        return;
+      }
+ 
       // Iterate over each flight in the journey to get the list of tickets
       var flights = this.get('DepartureFlight').get('legs');
       var flight;

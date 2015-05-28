@@ -164,7 +164,6 @@ export default Ember.ObjectController.extend({
       console.log("register user called!");
 
       var _this = this;
-      var performRedirect = ! noRedirect;
 //http://stackoverflow.com/questions/25632567/javascript-code-with-ember-js-password-confirm-password-matching-fields-with-em
 //TODO: password and email confirmation checking
   console.log(user_data);
@@ -180,7 +179,7 @@ export default Ember.ObjectController.extend({
         password: null,
         password_confirmation: null
       })
-      this.get('controllers.users/signup').send('createUser', performRedirect, data);
+      this.get('controllers.users/signup').send('createUser', noRedirect, data);
     },
 
     showLogin: function(){

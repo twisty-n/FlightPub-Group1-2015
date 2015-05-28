@@ -166,9 +166,9 @@ class Api::FlightsController < ApplicationController
         legs: val.get_herpes
       }
 
-      #if trip['seatsAvailable'] > 0
+     if seats_available > 0
         journeys.push(trip)
-     # end
+     end
 
     end
 
@@ -245,7 +245,9 @@ class Api::FlightsController < ApplicationController
         legs: val.get_herpes
       }
 
-      journeys.push(trip)
+      if seats_available > 0
+        journeys.push(trip)
+     end
 
     end
 
