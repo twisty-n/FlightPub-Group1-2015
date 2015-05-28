@@ -76,7 +76,7 @@ export default Ember.ObjectController.extend({
 
         journeys.forEach(function(journey)
         {
-            if(journey.save_type === 'purchased_flight')
+            if(journey.save_type === 'saved_flight')
             {
                 saved.pushObject(journey.journey.journey);
             }

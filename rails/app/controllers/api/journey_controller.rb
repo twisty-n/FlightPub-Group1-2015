@@ -152,6 +152,20 @@ class Api::JourneyController < ApplicationController
 
     end
 
+    def cancel_purchase
+=begin
+
+    Cancel a purchase that a user has made
+    We will expect the user_id, as well as the journey id
+
+=end
+    
+    # Step 1: Remove the journey from the users saved journeys
+    # Step 2: Remove all of the tickets from ticket purchases: consider doing this as a state instead of deleteion
+    # Step 3: Send an email to the user about their refund and all that crap: add in the terms and conditions
+
+    end
+
     private
 
     def build_journey(user_id, journey_id, save_type, account_type)

@@ -1,10 +1,12 @@
 Admin stuff         -- IN MOTION
 
-                    -- Implement promotions
+					-- Implement cancelling of purchases
+					-- Add a thing to the PurchasedTickets that represents
+						if it is active or cancelled or whatever
 
+					
                 	-- Create API endpoints for adding airlines
                     -- Create API endpoints for adding destinations
-                    -- CREATE PROMOTIONS
                     -- Create API endpoints for adding flights
                         -- Define the needed data
                         -- Code
