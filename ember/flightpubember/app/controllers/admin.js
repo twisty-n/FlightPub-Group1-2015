@@ -8,9 +8,6 @@ export default Ember.Controller.extend({
     actions: {
 
         toggleAccountStatus: function(user) {
-
-            alert(user.get('accountStatus'));
-
             if ( user.get('accountStatus') === 'active' ) {
                 user.set('accountStatus', 'inactive');
                 user.save();
@@ -18,7 +15,6 @@ export default Ember.Controller.extend({
                 user.set('accountStatus', 'active');
                 user.save();
             }
-
         },
 
 

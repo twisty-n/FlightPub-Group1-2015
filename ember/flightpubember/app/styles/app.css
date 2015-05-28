@@ -335,7 +335,7 @@ input.rounded:focus {
 
 #footer{
 	
-  margin-top: 80px;
+	margin-top: 80px;
 	width:100%;
 
 }
@@ -1554,7 +1554,7 @@ a{
 		margin-left: 20px;
 	}
 
-	#user-info h2{
+	h2, h3{
 		color: #1479C9;
 	}
 
@@ -1569,6 +1569,10 @@ a{
 		color: white;
 	}
 
+	#purchase-policy-text{
+		width: 560px;
+		height: 120px;
+	}
 
 	#user-filter-wrapper{
 		margin-bottom: 	10px;
