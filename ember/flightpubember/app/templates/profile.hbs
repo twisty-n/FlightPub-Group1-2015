@@ -3,6 +3,14 @@
 <div id="user-info" class="full-page-white-wrapper">
 	<div class="full-page-white-center-50">
 
+		{{#each journey in upcomingJourneys}}
+			{{journey.save_type}}
+		{{/each}}
+		{{pastJourneys}}
+		{{savedJourneys}}
+			
+		
+
 		<div id="purchased-flights">
 			<div id="upcoming">
 				<h2>Upcoming Trips</h2>
@@ -13,7 +21,9 @@
 					<div class="trip-time">Total Time: 10h 50m</div>
 					<div class="trip-price">Cost: $20.00</div>
 					<div class="trip-paid">Paid on: 5/04/2015</div>
+					
 
+	
 					<!-- if flights is more than 1 -->
 					<div class="trip-flights-list">
 						<ul>

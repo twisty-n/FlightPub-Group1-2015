@@ -5,6 +5,31 @@ export default Ember.ObjectController.extend({
 
     needs: ['application'],
 
+    upcomingJourneys: function(){
+        var journeys = this.get('model.journeys');
+
+        var upcoming = Ember.A([]); 
+
+        journeys.forEach(function(journey)
+        {
+            upcoming.pushObject(journey);
+        });
+
+        return upcoming;
+    }.property('model.journeys'),
+
+    pastJourneys: function(){
+        
+        return 'OY';
+    }.property('model.journeys'),
+
+    savedJourneys: function(){
+        
+
+        return 'Y O O O';
+
+    }.property('model.journeys'),
+
     actions: {
 
 
