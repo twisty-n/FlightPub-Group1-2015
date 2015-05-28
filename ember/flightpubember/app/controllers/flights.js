@@ -42,8 +42,6 @@ export default Ember.ArrayController.extend({
   maxStopsOptions: Ember.A([{max: "Max Stops", stops: -1}, {max: "1 Stop", stops: 1},{max: "2 Stops", stops: 2},{max: "3 Stops", stops: 3},{max: "4 Stops", stops: 4},{max: "5+ Stops", stops: 5}]),
 
   mustStopAt: 'Specify Stop',
-  
-
 
   averageFlightTime: Ember.computed('sortedFlights', function(){
 
@@ -72,6 +70,8 @@ export default Ember.ArrayController.extend({
     var filterProperties = this.get('filterProperties');
 
     flights = flights.filter(function(flight){
+      console.log(flight);
+
       var useFlight = false;
 
       if(self.get('currentSelection') === 'departure')
