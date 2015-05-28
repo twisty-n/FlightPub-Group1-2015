@@ -29,6 +29,11 @@ class Reachable
 #		Flight.where(origin_id: current_node.id).find_each do | flight |		# The old SQL query
 		
 		# Check if the requesting_dc is the very first node, because it has no flight!
+		if requesting_dc.flight == nil
+			requesting_dc.flight = Flight.new
+			requesting_dc.flight.arrival_time = FlightSearch.get_start_time
+		end
+		
 		Flight.where(origin_id: current_node.id).where("departure_time > ?", requesting_dc.flight.arrival_time).find_each do | flight |
 			# Step 2a: Add matching flights to the results
 			

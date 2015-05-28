@@ -148,7 +148,7 @@ class Test
 		
 		puts "The origin is: " + origin.airport + " and the destination is: " + destination.airport
 		
-		FlightSearch.bfs(origin, destination, 0)
+		FlightSearch.bfs(origin, destination, Time.new(2002))
 		
 	end #eof search test
 	

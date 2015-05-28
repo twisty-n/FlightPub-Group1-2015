@@ -13,6 +13,7 @@ class FlightSearch
 	# ------------------------------- Static Variables --------------------------------- #
 
 	@@time_counter = 0
+	@@start_time = Time.now
 	
 	# ------------------------------- Static methods --------------------------------- #
 	
@@ -24,6 +25,14 @@ class FlightSearch
 	
 	def self.set_time(input_time)
 		@@time_counter = input_time
+	end
+	
+	def self.get_start_time
+		return @@start_time
+	end
+	
+	def self.set_start_time(input)
+		@@start_time = input
 	end
 	
 	
@@ -46,6 +55,7 @@ class FlightSearch
 		toProcess = DestinationQueue.new
 		jack_reacher = Reachable.new
 		graph_level = 0
+		set_start_time(start_time)
 		
 		# Prepare the first DC. The flight is nil
 		first_dc = DestinationConnection.new(nil, origin, nil)
