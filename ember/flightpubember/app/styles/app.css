@@ -1090,7 +1090,7 @@ a{
 	padding-top: 0px;
 }
 
-.leg-details .airline-title, .flight-num-title{
+.leg-details .airline-title, .flight-num-title, .departure-title, .arrival-title{
 	
 	line-height: 26px;
 	color: #7C7C7C;
@@ -1543,6 +1543,74 @@ a{
 		padding-top: 15px;
 		padding-bottom: 10px;
 	}
+
+	.user-nav{
+		margin: 0 auto;
+		padding-top:12px;
+		width: 400px;
+	}
+
+	.user-nav .btn{
+		min-width: 90px;
+		height: 24px;
+		background-color: #FFFFFF;
+		color: #1479C9;
+		border-style: solid;
+		border-width: 1px;
+		border-color: #1479C9;
+		bottom: 40px;
+		font-size: 12px;
+	}
+
+	.btn.user-nav-active{
+		color: #FFF;
+		background-color: #1CAEE5;
+	}
+
+	.saved-flight{
+		width:100%;
+	}
+
+	.saved-flight:after {
+  content:"";
+  display:table;
+  clear:both;
+}
+
+	.saved-flight h3{
+		margin-bottom: 0px;
+		color:#1CAEE5;
+	}
+
+	.saved-flight div.leg-details{
+		width:100%;
+		padding-left: 5px;
+		margin: 0px;
+		padding-top: 10px;
+		height: 83px;
+		float: left;
+	}
+
+	.saved-flight .leg-details .leg-departure, .leg-arrival{
+		width: 80px;
+		float: left;
+	}
+
+	.saved-flight .leg-details .airline{
+		float: left;
+	}
+
+	.saved-flight .leg-details .flight-number{
+		font-size: 14px;
+		padding-left: 16px;
+		font-weight: normal;
+		width: 118px;
+		float: left;
+		padding-top: 0px;
+	}
+
+
+
 
 	/* Admin Page */
 

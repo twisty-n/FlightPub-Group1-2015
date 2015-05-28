@@ -2,45 +2,46 @@
 
 <div id="user-info" class="full-page-white-wrapper">
 	<div class="full-page-white-center-50">
-
-		{{#each journey in upcomingJourneys}}
-			{{journey.save_type}}
-		{{/each}}
-		{{pastJourneys}}
-		{{savedJourneys}}
-			
 		
+		<div class='user-nav'>
+			<button id="purchased-trips-switch" class="btn user-nav-active"{{action "showPurchased"}}>Purchased Trips</button>
+			<button id="saved-trips-switch" class="btn"{{action "showSaved"}}>Saved Trips</button>
+			<button id="settings-switch" class="btn"{{action "showSettings"}}>Settings</button>
+		</div>
 
 		<div id="purchased-flights">
 			<div id="upcoming">
 				<h2>Upcoming Trips</h2>
 				<div class="upcoming-trip admin-inside">
-					<div class="departure-time">Depart Time: hh:mm (am|pm) dd/mm/yyyy</div>
-					<div class="arrive-time">Arrival Time: hh:mm (am|pm) dd/mm/yyyy</div>
-					<div class="number-of-stops">No Stops</div>
-					<div class="trip-time">Total Time: 10h 50m</div>
-					<div class="trip-price">Cost: $20.00</div>
-					<div class="trip-paid">Paid on: 5/04/2015</div>
-					
+					{{#each journey in upcomingJourneys}}
 
-	
-					<!-- if flights is more than 1 -->
-					<div class="trip-flights-list">
-						<ul>
-							<!-- for each flight in trip -->
-							<li>
-								Flight: A380
-								<ul>
-									<li>Departure: hh:mm am dd/mm/yy</li>
-									<li>Return: hh:mm pm dd/mm/yy</li>
-									<li>Airline: Emirates</li>
-									<li>Class: Economy</li>
-								</ul>
-							</li>
-							<!-- end loop -->
-						</ul>
+					<h3>Trip from {{journey.origin}} to {{journey.destination}}</h3>
+					
+					<div class="trip-details">
+						<div class="times">
+							<div class="time">Departure Time: {{journey.departure_time}}</div>
+							<div class="time">Arrival Time: {{journey.arrival_time}}</div>
+						</div>
+						Price: ${{journey.price}}<br/>
+						Duration: {{journey.flight_time}}<br/>
+
+						HAS MULTIPLE FLIGHTS FLAG: {{journey.hasMultipleFlights}}
+						{{#if journey.hasMultipleFlights}}
+						<div class="admin-inside">
+							{{#each f in journey.flights}}
+							Flight: {{f.flight.flightNumber}}	
+							Airline: {{f.flight.airline}}	
+							departure: {{f.flight.departure_time}}	
+							arrival: {{f.flight.arrival_time}}	
+							origin: {{f.flight.origin}}	
+							destination: {{f.flight.destination}}	
+							{{/each}}
+						</div>
+						{{/if}}
+
 					</div>
-					<!-- end if -->
+
+					{{/each}}
 
 					<button>Cancel Flight</button>
 				</div>
@@ -48,60 +49,75 @@
 			
 			<h2>Previous Trips</h2>
 			<div  class="past-trips admin-inside">
-
+				
 				<div id="past-trips-list">
-					<!-- for each flight in past flights -->
-					<div class="past-depart-time">Depart Time: hh:mm (am|pm) dd/mm/yyyy</div>
-					<div class="past-arrive-time">Arrive Time: hh:mm (am|pm) dd/mm/yyyy</div>
-					<div class="past-total-time">Total Time: hh:mm </div>
-					<div class="past-price">Price: $12012012011010 </div>
-					<!-- end loop -->
+
+					{{#each journey in pastJourneys}}
+					Origin: {{journey.origin}}<br/>
+					Departure Time: {{journey.departure_time}}<br/>
+					Destination: {{journey.destination}}<br/>
+					Arrival Time: {{journey.arrival_time}}<br/>
+					Price: {{journey.price}}<br/>
+					Duration: {{journey.flight_time}}<br/>
+					
+					{{/each}}
 				</div>
 
 				<a href="">more</a>
 			</div>
 		</div>
 
-		<div id="saved-flights">
-			<h2>Saved Flights</h2>
+		<div id="saved-flights" style="display:none;">
+			<h2>Saved Trips</h2>
 
 			<div class="saved-flights-list admin-inside" >
-				<!-- for each saved flight -->
-					<div class="saved-flight">
+				{{#each journey in savedJourneys}}		
+				<div class="saved-flight">
+					<h3><span style="color:#A1A1A1;">From</span> {{journey.origin}} <span style="color:#A1A1A1;">To</span> {{journey.destination}}</h3>
+					{{journey.duration}}
+					{{journey.duration}}
+					<div class="admin-inside">
+					{{#each f in journey.flights}}
+					<div class="leg-details" {{bind-attr style="flight.legStyle"}}>
 
-						<div class="departure-time">Depart Time: hh:mm (am|pm) dd/mm/yyyy</div>
-						<div class="arrive-time">Arrival Time: hh:mm (am|pm) dd/mm/yyyy</div>
-						<div class="number-of-stops">No Stops</div>
-						<div class="trip-time">Total Time: 10h 50m</div>
-						<div class="trip-price">Cost: $20.00</div>
-						<div class="trip-paid">Paid on: 5/04/2015</div>
+						<div class="leg-departure">
+							<div class="leg-from-name">From</div><div class="leg-from">{{f.flight.origin}}</div>	
+						</div>
 
-						<!-- if flights is more than 1 -->
-							<div class="trip-flights-list">
-								<ul>
-									<!-- for each flight in trip -->
-									<li>
-										Flight: A380
-										<ul>
-											<li>Departure: hh:mm am dd/mm/yy</li>
-											<li>Return: hh:mm pm dd/mm/yy</li>
-											<li>Airline: Emirates</li>
-											<li>Class: Economy</li>
-										</ul>
-									</li>
-									<!-- end loop -->
-								</ul>
-							</div>
-						<!-- end if -->
-						<button>Delete</button>
+						<div class="leg-arrival">
+							<div class="leg-to-name">To</div><div class="leg-to">{{f.flight.destination}}</div>
+						</div>
+						
+						<div class="airline">
+							<div class="airline-title">Airline</div> {{f.flight.airline}}
+						</div>
+
+						<div class="flight-number">
+							<div class="flight-num-title">Flight No.</div> {{f.flight.flightNumber}}
+						</div>
+						<br/>
+						<div class="departure">
+							<div class="departure-title">Departure:</div>{{f.flight.departure_time}}
+						</div>
+						
+						<div class="arrival">
+							<div class="arrival-title">Arrival:</div>{{f.flight.departure_time}}
+						</div>
 					</div>
+
+					{{/each}}
+					</div>
+
+				</div>
+
+				{{/each}}
 			</div>
 
-				<!-- end loop -->
+			<!-- end loop -->
 		</div>
 
 
-		<div id="settings">
+		<div id="settings" style="display:none;">
 			<h2>Settings</h2>
 			<!-- here we will have the settings form which can be updated asynchronously -->
 			<div class="admin-inside">
@@ -109,24 +125,22 @@
 					
 					<!-- To have a new email address, the user must confirm it  -->
 					<div class="form-group">
-			          {{input value=email type="text" class="form-control input-lg" id="email" placeholder="Enter new email"}}
-			        </div>
-			        <div class="form-group">
-			          {{input value=email_confirmation type="text" class="form-control input-lg" id="email_confirmation" placeholder="Confirm email"}}
-			        </div>
+						{{input value=email type="text" class="form-control input-lg" id="email" placeholder="Enter new email"}}
+					</div>
+					<div class="form-group">
+						{{input value=email_confirmation type="text" class="form-control input-lg" id="email_confirmation" placeholder="Confirm email"}}
+					</div>
 
-			        <!-- User can update their name and bio  -->
-		        	<div class="form-group">
-			          {{input value=firstName type="text" class="form-control input-lg" id="firstName" placeholder="First Name"}}
-			        </div>
-			        <div class="form-group">
-			          {{input value=lastName type="text" class="form-control input-lg" id="lastName" placeholder="Last Name"}}
-			        </div>
-			        <div class="form-group">
-			          {{input value=address type="text" class="form-control input-lg" id="address" placeholder="Billing Address"}}
-			        </div>
-
-					<label>Recieve Marketing Emails</label><input type="checkbox"><br/>
+					<!-- User can update their name and bio  -->
+					<div class="form-group">
+						{{input value=firstName type="text" class="form-control input-lg" id="firstName" placeholder="First Name"}}
+					</div>
+					<div class="form-group">
+						{{input value=lastName type="text" class="form-control input-lg" id="lastName" placeholder="Last Name"}}
+					</div>
+					<div class="form-group">
+						{{input value=address type="text" class="form-control input-lg" id="address" placeholder="Billing Address"}}
+					</div>
 
 					<button type="submit">Save Changes</button>
 				</form>
@@ -136,15 +150,15 @@
 				</form>
 
 				<form {{action "saveDetails" on="submit"}} >
-								        <!-- To have a new password -->
-			        <div class="form-group">
-			          {{input value=password type="password" class="form-control input-lg" id="password_reg" placeholder="Password"}}
-			        </div>
-			        <div class="form-group">
-			          {{input value=password_confirmation type="password" class="form-control input-lg" id="password_confirmation" placeholder="Confirm password"}}
-			        </div>
-		        <button type="submit">Change Password</button>
-		        </form>
+					<!-- To have a new password -->
+					<div class="form-group">
+						{{input value=password type="password" class="form-control input-lg" id="password_reg" placeholder="Password"}}
+					</div>
+					<div class="form-group">
+						{{input value=password_confirmation type="password" class="form-control input-lg" id="password_confirmation" placeholder="Confirm password"}}
+					</div>
+					<button type="submit">Change Password</button>
+				</form>
 			</div>
 		</div>
 	</div>
