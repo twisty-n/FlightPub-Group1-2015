@@ -6,7 +6,7 @@ export default Ember.ObjectController.extend({
     actions: {
 
 
-        createUser: function(formData) {
+        createUser: function(noRedirect, formData) {
 
             var data = formData
             var user, _this;

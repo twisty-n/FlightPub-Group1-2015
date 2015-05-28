@@ -65,12 +65,29 @@ export default Ember.ObjectController.extend({
   },
   actions:              {
     // login action
-    loginUser: function() {
+    loginUser: function( noRedirect , user_data) {
+
+      /*
+          We use noRedirect and data to allow calling from out
+          side methods 
+       */
+
       var _this = this;
 
       // get the properties sent from the form and if there is any attemptedTransition set
       var attemptedTrans = this.get('attemptedTransition');
-      var data =           this.getProperties('email', 'password');
+      var data = null;
+      if (!user_data) {
+        data = this.getProperties('email', 'password');
+      }  else {
+        data = user_data;
+      }
+
+      console.log( noRedirect );
+
+      var performRedirect = ! noRedirect;
+
+      console.log(performRedirect);
 
       // clear the form fields
       this.setProperties({
@@ -122,13 +139,15 @@ export default Ember.ObjectController.extend({
               attemptedTrans.retry();
               _this.set('attemptedTransition', null);
             } else {
-              if(user.get('role') == 'admin')
-              {
-                _this.transitionToRoute('admin');
-              }
-              else
-              {
-                _this.transitionToRoute('profile');
+              if ( performRedirect ) {
+                if(user.get('role') == 'admin')
+                {
+                  _this.transitionToRoute('admin');
+                }
+                else
+                {
+                  _this.transitionToRoute('profile');
+                }
               }
             }
 
@@ -141,22 +160,27 @@ export default Ember.ObjectController.extend({
       });
     }
     ,
-    registerUser: function() {
+    registerUser: function( noRedirect, user_data ) {
       console.log("register user called!");
 
       var _this = this;
-
+      var performRedirect = ! noRedirect;
 //http://stackoverflow.com/questions/25632567/javascript-code-with-ember-js-password-confirm-password-matching-fields-with-em
 //TODO: password and email confirmation checking
-
-      var data = this.getProperties('email', 'password', 'email_confirmation', 'password_confirmation');
+  console.log(user_data);
+      var data = null;
+      if (user_data == undefined) {
+        data = this.getProperties('email', 'password', 'email_confirmation', 'password_confirmation');
+      } else {
+        data = user_data;
+      }
       _this.setProperties({
         email: null,
         email_confirmation: null,
         password: null,
         password_confirmation: null
       })
-      this.get('controllers.users/signup').send('createUser', data);
+      this.get('controllers.users/signup').send('createUser', performRedirect, data);
     },
 
     showLogin: function(){

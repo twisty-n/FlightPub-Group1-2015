@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
-  needs: ['application'],
+  needs: ['application', 'sessions'],
 
   DepartureFlight: null,          // The journey that represents origin to dest
   ReturnFlight: null,             // Journey that represents dest to org(y)
@@ -286,9 +286,15 @@ export default Ember.ArrayController.extend({
 
       if (! this.get('controllers.application.isAuthenticated')) {
 
-        // Gather the entered user details to submit to the server for purchasing
-        data = this.getProperties('email', 'email_confirmation', 'password', 'password_confirmation');
-
+        if( this.get('reviewLoginShowing') ) {
+          // Quickly grab their details and log the bastards in
+          data = this.getProperties('email', 'password');
+          this.get('controllers.sessions').send('loginUser', true, data);
+        } else {
+          // Gather the entered user details to submit to the server for purchasing
+          data = this.getProperties('email', 'email_confirmation', 'password', 'password_confirmation');
+          this.get('controllers.sessions').send('registerUser', true, data);
+        }
 
       } else {
         user_id = this.get('controllers.application.currentUser');
