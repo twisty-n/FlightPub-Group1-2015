@@ -21,8 +21,9 @@ class FlightPath
 	
 	# ------------------------------- Class Methods --------------------------------- #
 	
-	def get_array
+	public
 
+	def get_herpes
 		# Flights go here
 		results = Array.new
 

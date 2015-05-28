@@ -98,14 +98,14 @@ class Api::FlightsController < ApplicationController
       price = 0
 
       puts val.class.to_s
-      puts val.to_s
+      puts val.get_herpes
 
-      seats_available = val.get_array.first.ticket_availabilities.t_class(ticket_class).smallest_price.seats_available
+      seats_available = val.get_herpes.first.ticket_availabilities.t_class(ticket_class).smallest_price.seats_available
       total_duration = 0
 
 
       # Operates on the individual flights in our flight paths
-      val.get_array.each do |flight|
+      val.get_herpes.each do |flight|
         
         # Set up the flight information
         print("The flight is #{flight.inspect}")
@@ -130,10 +130,10 @@ class Api::FlightsController < ApplicationController
       journey = Journey.new
       journey.price           = price
       journey.flight_time     = total_duration
-      journey.origin_id       = elems.first.origin.id
-      journey.destination_id  = elems.last.destination.id
-      journey.departure_time  = elems.first.departure_time
-      journey.arrival_time    = elems.last.arrival_time
+      journey.origin_id       = val.get_herpes.first.origin.id
+      journey.destination_id  = val.get_herpes.last.destination.id
+      journey.departure_time  = val.get_herpes.first.departure_time
+      journey.arrival_time    = val.get_herpes.last.arrival_time
       journey.ticket_class_id = TicketClass.find_by(class_code: ticket_class).id
 
       journey.save!
@@ -141,7 +141,7 @@ class Api::FlightsController < ApplicationController
       # After creating the journey model, map the flights onto our journey, 
       # setting up a dependancy between them for the journey
        
-      val.get_array.each_with_index do |flight, index|
+      val.get_herpes.each_with_index do |flight, index|
 
         mapping = JourneyMap.new
         mapping.journey_id = journey.id
@@ -153,17 +153,17 @@ class Api::FlightsController < ApplicationController
 
       trip = {
         id: journey.id,
-        flightNumber: elems.first.flight_number,
+        flightNumber: val.get_herpes.first.flight_number,
         price: price,
-        departureTime: elems.first.departure_time,
-        arrivalTime: elems.last.arrival_time,
+        departureTime: val.get_herpes.first.departure_time,
+        arrivalTime: val.get_herpes.last.arrival_time,
         seatsAvailable: seats_available,
         flightTime: total_duration,
-        origin: elems.first.origin.destination_code,
-        destination: elems.last.destination.destination_code,
+        origin: val.get_herpes.first.origin.destination_code,
+        destination: val.get_herpes.last.destination.destination_code,
         isReturnFlight: false,
         ticketClass: ticket_class,
-        legs: elems
+        legs: val.get_herpes
       }
 
       journeys.push(trip)
@@ -177,12 +177,12 @@ class Api::FlightsController < ApplicationController
       ticket_class ||= 'ECO'
 
       price = 0
-      seats_available = val.get_array.first.ticket_availabilities.t_class(ticket_class).smallest_price.seats_available
+      seats_available = val.get_herpes.first.ticket_availabilities.t_class(ticket_class).smallest_price.seats_available
       total_duration = 0
 
 
       # Operates on the individual flights in our flight paths
-      val.get_array.each do |flight|
+      val.get_herpes.each do |flight|
         
         # Set up the flight information
         print("The flight is #{flight.inspect}")
@@ -207,10 +207,10 @@ class Api::FlightsController < ApplicationController
       journey = Journey.new
       journey.price           = price
       journey.flight_time     = total_duration
-      journey.origin_id       = elems.first.origin.id
-      journey.destination_id  = elems.last.destination.id
-      journey.departure_time  = elems.first.departure_time
-      journey.arrival_time    = elems.last.arrival_time
+      journey.origin_id       = val.get_herpes.first.origin.id
+      journey.destination_id  = val.get_herpes.last.destination.id
+      journey.departure_time  = val.get_herpes.first.departure_time
+      journey.arrival_time    = val.get_herpes.last.arrival_time
       journey.ticket_class_id = TicketClass.find_by(class_code: ticket_class).id
 
       journey.save!
@@ -218,7 +218,7 @@ class Api::FlightsController < ApplicationController
       # After creating the journey model, map the flights onto our journey, 
       # setting up a dependancy between them for the journey
        
-      val.get_array.each_with_index do |flight, index|
+      val.get_herpes.each_with_index do |flight, index|
 
         mapping = JourneyMap.new
         mapping.journey_id = journey.id
@@ -230,17 +230,17 @@ class Api::FlightsController < ApplicationController
 
       trip = {
         id: journey.id,
-        flightNumber: elems.first.flight_number,
+        flightNumber: val.get_herpes.first.flight_number,
         price: price,
-        departureTime: elems.first.departure_time,
-        arrivalTime: elems.last.arrival_time,
+        departureTime: val.get_herpes.first.departure_time,
+        arrivalTime: val.get_herpes.last.arrival_time,
         seatsAvailable: seats_available,
         flightTime: total_duration,
-        origin: elems.first.origin.destination_code,
-        destination: elems.last.destination.destination_code,
+        origin: val.get_herpes.first.origin.destination_code,
+        destination: val.get_herpes.last.destination.destination_code,
         isReturnFlight: true,
         ticketClass: ticket_class,
-        legs: elems
+        legs: val.get_herpes
       }
 
       journeys.push(trip)

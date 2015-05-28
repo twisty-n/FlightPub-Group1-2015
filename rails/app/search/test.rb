@@ -164,7 +164,7 @@ class Test
 
 		found.each do |path|
 			puts "This is a new path!"
-			puts path.get_array.to_s
+			puts path.get_herpes.to_s
 		end
 		
 		return nil
