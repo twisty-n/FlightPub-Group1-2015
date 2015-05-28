@@ -1171,6 +1171,11 @@ a{
 	margin-right: 5px;
 }
 
+.leg-details .airline{
+  width: 50%;
+
+}
+
 .leg-details .price{
 	color: #36C50F;
 	width: 35%;
