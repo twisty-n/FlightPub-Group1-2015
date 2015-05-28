@@ -216,6 +216,13 @@ class Test
 			puts 'false'
 		end
 		
+		puts 'Now trying to do some arithmetic with some time objects'
+		
+		minus = tz1 - tz2
+		puts minus
+		
+		# Thus it returns seconds. Divide by 360 to get the hours!
+		
 		return nil
 	end # eof the time test
 end
