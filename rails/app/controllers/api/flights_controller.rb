@@ -63,6 +63,15 @@ class Api::FlightsController < ApplicationController
     end
 
     # We will now load up a selection of flights variable
+    # 
+    # These are our params
+    #     # Started GET "/api/flights?
+    #     originCode=HBA&
+    #     destinationCode=VIE&
+    #     departureDate=25-05-2015&
+    #     returnDate=27-05-2015&
+    #     ticketClass=&
+    #     numberOfPeople=4" 
     num_flights = [10..30].sample
 
     flights = Array.new
