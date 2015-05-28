@@ -100,17 +100,19 @@
 				<form id="purchase-signup">
 					<h3>Register</h3>
 					<!-- <p>This quick registration allows you to login and manage your flights</p> -->
-					<input type="text" class="small-rounded"  placeholder="Email"><br/>
-					<input type="text" class="small-rounded" placeholder="Create Password"><br/>
-					<input type="text" class="small-rounded" placeholder="Confirm password"><br/>
+					{{input value=email type="text" class="small-rounded"  placeholder="Email"}}<br/>
+					{{input value=email_confirmation type="text" class="small-rounded"  placeholder="Confirm Email"}}<br/>
+					{{input value=password type="text" class="small-rounded" placeholder="Create Password"}}<br/>
+					{{input value=password_confirmation type="text" class="small-rounded" placeholder="Confirm password"}}<br/>
 				</form>
 				{{/if}}
 				<form id="pay-form">
 					<h3>Payment Details</h3>
 
-					<input type="text" class="small-rounded" placeholder="Card number" ><br/>
-					<input type="text" class="small-rounded" placeholder="MM / YY"><br/>
-					<input type="text" class="small-rounded" placeholder="CVC"><br/>	
+					{{input value=cardNumber type="text" class="small-rounded" placeholder="Card number" }}<br/>
+					{{input value=expiryDate type="text" class="small-rounded" placeholder="MM / YY"}}<br/>
+					{{input value=securityCode type="text" class="small-rounded" placeholder="CVC"}}<br/>
+					{{input value=nameOnCard type="text" class="small-rounded" placeholder="Name on Card"}}<br/>	
 
 				</form>
 			</div>

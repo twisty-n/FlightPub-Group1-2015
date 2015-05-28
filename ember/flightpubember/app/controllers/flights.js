@@ -115,6 +115,7 @@ export default Ember.ArrayController.extend({
   selectedFlight: null,
   
   actions: {
+
     sortBy: function(property) {
 
       this.send('updatePropertyStyle', property);
@@ -281,16 +282,18 @@ export default Ember.ArrayController.extend({
       console.log(this.get('controllers.application.isAuthenticated'));
       console.log(this.get('controllers.application.currentUser'));
 
+      var user_id = null;
+
       if (! this.get('controllers.application.isAuthenticated')) {
 
-        // Currently the user needs to be signed in in order to purchase a flight
-        // we will allow this inline, but for now, alert and about
-        
-        alert('You must be signed in in order to purchase a flight!');
-        this.transitionToRoute('results');
-        return;
+        // Gather the entered user details to submit to the server for purchasing
+        data = this.getProperties('email', 'email_confirmation', 'password', 'password_confirmation');
 
+
+      } else {
+        user_id = this.get('controllers.application.currentUser');
       }
+
 
       // Iterate over each flight in the journey to get the list of tickets
       var flights = this.get('DepartureFlight').get('legs');
@@ -320,7 +323,7 @@ export default Ember.ArrayController.extend({
         'tickets_to_purchase': this.get('numberOfTickets'),
         'return_journey_id': data['ReturnFlight.id'],
         'departure_journey_id': data['DepartureFlight.id'],
-        'user_id': this.get('controllers.application.currentUser'),
+        'user_id': user_id,
         'departure_tickets': departureTickets,
         'return_tickets': returnTickets,
         'save_type': 'purchased_flight',
