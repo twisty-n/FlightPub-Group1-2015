@@ -14,36 +14,50 @@
 				<h2>Upcoming Trips</h2>
 				<div class="upcoming-trip admin-inside">
 					{{#each journey in upcomingJourneys}}
-
-					<h3>Trip from {{journey.origin}} to {{journey.destination}}</h3>
-					
-					<div class="trip-details">
-						<div class="times">
-							<div class="time">Departure Time: {{journey.departure_time}}</div>
-							<div class="time">Arrival Time: {{journey.arrival_time}}</div>
-						</div>
-						Price: ${{journey.price}}<br/>
-						Duration: {{journey.flight_time}}<br/>
-
-						HAS MULTIPLE FLIGHTS FLAG: {{journey.hasMultipleFlights}}
-						{{#if journey.hasMultipleFlights}}
+					<div class="saved-flight">
+						<h3><span style="color:#A1A1A1; font-weight: normal; font-size: 14px;">From</span> {{journey.origin}} 
+							<span style="color:#A1A1A1; font-weight: normal; font-size: 14px;">To</span> {{journey.destination}}
+							<span style="color:rgb(49, 203, 49); margin-left:10px;">${{journey.price}}</span>
+							<span style="color:black; margin-left:10px;">{{journey.flight_time_hours}}h {{journey.flight_time_minutes}}m</span>
+						</h3>
 						<div class="admin-inside">
 							{{#each f in journey.flights}}
-							Flight: {{f.flight.flightNumber}}	
-							Airline: {{f.flight.airline}}	
-							departure: {{f.flight.departure_time}}	
-							arrival: {{f.flight.arrival_time}}	
-							origin: {{f.flight.origin}}	
-							destination: {{f.flight.destination}}	
+							<div class="leg-details" {{bind-attr style="flight.legStyle"}}>
+
+								<div class="leg-departure">
+									<div class="leg-from-name">From</div><div class="leg-from">{{f.flight.origin}}</div>	
+								</div>
+
+								<div class="leg-arrival">
+									<div class="leg-to-name">To</div><div class="leg-to">{{f.flight.destination}}</div>
+								</div>
+
+								<div class="airline">
+									<div class="airline-title">Airline</div> {{f.flight.airline}}
+								</div>
+
+								<div class="flight-number">
+									<div class="flight-num-title">Flight No.</div> {{f.flight.flightNumber}}
+								</div>
+								<br/>
+								<div class="departure">
+									<div class="departure-title">Departure:</div>{{f.flight.departure_time}}
+								</div>
+
+								<div class="arrival">
+									<div class="arrival-title">Arrival:</div>{{f.flight.departure_time}}
+								</div>
+							</div>
+
 							{{/each}}
+							<div class="pruchased-flight-actions">
+								<button class="btn cancel-purchase">Cancel Flight</button>
+							</div>
 						</div>
-						{{/if}}
 
 					</div>
 
 					{{/each}}
-
-					<button>Cancel Flight</button>
 				</div>
 			</div>
 			
@@ -53,17 +67,45 @@
 				<div id="past-trips-list">
 
 					{{#each journey in pastJourneys}}
-					Origin: {{journey.origin}}<br/>
-					Departure Time: {{journey.departure_time}}<br/>
-					Destination: {{journey.destination}}<br/>
-					Arrival Time: {{journey.arrival_time}}<br/>
-					Price: {{journey.price}}<br/>
-					Duration: {{journey.flight_time}}<br/>
-					
+					<div class="saved-flight">
+						<h3><span style="color:#A1A1A1; font-weight: normal; font-size: 14px;">From</span> {{journey.origin}} 
+							<span style="color:#A1A1A1; font-weight: normal; font-size: 14px;">To</span> {{journey.destination}}
+						</h3>
+						<div class="admin-inside">
+							{{#each f in journey.flights}}
+							<div class="leg-details" {{bind-attr style="flight.legStyle"}}>
+
+								<div class="leg-departure">
+									<div class="leg-from-name">From</div><div class="leg-from">{{f.flight.origin}}</div>	
+								</div>
+
+								<div class="leg-arrival">
+									<div class="leg-to-name">To</div><div class="leg-to">{{f.flight.destination}}</div>
+								</div>
+
+								<div class="airline">
+									<div class="airline-title">Airline</div> {{f.flight.airline}}
+								</div>
+
+								<div class="flight-number">
+									<div class="flight-num-title">Flight No.</div> {{f.flight.flightNumber}}
+								</div>
+								<br/>
+								<div class="departure">
+									<div class="departure-title">Departure:</div>{{f.flight.departure_time}}
+								</div>
+
+								<div class="arrival">
+									<div class="arrival-title">Arrival:</div>{{f.flight.departure_time}}
+								</div>
+							</div>
+
+							{{/each}}
+						</div>
+
+					</div>
 					{{/each}}
 				</div>
-
-				<a href="">more</a>
 			</div>
 		</div>
 
@@ -73,39 +115,48 @@
 			<div class="saved-flights-list admin-inside" >
 				{{#each journey in savedJourneys}}		
 				<div class="saved-flight">
-					<h3><span style="color:#A1A1A1;">From</span> {{journey.origin}} <span style="color:#A1A1A1;">To</span> {{journey.destination}}</h3>
-					{{journey.duration}}
-					{{journey.duration}}
+					<h3><span style="color:#A1A1A1; font-weight: normal; font-size: 14px;">From</span> {{journey.origin}} 
+							<span style="color:#A1A1A1; font-weight: normal; font-size: 14px;">To</span> {{journey.destination}}
+							<span style="color:rgb(49, 203, 49); margin-left:10px;">${{journey.price}}</span>
+							<span style="color:black; margin-left:10px;">{{journey.flight_time_hours}}h {{journey.flight_time_minutes}}m</span>
+						</h3>
+
+
 					<div class="admin-inside">
-					{{#each f in journey.flights}}
-					<div class="leg-details" {{bind-attr style="flight.legStyle"}}>
-
-						<div class="leg-departure">
-							<div class="leg-from-name">From</div><div class="leg-from">{{f.flight.origin}}</div>	
+						<div class="saved-flight-actions">
+						<button class="btn purchase-saved">Purchase</button>
+							<button class="btn remove-saved">Remove</button>
 						</div>
 
-						<div class="leg-arrival">
-							<div class="leg-to-name">To</div><div class="leg-to">{{f.flight.destination}}</div>
-						</div>
-						
-						<div class="airline">
-							<div class="airline-title">Airline</div> {{f.flight.airline}}
+						{{#each f in journey.flights}}
+						<div class="leg-details" {{bind-attr style="flight.legStyle"}}>
+
+							<div class="leg-departure">
+								<div class="leg-from-name">From</div><div class="leg-from">{{f.flight.origin}}</div>	
+							</div>
+
+							<div class="leg-arrival">
+								<div class="leg-to-name">To</div><div class="leg-to">{{f.flight.destination}}</div>
+							</div>
+
+							<div class="airline">
+								<div class="airline-title">Airline</div> {{f.flight.airline}}
+							</div>
+
+							<div class="flight-number">
+								<div class="flight-num-title">Flight No.</div> {{f.flight.flightNumber}}
+							</div>
+							<br/>
+							<div class="departure">
+								<div class="departure-title">Departure:</div>{{f.flight.departure_time}}
+							</div>
+
+							<div class="arrival">
+								<div class="arrival-title">Arrival:</div>{{f.flight.departure_time}}
+							</div>
 						</div>
 
-						<div class="flight-number">
-							<div class="flight-num-title">Flight No.</div> {{f.flight.flightNumber}}
-						</div>
-						<br/>
-						<div class="departure">
-							<div class="departure-title">Departure:</div>{{f.flight.departure_time}}
-						</div>
-						
-						<div class="arrival">
-							<div class="arrival-title">Arrival:</div>{{f.flight.departure_time}}
-						</div>
-					</div>
-
-					{{/each}}
+						{{/each}}
 					</div>
 
 				</div>

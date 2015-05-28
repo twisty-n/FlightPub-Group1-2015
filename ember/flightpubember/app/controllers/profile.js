@@ -28,7 +28,9 @@ export default Ember.ObjectController.extend({
             {
 
                 j.hasMultipleFlights = false;
-                j.formatted
+                
+                j.flight_time_hours = Math.floor(j.flight_time/60);
+                j.flight_time_minutes = j.flight_time - (j.flight_time_hours*60); 
 
                 if(j.flights.length > 1)
                 {
