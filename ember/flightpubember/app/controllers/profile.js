@@ -27,15 +27,8 @@ export default Ember.ObjectController.extend({
             && parseDate(j.departure_time) > new Date())
             {
 
-                j.hasMultipleFlights = false;
-                
                 j.flight_time_hours = Math.floor(j.flight_time/60);
                 j.flight_time_minutes = j.flight_time - (j.flight_time_hours*60); 
-
-                if(j.flights.length > 1)
-                {
-                    j.hasMultipleFlights = true;
-                }
 
                 upcoming.pushObject(j);
             }
@@ -76,9 +69,13 @@ export default Ember.ObjectController.extend({
 
         journeys.forEach(function(journey)
         {
+            var j = journey.journey.journey;
             if(journey.save_type === 'saved_flight')
             {
-                saved.pushObject(journey.journey.journey);
+                j.flight_time_hours = Math.floor(j.flight_time/60);
+                j.flight_time_minutes = j.flight_time - (j.flight_time_hours*60); 
+
+                saved.pushObject(j);
             }
         });
 
