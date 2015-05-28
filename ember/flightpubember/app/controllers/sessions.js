@@ -177,24 +177,5 @@ export default Ember.ObjectController.extend({
         this.set('loginShowing', false);
         this.set('pageTitle', 'Register');
     },
-
-    toggleLoginShowing: function(){
-      if(this.get('loginShowing')){
-          $("#login-section").hide();
-          $("#signup-section").show();
-          this.set('loginShowing', false);
-          this.set('pageTitle', 'Register');
-      }
-      else
-      {
-          $("#login-section").show();
-          $("#signup-section").hide();
-          this.set('loginShowing', true);
-          this.set('pageTitle', 'Login');
-
-      }
-    },
-
-
   }
 });
