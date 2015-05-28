@@ -283,15 +283,15 @@ body{
 
 /* My shitty admin table stuff! */
 table, td, th {
-    border: 1px solid green;
-    border-collapse: collapse;
-    padding: 5px;
-    table-layout: fixed;
+	border: 1px solid green;
+	border-collapse: collapse;
+	padding: 5px;
+	table-layout: fixed;
 }
 
 th {
-    background-color: #17AEE5;
-    color: white;
+	background-color: #17AEE5;
+	color: white;
 }
 
 
@@ -1111,13 +1111,13 @@ a{
 }
 
 .leg-details .price{
-  color: #36C50F;
-  width: 35%;
-  float: left;
-  padding-left: 5%;
-  padding-top: 0px;
-  font-size: 15px;
-  /* font-weight: bold; */
+	color: #36C50F;
+	width: 35%;
+	float: left;
+	padding-left: 5%;
+	padding-top: 0px;
+	font-size: 15px;
+	/* font-weight: bold; */
 }
 
 .leg-details .leg-departure, .leg-arrival{
@@ -1449,9 +1449,7 @@ a{
 	#signup-wrapper{
 		width:100%;
 		background-color: #fff;
-
-		margin-top:30px;
-		height: 200px;
+		height: 250px;
 	}
 
 	#signup{
@@ -1460,6 +1458,28 @@ a{
 		height: 100%;
 		padding-top: 15px;
 		padding-bottom: 10px;
+	}
+
+	.loginSignup-top{
+		margin: 0 auto;
+		width: 295px;
+	}
+
+	.loginSignup-top button{
+		min-width: 90px;
+		height: 24px;
+		background-color: #FFFFFF;
+		color: #1479C9;
+		border-style: solid;
+		border-width: 1px;
+		border-color: #1479C9;
+		bottom: 40px;
+		font-size: 12px;
+	}
+
+	.btn.loginSignup-active{
+		color: #FFF;
+		background-color: #1CAEE5;
 	}
 
 	.loginSignup{

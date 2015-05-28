@@ -159,12 +159,31 @@ export default Ember.ObjectController.extend({
       this.get('controllers.users/signup').send('createUser', data);
     },
 
+    showLogin: function(){
+      $("#login-section").show();
+      $("#signup-section").hide();
+      $("#login-switch").addClass("loginSignup-active");
+      $("#signup-switch").removeClass("loginSignup-active");
+      this.set('loginShowing', true);
+      this.set('pageTitle', 'Login');
+
+    },
+
+    showSignup: function(){
+        $("#login-section").hide();
+        $("#signup-section").show();
+        $("#login-switch").removeClass("loginSignup-active");
+        $("#signup-switch").addClass("loginSignup-active");
+        this.set('loginShowing', false);
+        this.set('pageTitle', 'Register');
+    },
+
     toggleLoginShowing: function(){
       if(this.get('loginShowing')){
           $("#login-section").hide();
           $("#signup-section").show();
           this.set('loginShowing', false);
-          this.set('pageTitle', 'Signup');
+          this.set('pageTitle', 'Register');
       }
       else
       {
