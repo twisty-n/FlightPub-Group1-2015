@@ -125,7 +125,7 @@
 					<div class="admin-inside">
 						<div class="saved-flight-actions">
 						<button class="btn purchase-saved">Purchase</button>
-							<button class="btn remove-saved">Remove</button>
+							<button class="btn remove-saved" {{action "removeSavedJourney" journey}} >Remove</button>
 						</div>
 
 						{{#each f in journey.flights}}

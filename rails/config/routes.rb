@@ -39,6 +39,9 @@ Rails.application.routes.draw do
 
     get 'apply_promotion'=> 'promotion#apply_promotion'
 
+    # Delete a saved flight
+    post 'saved_journey' => 'journey#remove_saved'
+
   end
 
   # END API ENDPOINTS ===========================================================================

@@ -164,6 +164,22 @@ export default Ember.ObjectController.extend({
             Ember.$("#settings-switch").removeClass("user-nav-active");
 
             Ember.$(activeID).addClass("user-nav-active");
+        },
+
+        removeSavedJourney: function( journey ) {
+
+            var data = {
+                'journey_id': journey.id
+            };
+            Ember.$.post('api/saved_journey', data).then(function(response) {
+
+                // Remove the record from the store
+                journey.unloadRecord();
+
+            }, function(error) {
+                alert('Unable to delete ' + journey.id);
+            });
+
         }
 
 

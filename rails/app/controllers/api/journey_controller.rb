@@ -152,6 +152,18 @@ class Api::JourneyController < ApplicationController
 
     end
 
+    def remove_saved
+
+        journey_id = params['journey_id']
+        journey = Journey.find_by(id: journey_id)
+        if journey == nil or ! journey.delete 
+            render json: {'status'=>'Unable to find listed journey'}, status: 422
+        else
+            render json: {'status'=>'Saved flight removed'}, status: 201
+        end
+
+    end
+
     def cancel_purchase
 =begin
 
