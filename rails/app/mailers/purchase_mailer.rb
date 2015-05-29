@@ -20,7 +20,7 @@ class PurchaseMailer < ApplicationMailer
                 } )
         end
 
-        if ret_journey != nil
+        if ! ret_journey.blank?
             ret_journey.journey_maps.each do |map|
                 @ret_flights.push( {
                         'order' => map.order_in_journey,
@@ -52,7 +52,7 @@ class PurchaseMailer < ApplicationMailer
             @sum_dep += tick.price
         end
 
-        if ret_tickets != nil
+        if ! ret_tickets.blank?
             ret_tickets.each do |ticket_id|
                 tick = TicketAvailability.find_by(id: ticket_id)
                 @ret_tickets.push( tick )

@@ -264,6 +264,57 @@ class Api::FlightsController < ApplicationController
       render json: Flight.where('flight_number = ? and departure_time >= ? and departure_time <= ?', 
         flight_number, date, max_date), status: 201
 
+    end
+
+    def find_to_buy
+
+      journey = Journey.find_by(id: params[:journey_id])
+
+      ticket_class = params['ticketClass']
+      ticket_class ||= 'ECO'
+
+      price = 0
+      seats_available = journey.flights.first.ticket_availabilities.t_class(ticket_class).smallest_price.seats_available
+      total_duration = 0
+
+
+      # Operates on the individual flights in our flight paths
+      journey.flights.each do |flight|
+        
+        # Set up the flight information
+        print("The flight is #{flight.inspect}")
+        ticket = flight.ticket_availabilities.t_class(ticket_class).smallest_price
+        price += ticket.price
+        total_duration += flight.flight_time
+        if ticket.seats_available <= seats_available
+          seats_available = ticket.seats_available
+        end
+
+        # Set up the ticket information
+        flight.set_ticket_id(ticket.id)
+
+      end
+
+      trip = {
+        id: journey.id,
+        flightNumber: journey.flights.first.flight_number,
+        price: price,
+        departureTime: journey.flights.first.departure_time,
+        arrivalTime: journey.flights.last.arrival_time,
+        seatsAvailable: seats_available,
+        flightTime: total_duration,
+        origin: journey.flights.first.origin.destination_code,
+        destination: journey.flights.last.destination.destination_code,
+        isReturnFlight: false,
+        ticketClass: ticket_class,
+        legs: journey.flights
+      }
+
+      if seats_available > 0 
+        render json: trip
+      else
+        render json: { 'status' => 'An unknown error occured with your purchase' }, status: 422
+      end
 
     end
 

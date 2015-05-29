@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
 
-    needs: ['application', 'sessions'],
+    needs: ['application', 'sessions', 'flights'],
 
     //we can separate these into a single
     // purchased flight array and then return the results from there
@@ -84,8 +84,56 @@ export default Ember.ObjectController.extend({
         return saved;
     }.property('model.journeys.@each'),
 
+
     actions: {
 
+        purchaseSavedJourney: function( journey ) {
+
+            // Set oneWAy to true
+            // Set departFlight to the journey
+            // Transiition to new route
+            // 
+            // This wont work, need to hit the API with a special request to load
+            // tickets
+            var journey_id = journey.id;
+            var data = {
+                'journey_id':journey_id
+            }
+            var _this = this;
+            Ember.$.get('api/journey_lookup', data).then( function(response) {
+
+                console.log(response);
+
+                journey = _this.store.createRecord('flight', response);
+
+                _this.set('controllers.flights.oneWay', true);
+                _this.set('controllers.flights.DepartureFlight', journey);
+                _this.set('controllers.flights.currentSelection', 'departure');
+
+                console.log(journey);
+
+                var journeys = _this.get('model.journeys');
+                console.log(journeys);
+
+                var toDelete = null;
+                journeys.forEach(function(journey) {
+                    var j = journey.journey.journey;
+                    if ( j.id == journey_id ) {
+                        toDelete = journey;
+                    }
+                })
+
+                console.log( toDelete );
+                journeys.removeObject( toDelete );
+                _this.get('model.journeys').notifyPropertyChange();
+
+                _this.transitionToRoute('review');
+            }, function( error ) {
+                console.log(error);
+                alert('Unable to purchase the flight at this time!');
+            } );
+
+        },
 
         saveDetails: function() {
 

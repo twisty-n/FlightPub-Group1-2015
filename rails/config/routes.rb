@@ -42,6 +42,9 @@ Rails.application.routes.draw do
     # Delete a saved flight
     post 'saved_journey' => 'journey#remove_saved'
 
+    # Lookup a single journey to purchase
+    get 'journey_lookup' => 'flights#find_to_buy'
+
   end
 
   # END API ENDPOINTS ===========================================================================

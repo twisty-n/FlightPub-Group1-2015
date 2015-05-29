@@ -312,7 +312,7 @@ export default Ember.ArrayController.extend({
         alert('Please Log In or Register');
         return;
       }
- 
+
       // Iterate over each flight in the journey to get the list of tickets
       var flights = this.get('DepartureFlight').get('legs');
       var flight;
