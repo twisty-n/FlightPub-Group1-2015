@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150527160939) do
+ActiveRecord::Schema.define(version: 20150529032514) do
 
   create_table "airlines", force: :cascade do |t|
     t.string   "airline_code", limit: 255
@@ -208,7 +208,5 @@ ActiveRecord::Schema.define(version: 20150527160939) do
   add_foreign_key "promotions", "flights"
   add_foreign_key "purchased_tickets", "ticket_availabilities"
   add_foreign_key "purchased_tickets", "users"
-  add_foreign_key "saved_journeys", "journeys"
   add_foreign_key "saved_journeys", "save_identifiers"
-  add_foreign_key "saved_journeys", "users"
 end

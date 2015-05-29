@@ -155,8 +155,12 @@ class Api::JourneyController < ApplicationController
     def remove_saved
 
         journey_id = params['journey_id']
-        journey = Journey.find_by(id: journey_id)
-        if journey == nil or ! journey.delete 
+        journey = SavedJourney.find_by(journey_id: journey_id, 
+            user_id: params['user_id'], 
+            save_identifier_id: SaveIdentifier.find_by(s_type: params['save_type']))
+        val = journey.delete 
+        puts val
+        if journey == nil or ! val
             render json: {'status'=>'Unable to find listed journey'}, status: 422
         else
             render json: {'status'=>'Saved flight removed'}, status: 201

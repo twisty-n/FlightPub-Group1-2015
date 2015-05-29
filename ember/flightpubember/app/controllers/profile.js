@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
 
-    needs: ['application'],
+    needs: ['application', 'sessions'],
 
     //we can separate these into a single
     // purchased flight array and then return the results from there
@@ -72,15 +72,17 @@ export default Ember.ObjectController.extend({
             var j = journey.journey.journey;
             if(journey.save_type === 'saved_flight')
             {
-                j.flight_time_hours = Math.floor(j.flight_time/60);
-                j.flight_time_minutes = j.flight_time - (j.flight_time_hours*60); 
+                Ember.set(j, 'flight_time_hours', Math.floor(j.flight_time/60));
+                //j.flight_time_hours = Math.floor(j.flight_time/60);
+                Ember.set(j, 'flight_time_minutes', j.flight_time - (j.flight_time_hours*60));
+                //j.flight_time_minutes = j.flight_time - (j.flight_time_hours*60); 
 
                 saved.pushObject(j);
             }
         });
 
         return saved;
-    }.property('model.journeys'),
+    }.property('model.journeys.@each'),
 
     actions: {
 
@@ -169,12 +171,31 @@ export default Ember.ObjectController.extend({
         removeSavedJourney: function( journey ) {
 
             var data = {
-                'journey_id': journey.id
+                'user_id': this.get('controllers.application.currentUser'),
+                'journey_id': journey.id,
+                'save_type' : 'saved_flight'
             };
-            Ember.$.post('api/saved_journey', data).then(function(response) {
+
+            var _journey = journey;
+            var self = this;
+
+            Ember.$.post('api/saved_journey', data).then( function(response) {
 
                 // Remove the record from the store
-                journey.unloadRecord();
+                var journeys = self.get('model.journeys');
+                console.log(journeys);
+
+                var toDelete = null;
+                journeys.forEach(function(journey) {
+                    var j = journey.journey.journey;
+                    if ( j.id == _journey.id ) {
+                        toDelete = journey;
+                    }
+                })
+
+                console.log( toDelete );
+                journeys.removeObject( toDelete );
+                self.get('model.journeys').notifyPropertyChange();
 
             }, function(error) {
                 alert('Unable to delete ' + journey.id);
