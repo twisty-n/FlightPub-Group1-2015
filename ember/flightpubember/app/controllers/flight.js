@@ -59,9 +59,6 @@ export default Ember.ObjectController.extend({
 		var period = "am";
 		var day = flightTime.getDay();
 
-		console.log(flightTime);
-		console.log(" : "+hour+" : "+day);
-
 		if(hour == 0){
 			hour = 12;
 		}
@@ -105,8 +102,6 @@ export default Ember.ObjectController.extend({
 		{
 			hour -= 12;
 		}
-
-		console.log("arrival time hour: "+hour);
 
 		return hour+" "+period;
 	}),
@@ -282,9 +277,6 @@ export default Ember.ObjectController.extend({
 					var layoverStartDate = parseDate(this.get('arrivalFlight.arrival_time'));
 					var tripStartDate = this.get('flightDepartTime');
 
-					console.log(layoverStartDate);
-					console.log(tripStartDate);
-
 					var diffMilliseconds = (layoverStartDate - tripStartDate);
 
 					var timeDiffMins = Math.floor(diffMilliseconds / 1000 / 60);
@@ -310,15 +302,8 @@ export default Ember.ObjectController.extend({
 				return new Date(Date.UTC(parts[0], parts[1]-1, parts[2], parts[3], parts[4], parts[5])); // months are 0-based
 			}
 
-			console.log("Flight Length Mins:    "+this.get('flightLengthMinutes'));
-			console.log("Flight Departure Time: "+this.get('departureTime'));
-			console.log("Flight Arrival Time:   "+this.get('arrivalTime'));
-
 			legs.forEach(function(leg, index){
 				
-				console.log("Leg["+index+"] (real):   "+leg.arrival_time);
-				console.log("Leg["+index+"] (parsed): "+parseDate(leg.arrival_time));
-
 				if(prevLeg)
 				{
 					var l = layover.create({

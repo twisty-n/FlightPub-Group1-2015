@@ -50,7 +50,6 @@ export default Ember.ArrayController.extend({
 
     flights.forEach(function(flight){
       timeCount += flight.get('flightLengthMinutes');
-      console.log(flight.get('flightLengthMinutes'));
     });
 
     return timeCount/flights.length;
@@ -136,7 +135,6 @@ export default Ember.ArrayController.extend({
     filterBy: function(property){
 
       this.send('updatePropertyStyle', property);
-      console.log(property);
 
       var filterProperties = this.get('filterProperties');
 
@@ -241,7 +239,6 @@ export default Ember.ArrayController.extend({
       if(this.get('controllers.application.isAuthenticated'))
       {
 
-        console.log(this.get('controllers.application.currentUser'));  
 
         var data = {
           'journey_id': flight.id, 
@@ -296,8 +293,6 @@ export default Ember.ArrayController.extend({
     purchase: function(){
 
       //we need user id, so we need to have the user sign up if they're not logged in
-      console.log(this.get('controllers.application.isAuthenticated'));
-      console.log(this.get('controllers.application.currentUser'));
 
       if (this.get('cardNumber') == undefined 
         ||this.get('expiryDate') == undefined 
@@ -409,7 +404,6 @@ export default Ember.ArrayController.extend({
       this.set('currentSelection', 'departure');
       this.set('numberOfTickets', 1);  
 
-      console.log("Clearing cached data");    
     }
 
   },

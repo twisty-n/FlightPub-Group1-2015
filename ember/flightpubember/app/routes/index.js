@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
     setupController: function(controller, model) {
+
     	controller.set('destinations', this.store.find('destination'));
      	controller.set('content', model);
      	controller.set('tickets', this.store.find('ticketClass'));
@@ -10,10 +11,9 @@ export default Ember.Route.extend({
         // Reset the flights controller search data. We do not want it to persist across searches
        this.controllerFor('flights').send('clearSearchedFlights');
        
-       var depFlight = this.controllerFor('flights').get('DepartureFlight');
-
-       console.log("Navigation back to search page: clearing cached flight selection data");
-       console.log("Cached flight selection data: depFlight: " + depFlight);
+       //var depFlight = this.controllerFor('flights').get('DepartureFlight');
+       //console.log("Navigation back to search page: clearing cached flight selection data");
+       //console.log("Cached flight selection data: depFlight: " + depFlight);
     }
 
 });
