@@ -394,6 +394,22 @@ export default Ember.ArrayController.extend({
       Ember.$("#purchase-register").show();
       Ember.$("#purchase-login").hide();
       this.set('reviewLoginShowing', false);
+    },
+
+    /**
+     * Clear the searched flight data out so that it is not
+     * persisted across application context changes
+     * @return {[type]} [description]
+     */
+    clearSearchedFlights: function() {
+
+      this.set('DepartureFlight', null);
+      this.set('ReturnFlight', null);
+      this.set('oneWay', false);
+      this.set('currentSelection', 'departure');
+      this.set('numberOfTickets', 1);  
+
+      console.log("Clearing cached data");    
     }
 
   },

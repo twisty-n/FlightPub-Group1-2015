@@ -226,6 +226,7 @@ export default Ember.ObjectController.extend({
 
             var _journey = journey;
             var self = this;
+            var loc = location;
 
             Ember.$.post('api/saved_journey', data).then( function(response) {
 
