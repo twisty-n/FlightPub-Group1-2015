@@ -55,7 +55,8 @@ export default Ember.ObjectController.extend({
       email: null,
       password:          null,
       token:             null,
-      currentUser:       null
+      currentUser:       null,
+      userAuth:          null 
     });
     Ember.$.ajaxSetup({
       headers: {
