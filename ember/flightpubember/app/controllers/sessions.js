@@ -32,6 +32,7 @@ export default Ember.ObjectController.extend({
   token:               Ember.$.cookie('access_token'),
   currentUser:         Ember.$.cookie('auth_user'),   //We are going to define the current user by their id alone
   userAuth:            null,
+  userModel:            null,
 
   //for switching between displays of login and register
   pageTitle: 'Login',
@@ -56,7 +57,8 @@ export default Ember.ObjectController.extend({
       password:          null,
       token:             null,
       currentUser:       null,
-      userAuth:          null 
+      userAuth:          null,
+      userModel:         null 
     });
     Ember.$.ajaxSetup({
       headers: {
@@ -124,7 +126,8 @@ export default Ember.ObjectController.extend({
             _this.setProperties({
               token:       response.api_key.access_token,
               currentUser: user['id'],//.getProperties('email', 'firstName', 'lastName'),
-              userAuth:    user.get('role')
+              userAuth:    user.get('role'),
+              userModel:   user
             });
 
             // set the relationship between the User and the ApiKey models & save the apiKey object

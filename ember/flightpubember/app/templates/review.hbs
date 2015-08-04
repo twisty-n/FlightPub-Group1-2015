@@ -96,6 +96,8 @@
 
 		<div id="pruchase-form">
 			<div id="purchase-wrapper" {{bind-attr class="wrapperWidth"}}>
+				
+				<!-- If the user is not logged in, they need to be. Create a new account or let them sign in  -->
 				{{#if showReviewRegistration}}
 				<form id="purchase-signup">
 
@@ -119,6 +121,26 @@
 						<button class="rounded" {{action "setupUser"}}>Log In</button>
 					</div>
 				</form>
+				{{/if}}
+
+				<!-- If the user has not entered their extra details, we need them as well, so get them  -->
+				{{#if signedInAndNeedsDetails}}
+					<form id="purchase-extra-details">
+						<div id="purchase-extra-information">
+						<h3>Fill out these details! Please make it not hideous Alistair :(</h3>
+						<!-- Only let them submit details which havent been filled out yet -->
+						{{#if needsFirstName}}
+							{{input value=firstName type="text" class="small-rounded"  placeholder="First Name"}}<br/>
+						{{/if}}
+						{{#if needsLastName}}
+							{{input value=lastName type="text" class="small-rounded" placeholder="Last Name"}}<br/>
+						{{/if}}
+						{{#if needsAddress}}
+							{{input value=address type="text" class="small-rounded" placeholder="Billing Address"}}<br/>
+						{{/if}}
+						<button class="rounded" {{action "submitExtraDetails"}}>Submit</button>
+					</div>
+					</form>
 				{{/if}}
 				<form id="pay-form">
 					<h3>Payment Details</h3>

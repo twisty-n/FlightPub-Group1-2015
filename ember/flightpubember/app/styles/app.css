@@ -558,6 +558,14 @@ input.small-rounded{
 	color: #22B0E6;
 }
 
+
+#purchase-extra-details {
+	float:left;
+	width: 200px;
+	display: block;
+}
+
+
 #purchase-flights{
 	height: 100px;
 	width: 155px;

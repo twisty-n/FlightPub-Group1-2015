@@ -8,9 +8,39 @@ export default Ember.ArrayController.extend({
   oneWay: false,
   currentSelection: 'departure',  
   numberOfTickets: 1,             // The number of tickets that the want to purchase
+  
+  // These are for the flight purchasing stuff!
+  currentUserModel: null,         // To hopefully store the current user model to extract information from
+  allDetailsFilledIn: false,
 
   showReviewRegistration: Ember.computed('controllers.application.isAuthenticated', function(){
     return !this.get('controllers.application.isAuthenticated');
+  }),
+
+  needsExtraDetails: Ember.computed('controllers.application.currentUser', function() {
+    var user = this.get('currentUserModel');
+    return user.get('firstName') == null || user.get('lastName') == null || user.get('address') == null;
+  }),
+
+  needsFirstName: Ember.computed("controllers.application.currentUser", function() {
+    console.log(this.get('currentUserModel').get('firstName'));
+    return this.get('currentUserModel').get('firstName') == null;
+  }),
+
+
+  needsLastName: Ember.computed("controllers.application.currentUser", function() {
+    return this.get('currentUserModel').get('lastName') == null;
+  }),
+
+
+  needsAddress: Ember.computed("controllers.application.currentUser", function() {
+    return this.get('currentUserModel').get('address') == null;
+  }),
+
+  signedInAndNeedsDetails: Ember.computed('controllers.application.currentUser', function() {
+    var authenticated = !this.get('showReviewRegistration');
+    var needsDetails = this.get('needsExtraDetails');
+    return authenticated && needsDetails;
   }),
 
   wrapperWidth: Ember.computed('showReviewRegistration', function(){
@@ -235,10 +265,14 @@ export default Ember.ArrayController.extend({
       }
     },
 
+    /**
+     * Makes a call to the API in order to save a flight for the user
+     * @param  {[type]} flight The flight that is going to be saved to the API
+     * @return {[type]}        [description]
+     */
     saveFlight: function(flight){
       if(this.get('controllers.application.isAuthenticated'))
       {
-
 
         var data = {
           'journey_id': flight.id, 
@@ -273,6 +307,10 @@ export default Ember.ArrayController.extend({
       }
     },
 
+    /** 
+     * Will Register or log in a user as needed so that they are able to use the application
+     * @return {[type]} [description]
+     */
     setupUser: function() {
       var data = null;
       if (! this.get('controllers.application.isAuthenticated')) {
@@ -290,6 +328,10 @@ export default Ember.ArrayController.extend({
       }
     },
 
+    /**
+     * Will start the purchasing process for a dep and return flight
+     * @return {[type]} [description]
+     */
     purchase: function(){
 
       //we need user id, so we need to have the user sign up if they're not logged in
@@ -299,6 +341,14 @@ export default Ember.ArrayController.extend({
         ||this.get('securityCode') == undefined 
         ||this.get('nameOnCard') == undefined) {
         alert('Fill out payment details');
+        return;
+      }
+
+      // Ensure the user has entered in all details so that they
+      // can have decent information
+      if ( !this.get('allDetailsFilledIn') ) {
+        alert('You must fill out the extra details before being able to book!');
+        // TODO: maybe highlight the fields or whatever?
         return;
       }
 
@@ -404,6 +454,31 @@ export default Ember.ArrayController.extend({
       this.set('currentSelection', 'departure');
       this.set('numberOfTickets', 1);  
 
+    },
+
+    submitExtraDetails: function() {
+
+      var user = this.get('currentUserModel');
+      // First grab the details that changed and assign to user model
+      
+      if ( this.get('needsFirstName') ) {
+        // Fname
+        user.set('firstName', this.get('firstName'))
+      }
+      if ( this.get('needsLastName') ) {
+        // Lname
+        user.set('lastName', this.get('lastName'))
+      }
+      if ( this.get('needsAddress') ) {
+        //addr
+        user.set('address', this.get('address'));
+      }
+      
+      // Then save the user model and let Ember data handle it all
+      console.log('Saving the new user details ' + user);
+      Ember.$("#purchase-extra-details").hide();
+      this.set('allDetailsFilledIn', true);
+      user.save();
     }
 
   },
