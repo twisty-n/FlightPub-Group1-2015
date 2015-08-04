@@ -11,7 +11,7 @@ export default Ember.ArrayController.extend({
   
   // These are for the flight purchasing stuff!
   currentUserModel: null,         // To hopefully store the current user model to extract information from
-  allDetailsFilledIn: false,
+  allDetailsFilledIn: true,       // Initially assume all details are filled in
 
   showReviewRegistration: Ember.computed('controllers.application.isAuthenticated', function(){
     return !this.get('controllers.application.isAuthenticated');
@@ -19,7 +19,11 @@ export default Ember.ArrayController.extend({
 
   needsExtraDetails: Ember.computed('controllers.application.currentUser', function() {
     var user = this.get('currentUserModel');
-    return user.get('firstName') == null || user.get('lastName') == null || user.get('address') == null;
+    var needsExtra = user.get('firstName') == null || user.get('lastName') == null || user.get('address') == null;
+    if (needsExtra) {
+      this.set('allDetailsFilledIn', false);
+    }
+    return needsExtra;
   }),
 
   needsFirstName: Ember.computed("controllers.application.currentUser", function() {
