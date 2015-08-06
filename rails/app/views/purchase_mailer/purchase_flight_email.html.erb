@@ -4,7 +4,7 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <%= render inline: @g_now_string %>
+    <%= raw @g_now_string %>
     <h1>Your flight itinerary <%= @user.email %></h1>
     <h2>
       Your departing flights
