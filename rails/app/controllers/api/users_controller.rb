@@ -82,6 +82,24 @@ class Api::UsersController < ApplicationController
 		render json: {}, status: 200
 	end
 
+	def get_users_on_flight
+
+		journey_id = params["journeyId"]
+		user_id = params["userId"]
+
+		
+
+		# We will expect a journey_id as one of the supplied params
+		# 
+		# Then query saved journeys using the 'purchased_flight' identifier
+		# for a list of the the other user id's who are on the flight
+		# 
+		# Remove the queryer from the list and remove sensetive information
+		# 
+		# Done. Return our model list
+
+	end
+
 	private
 
 	# Define the permitted user paramaters. Anything listed will be allowed as a provided paramater
