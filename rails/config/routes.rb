@@ -45,6 +45,9 @@ Rails.application.routes.draw do
     # Lookup a single journey to purchase
     get 'journey_lookup' => 'flights#find_to_buy'
 
+    # Lookup a listing of all users that belong to some journey
+    get 'user_listing' => 'users#get_users_on_flight_reject_requester'
+
   end
 
   # END API ENDPOINTS ===========================================================================

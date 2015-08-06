@@ -5,4 +5,9 @@ class SavedJourney < ActiveRecord::Base
   belongs_to :user
   belongs_to :journey
   belongs_to :save_identifier
+
+  scope :purchased, -> { joins(:save_identifier).merge(SaveIdentifier.purchased) }
+
+
+
 end

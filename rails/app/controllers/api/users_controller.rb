@@ -82,12 +82,21 @@ class Api::UsersController < ApplicationController
 		render json: {}, status: 200
 	end
 
-	def get_users_on_flight
+	# Will return a listing of all the users that are aboard some flight
+	# This listing will not include the user that requested the listing
+	# 
+	# param1  journeyId: 	the journey that the user is requesting the information for
+	# params2 userId:  		the id of the user that requested the flight
+	#
+	def get_users_on_flight_reject_requester
 
 		journey_id = params["journeyId"]
 		user_id = params["userId"]
 
-		
+		user_list = User.on_journey(journey_id).reject{ |s| s.id == user_id }
+
+		render json: user_list, status: 200
+
 
 		# We will expect a journey_id as one of the supplied params
 		# 

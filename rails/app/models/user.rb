@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
 	validates :address, length: {maximum: 200}
 	validates :email, confirmation: true, presence: true, uniqueness: true
 
+	scope :on_journey, ->(journey_id) { joins(:saved_journeys).where("journey_id = ?", journey_id).merge(SavedJourney.purchased) }
+
 	# This will automagically ensure that the user has a password and that the
 	# password is valid
 	has_secure_password
