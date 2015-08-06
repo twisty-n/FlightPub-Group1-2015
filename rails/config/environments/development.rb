@@ -15,7 +15,7 @@ Rails.application.configure do
 
   # All of the super fun mail config settings!
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :test
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address:              'smtp.mandrillapp.com',
     port:                 587,
