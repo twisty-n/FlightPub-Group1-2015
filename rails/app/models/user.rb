@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :api_keys
   has_many :saved_journeys
   has_many :journeys, :through => :saved_journeys
+  has_many :conversations
 
 	validates :first_name, 	length: {maximum: 40}
 	validates :last_name,   length: {maximum: 40}

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150529032514) do
+ActiveRecord::Schema.define(version: 20150807134815) do
 
   create_table "airlines", force: :cascade do |t|
     t.string   "airline_code", limit: 255
@@ -108,6 +108,18 @@ ActiveRecord::Schema.define(version: 20150529032514) do
   add_index "journeys", ["origin_id"], name: "fk_rails_6b5c29487e", using: :btree
   add_index "journeys", ["ticket_class_id"], name: "index_journeys_on_ticket_class_id", using: :btree
 
+  create_table "messages", force: :cascade do |t|
+    t.string   "content",              limit: 255
+    t.integer  "user_conversation_id", limit: 4
+    t.integer  "user_id",              limit: 4
+    t.integer  "message_number",       limit: 4
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "messages", ["user_conversation_id"], name: "index_messages_on_user_conversation_id", using: :btree
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
+
   create_table "promotions", force: :cascade do |t|
     t.integer  "flight_id",  limit: 4
     t.integer  "discount",   limit: 4
@@ -177,6 +189,17 @@ ActiveRecord::Schema.define(version: 20150529032514) do
     t.datetime "updated_at",                        null: false
   end
 
+  create_table "user_conversations", force: :cascade do |t|
+    t.integer  "participant_1_id", limit: 4
+    t.integer  "participant_2_id", limit: 4
+    t.integer  "message_count",    limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "user_conversations", ["participant_1_id"], name: "fk_rails_95f86cb8a2", using: :btree
+  add_index "user_conversations", ["participant_2_id"], name: "fk_rails_5670ba46f7", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "first_name",       limit: 255, default: ""
     t.string   "last_name",        limit: 255, default: ""
@@ -205,8 +228,12 @@ ActiveRecord::Schema.define(version: 20150529032514) do
   add_foreign_key "journeys", "destinations"
   add_foreign_key "journeys", "destinations", column: "origin_id"
   add_foreign_key "journeys", "ticket_classes"
+  add_foreign_key "messages", "user_conversations"
+  add_foreign_key "messages", "users"
   add_foreign_key "promotions", "flights"
   add_foreign_key "purchased_tickets", "ticket_availabilities"
   add_foreign_key "purchased_tickets", "users"
   add_foreign_key "saved_journeys", "save_identifiers"
+  add_foreign_key "user_conversations", "users", column: "participant_1_id"
+  add_foreign_key "user_conversations", "users", column: "participant_2_id"
 end

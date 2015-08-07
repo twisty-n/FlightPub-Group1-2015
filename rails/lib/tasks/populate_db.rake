@@ -33,4 +33,16 @@ namespace :populate_db do
 
     end
 
+    task :simulate_conversation => :environment do
+
+        twisty = User.find_by email: 'tnew2294@gmail.com'
+        matt = User.find_by email: 'matt@sikkema.com'
+
+        convo = UserConversation.new
+        convo.participant_1_id = twisty.id
+        convo.participant_2_id = matt.id
+        convo.message_count = 0
+
+    end
+
 end
