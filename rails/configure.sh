@@ -14,3 +14,7 @@ mysql -u rails --password=password rails_test < mysql_dumps/full_database.sql
 #mysql -u rails --password=password rails_test < mysql_dumps/annoying_backup_av_pr.sql
 
 # Then we load any fixtures that we need
+# 
+# Then we can perform any rake tasks that we want
+echo "Enumerating user saved flights"
+rake populate_db:enumerate_saved_flights
