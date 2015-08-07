@@ -35,13 +35,22 @@ namespace :populate_db do
 
     task :simulate_conversation => :environment do
 
-        twisty = User.find_by email: 'tnew2294@gmail.com'
-        matt = User.find_by email: 'matt@sikkema.com'
+        convo_list = Array.new
 
-        convo = UserConversation.new
-        convo.participant_1_id = twisty.id
-        convo.participant_2_id = matt.id
-        convo.message_count = 0
+        12.times do 
+
+            convo = UserConversation.new
+            convo.participant_1_id = User.limit(20).order("RAND()").first.id
+            convo.participant_2_id = User.limit(5).order("RAND()").reject{ |s| s.id == convo.participant_1_id }.first.id
+            convo.message_count = 0;
+
+            if convo.save
+                print "saved"
+            end
+
+            convo_list.push(convo)
+
+        end
 
     end
 
