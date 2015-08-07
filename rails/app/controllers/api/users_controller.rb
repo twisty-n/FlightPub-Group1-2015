@@ -90,22 +90,19 @@ class Api::UsersController < ApplicationController
 	#
 	def get_users_on_flight_reject_requester
 
-		journey_id = params["journeyId"]
-		user_id = params["userId"]
-
-		user_list = User.on_journey(journey_id).reject{ |s| s.id == user_id }
-
-		render json: user_list, status: 200
-
-
-		# We will expect a journey_id as one of the supplied params
-		# 
 		# Then query saved journeys using the 'purchased_flight' identifier
 		# for a list of the the other user id's who are on the flight
 		# 
 		# Remove the queryer from the list and remove sensetive information
 		# 
 		# Done. Return our model list
+
+		journey_id = params["journeyId"]
+		user_id = params["userId"]
+
+		user_list = User.on_journey(journey_id).reject{ |s| s.id == user_id }
+
+		render json: user_list.as_json(only: [:id, :first_name, :last_name, :email]), status: 200
 
 	end
 
