@@ -41,8 +41,14 @@ class UserConversation < ActiveRecord::Base
 		results_1 = UserConversation.where("participant_1_id =? AND participant_2_id = ?", user_id_1, user_id_2)
 		results_2 = UserConversation.where("participant_2_id =? AND participant_1_id = ?", user_id_1, user_id_2)
 
-		# Check for nil and no records
-		return results_1.blank? and results_2.blank?
+		print "#{results_1.inspect}"
+		print "#{results_2.inspect}"
 
+		converExists = ! (results_1.empty? and results_2.empty?)
+
+		print "Does the conversation exist: #{converExists}"
+
+		# Check for nil and no records
+		return converExists
 	end
 end

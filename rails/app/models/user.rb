@@ -83,13 +83,14 @@ class User < ActiveRecord::Base
 		else
 
 			# Create new conversation
+			convo = UserConversation.new
 			convo.participant_1_id = initiate_user_id
 			convo.participant_2_id = self.id
 			convo.message_count = 0
 			convo.save!
 
 			# Create new message
-			initiate_user = User.find_by(id: :initiate_user_id)
+			initiate_user = User.where("id = ?", initiate_user_id).first
 			message = Message.new			
 			message.user_conversation_id = convo.id
 			message.user_id = initiate_user_id
