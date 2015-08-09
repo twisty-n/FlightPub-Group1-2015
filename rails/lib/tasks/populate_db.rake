@@ -37,6 +37,7 @@ namespace :populate_db do
 
         convo_list = Array.new
 
+        # Create 12 new conversations
         12.times do 
 
             convo = UserConversation.new
@@ -51,6 +52,27 @@ namespace :populate_db do
             convo_list.push(convo)
 
         end
+
+        # having generated the conversations, we now need to populate them with some test messages
+        UserConversation.all.each  do |conversation|
+
+            # Create a conversation! with messages
+            20.times do |index|
+
+                users = [ conversation.participant_1_id, conversation.participant_2_id ]
+                message = Message.new
+                message.user_id = users.sample
+                message.user_conversation_id = conversation.id
+                message.content = "Message #{index} sent by user #{message.user_id}"
+                
+                # post the conversation to the message
+                conversation.post_message(message)
+
+            end
+            
+
+        end
+        
 
     end
 
