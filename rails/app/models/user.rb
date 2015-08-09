@@ -67,6 +67,50 @@ class User < ActiveRecord::Base
 		return @id
 	end
 
+	# Rub shoulders with another User. This will automatically generate
+	# a conversation and content for the message an launch the sending process
+	# 
+	# This method returns true if the bug shoulders succeeded, or false if a
+	# conversation already existed.
+	# 
+	# Semnatically, rubbing shoulders is the way to initiate a conversation with another user
+	def rub_shoulders(initiate_user_id)
+
+		# Check if a conversation exists
+		if UserConversation.does_exist?(initiate_user_id, self.id)
+			print "#{initiate_user_id} tried to rub shoudlers with #{self.id} but a conversation already existed"
+			return false
+		else
+
+			# Create new conversation
+			convo.participant_1_id = initiate_user_id
+			convo.participant_2_id = self.id
+			convo.message_count = 0
+			convo.save!
+
+			# Create new message
+			initiate_user = User.find_by(id: :initiate_user_id)
+			message = Message.new			
+			message.user_conversation_id = convo.id
+			message.user_id = initiate_user_id
+
+			# For now we will use email but later we will change it to u
+			# se first name last name
+			# TODO!
+			message.content = 
+			" Hi! #{initiate_user.email} would like to rub shoulders with you! Reply to start your mile high adventure."
+			# 	post to conversation
+			
+			convo.post_message(message)
+			return true
+
+		end
+		
+		# Else
+		
+
+	end
+
 	# Create or retrieve a user using their google information
 	def self.from_omniauth(auth)
 		where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|

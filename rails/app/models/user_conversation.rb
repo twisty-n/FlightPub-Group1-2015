@@ -33,4 +33,16 @@ class UserConversation < ActiveRecord::Base
 		print "sent notification to user #{message.user_id}"
 
 	end
+
+	# Checks for the existance of a conversation with 
+	# the listed user id's
+	def self.does_exist?(user_id_1, user_id_2)
+
+		results_1 = UserConversation.where("participant_1_id =? AND participant_2_id = ?", user_id_1, user_id_2)
+		results_2 = UserConversation.where("participant_2_id =? AND participant_1_id = ?", user_id_1, user_id_2)
+
+		# Check for nil and no records
+		return results_1.blank? and results_2.blank?
+
+	end
 end
