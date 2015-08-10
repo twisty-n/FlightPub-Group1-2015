@@ -9,4 +9,22 @@ class Message < ActiveRecord::Base
   	return @user_id
   end
 
+  	# Create a new message object from a json Object
+  	# 	message: 			JSON object encapsulating a message
+	# 		JSON message => {
+	# 			"userConversationId" 	=> " < the id > ",
+	# 			"sendingUserId"			=> " < the id > ",
+	# 			"content" 				=> " < the content > "
+	# 		}
+  def self.from_json(json_message)
+
+  	msg = Message.new
+  	msg.content = json_message[:content]
+  	msg.user_id = json_message[:sendingUserId]
+  	msg.user_conversation_id = json_message[:userConversationId]
+
+  	return msg
+
+  end
+
 end

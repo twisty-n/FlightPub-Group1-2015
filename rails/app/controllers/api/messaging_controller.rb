@@ -10,9 +10,27 @@ class Api::MessagingController < ApplicationController
 
 	
 	# Hook to send a message to a user
+	# params
+	# 	message: 			JSON object encapsulating a message
+	  	# Create a new message object from a json Object
+  	# 	message: 			JSON object encapsulating a message
+	# 		JSON message => {
+	# 			"userConversationId" 	=> " < the id > ",
+	# 			"sendingUserId"			=> " < the id > ",
+	# 			"content" 				=> " < the content > "
+	# 		}
 	def post_message
 
-		# Define the accepted params
+		print "#{params[:message]}"
+
+		message = params[:message]					# This will be a JSON object
+		UserConversation.find_by(id: message[:userConversationId])
+				.post_message(
+					Message.from_json(message)
+				)
+		render json: {
+				'status' => 'Operation Success!'
+				},  status: 201
 
 	end
 
