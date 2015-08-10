@@ -61,8 +61,46 @@ class Api::MessagingController < ApplicationController
 
 	end
 
-	# Hook to delete a conversation
+	# Hook to delete a conversation for a certain user. The concersation will still be visible to the
+	# user that did not delete it. This will essentially be a soft delete. If the other user wishes to 
+	# continue a conversation. it will be recreated on the deleting users phone
+	# 
+	# Need to come back to the semantics on this. So ill leave it unimplemented for now
+	# 
 	def delete_conversation
+
+	end
+
+	# Hook to check if a conversation has new messages, based on a message count
+	# and conversation id
+	# If it does, a JSON payload will be returned with the messages
+	# if it doesn't we will still return success, but with a status that says no
+	# new messages were available
+	# params
+	# 	conversationId: 	the Id of the conversation that we are checking for updates
+	# 	clientMessageCount: The number of messages that the client has recorded as 
+	# 						as being a part of the conversation	
+	# 	
+	def check_update
+
+		conversation_id = params[:conversationId]
+		client_message_count = params[:clientMessageCount]
+
+		conversation = UserConversation.find_by(id: conversation_id)
+		if client_message_count.to_i < conversation.message_count
+
+			# the client requires updates
+			render json: conversation
+							.messages
+							.messages_higher_than(client_message_count), status: 201
+			
+		else
+
+			# We will return a good code, cause the operation didn't fail,
+			# but there was nothing to report
+			render json: { status: "UpToDate" }, status: 201
+
+		end
 
 	end
 

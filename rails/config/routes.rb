@@ -52,11 +52,13 @@ Rails.application.routes.draw do
     get 'send_message'=> 'messaging#post_message'
     get 'rub_shoulders'=> 'messaging#rub_shoulders'
     get 'delete_conversation'=> 'messaging#delete_conversation'
+    get 'check_and_get_updates' => 'messaging#check_update'
 
     # used for production!
     post 'send_message'=> 'messaging#post_message'
     post 'rub_shoulders'=> 'messaging#rub_shoulders'
     post 'delete_conversation'=> 'messaging#delete_conversation'
+    post 'check_and_get_updates' => 'messaging#check_update'
 
   end
 
