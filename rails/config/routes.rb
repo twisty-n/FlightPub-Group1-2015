@@ -48,6 +48,16 @@ Rails.application.routes.draw do
     # Lookup a listing of all users that belong to some journey
     get 'user_listing' => 'users#get_users_on_flight_reject_requester'
 
+    # Get only to be used for debugging! ******************
+    get 'send_message'=> 'messaging#post_message'
+    get 'rub_shoulders'=> 'messaging#rub_shoulders'
+    get 'delete_conversation'=> 'messaging#delete_conversation'
+
+    # used for production!
+    post 'send_message'=> 'messaging#post_message'
+    post 'rub_shoulders'=> 'messaging#rub_shoulders'
+    post 'delete_conversation'=> 'messaging#delete_conversation'
+
   end
 
   # END API ENDPOINTS ===========================================================================
