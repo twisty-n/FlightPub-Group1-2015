@@ -7,7 +7,7 @@ class UserConversation < ActiveRecord::Base
     belongs_to :participant_1, class_name: "User"
 	belongs_to :participant_2, class_name: "User"
 
-	has_many :messages
+	has_many :messages, dependant: :delete_all
 
 	scope :contains_user, -> (user_id) { where("participant_1_id = ? OR participant_2_id = ?", user_id, user_id) }
 
@@ -22,12 +22,7 @@ class UserConversation < ActiveRecord::Base
 		self.message_count = self.message_count + 1
 		self.save!
 
-		print(" message count for convo #{self.message_count}")
-		
 		message.message_number = self.message_count
-
-		print(" Message number in convo: #{message.message_number}")
-
 		message.save!
 
 		# For expanded functionality, we will send a push notification here when we 
@@ -42,13 +37,7 @@ class UserConversation < ActiveRecord::Base
 
 		results_1 = UserConversation.where("participant_1_id =? AND participant_2_id = ?", user_id_1, user_id_2)
 		results_2 = UserConversation.where("participant_2_id =? AND participant_1_id = ?", user_id_1, user_id_2)
-
-		print "#{results_1.inspect}"
-		print "#{results_2.inspect}"
-
 		converExists = ! (results_1.empty? and results_2.empty?)
-
-		print "Does the conversation exist: #{converExists}"
 
 		# Check for nil and no records
 		return converExists

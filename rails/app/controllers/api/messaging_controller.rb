@@ -21,8 +21,6 @@ class Api::MessagingController < ApplicationController
 	# 		}
 	def post_message
 
-		print "#{params[:message]}"
-
 		message = params[:message]					# This will be a JSON object
 		UserConversation.find_by(id: message[:userConversationId])
 				.post_message(
