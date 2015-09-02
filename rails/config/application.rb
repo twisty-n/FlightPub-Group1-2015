@@ -27,6 +27,12 @@ module ExampleApp
     ActiveRecord::Base.include_root_in_json = false
     # config/application.rb
     config.autoload_paths << Rails.root.join('lib')
+    
+    # Allow all origins
+    config.action_dispatch.default_headers.merge!({
+        'Access-Control-Allow-Origin' => '*',
+        'Access-Control-Allow-Request-Method' => '*'
+    })
 
   end
 end
