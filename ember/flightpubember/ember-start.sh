@@ -1,1 +1,1 @@
-ember server --proxy http://192.168.0.14:3000
+ember server --proxy http://localhost:3000
